@@ -1,23 +1,26 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once 'dompdf-master/autoload.inc.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class PDFlib extends Dompdf{
-    protected $ci;
-    private $filename;
+class PDFlib extends Dompdf
+{
+   protected $ci;
+   private $filename;
 
-    public function __construct()
-    {
-       parent::__construct();
-        $this->ci =& get_instance();
-    }
-
-    public function setFileName($filename)
+   public function __construct()
    {
+      parent::__construct();
+      $this->ci = &get_instance();
+   }
+
+   public function setFileName($filename)
+   {
+      var_dump($filename);
+      die;
       $this->filename = $filename;
    }
 
@@ -34,6 +37,4 @@ class PDFlib extends Dompdf{
       $this->render();
       $this->stream($this->filename, ['Attachment' => 0]);
    }
-
-
 }
