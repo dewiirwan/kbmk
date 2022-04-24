@@ -11,6 +11,7 @@ class List_kegiatan extends CI_Controller
         $this->load->helper(array('url', 'language'));
         $this->load->model('m_kegiatan');
         $this->load->model('m_global');
+        $this->load->model('M_foto');
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -45,7 +46,7 @@ class List_kegiatan extends CI_Controller
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             // set the flash data error message if there is one
             $this->ion_auth->logout();
@@ -103,7 +104,6 @@ class List_kegiatan extends CI_Controller
             $durasi                 = $this->input->post('durasi');
             $ketuplak                 = $this->input->post('ketuplak');
             $kapasitas             = $this->input->post('kapasitas');
-            $bukti_swab                 = $this->input->post('bukti_swab');
             $deskripsi             = $this->input->post('deskripsi');
             $created_by = $user->id_user;
 
@@ -121,7 +121,6 @@ class List_kegiatan extends CI_Controller
                     'durasi'               => $durasi,
                     'created_by'            => $created_by,
                     'deskripsi' => $deskripsi,
-                    'butuh_swab' => $bukti_swab
                 );
 
                 $KETERANGAN = "Simpan Kegiatan: "
@@ -132,7 +131,6 @@ class List_kegiatan extends CI_Controller
                     . "; " . $ketuplak
                     . "; " . $kapasitas
                     . "; " . $deskripsi
-                    . "; " . $bukti_swab
                     . "; " . $created_by;
                 $this->user_log($KETERANGAN);
             } else {
@@ -156,7 +154,6 @@ class List_kegiatan extends CI_Controller
             $durasi                 = $this->input->post('durasi_');
             $ketuplak                 = $this->input->post('ketuplak_');
             $kapasitas             = $this->input->post('kapasitas_');
-            $bukti_swab                 = $this->input->post('bukti_swab_');
             $deskripsi             = $this->input->post('deskripsi_');
 
             $id     = $this->input->post('id_kegiatan');
@@ -177,10 +174,9 @@ class List_kegiatan extends CI_Controller
                 'jml_slot'                         => $kapasitas,
                 'durasi'               => $durasi,
                 'deskripsi' => $deskripsi,
-                'butuh_swab' => $bukti_swab
             );
 
-            $KETERANGAN = "Ubah Data Kegiatan: " . json_encode($cek) . " ---- " . $nama_kegiatan . ";" . $tgl_kegiatan . ";" . $pengkhotbah . ";" . $ketuplak . ";" . $kapasitas . ";" . $durasi . ";" . $deskripsi . ";" . $bukti_swab;
+            $KETERANGAN = "Ubah Data Kegiatan: " . json_encode($cek) . " ---- " . $nama_kegiatan . ";" . $tgl_kegiatan . ";" . $pengkhotbah . ";" . $ketuplak . ";" . $kapasitas . ";" . $durasi . ";" . $deskripsi;
 
             $this->user_log($KETERANGAN);
         } else {
@@ -202,7 +198,6 @@ class List_kegiatan extends CI_Controller
         $durasi                 = $this->input->post('durasi');
         $ketuplak                 = $this->input->post('ketuplak');
         $kapasitas             = $this->input->post('kapasitas');
-        $bukti_swab                 = $this->input->post('bukti_swab');
         $deskripsi             = $this->input->post('deskripsi');
 
 
@@ -246,12 +241,6 @@ class List_kegiatan extends CI_Controller
             $data['status']                          = false;
         }
 
-        if ($bukti_swab == '') {
-            $data['error_class']['bukti_swab']  = 'is-invalid';
-            $data['error_string']['bukti_swab'] = 'Bukti Swab harus dipilih';
-            $data['status']                              = false;
-        }
-
         if ($deskripsi == '') {
             $data['error_class']['deskripsi']  = 'is-invalid';
             $data['error_string']['deskripsi'] = 'Deskripsi tidak boleh kosong';
@@ -274,7 +263,6 @@ class List_kegiatan extends CI_Controller
         $durasi                 = $this->input->post('durasi_');
         $ketuplak                 = $this->input->post('ketuplak_');
         $kapasitas             = $this->input->post('kapasitas_');
-        $bukti_swab                 = $this->input->post('bukti_swab_');
         $deskripsi             = $this->input->post('deskripsi_');
 
 
@@ -318,12 +306,6 @@ class List_kegiatan extends CI_Controller
             $data['status']                          = false;
         }
 
-        if ($bukti_swab == '') {
-            $data['error_class']['bukti_swab_']  = 'is-invalid';
-            $data['error_string']['bukti_swab_'] = 'Bukti Swab harus dipilih';
-            $data['status']                              = false;
-        }
-
         if ($deskripsi == '') {
             $data['error_class']['deskripsi_']  = 'is-invalid';
             $data['error_string']['deskripsi_'] = 'Deskripsi tidak boleh kosong';
@@ -346,5 +328,168 @@ class List_kegiatan extends CI_Controller
         $this->db->delete('kegiatan');
 
         echo json_encode(['status' => $status]);
+    }
+
+    public function detail()
+    {
+        //jika mereka belum login
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data tabel users untuk ditampilkan
+        $user = $this->ion_auth->user()->row();
+        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
+
+        $this->data['USER_ID'] = $user->id_user;
+        $this->data['id_kegiatan'] = $user->id_mhs;
+        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
+        $this->data['role_user'] = 'pengurus';
+        $this->data['ip_address'] = $user->ip_address;
+        $this->data['email'] = $user->email;
+        date_default_timezone_set('Asia/Jakarta');
+        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
+        $this->data['isi'] = 'pengurus/list_kegiatan/detail';
+        $this->data['id_group'] = $id_group->id_group;
+
+        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
+        if ($query_foto_user == "BELUM ADA FOTO") {
+            $this->data['foto_user'] = "assets/img/profile_small.jpg";
+        } else {
+            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+        }
+
+        $this->data['id_kegiatan'] = $this->uri->segment(4);
+
+        //Kueri data di tabel pengurus
+        $query_detil_kegiatan = $this->m_kegiatan->get_detil($this->data['id_kegiatan']);
+
+        $query_detil_kegiatan_result = $this->m_kegiatan->get_detil_result($this->data['id_kegiatan']);
+        $this->data['query_detil_kegiatan_result'] = $query_detil_kegiatan_result;
+
+        if ($query_detil_kegiatan->num_rows() == 0) {
+            // alihkan mereka ke halaman list pengurus
+            redirect('pengurus/list_kegiatan', 'refresh');
+        }
+        //Kueri data di tabel kegiatan file
+        $query_file_id_kegiatan = $this->m_kegiatan->file_list_by_id_kegiatan($this->data['id_kegiatan']);
+
+        //log
+        $KETERANGAN = "Lihat Profil Kegiatan: " . json_encode($query_detil_kegiatan_result) . " ---- " . json_encode($query_file_id_kegiatan);
+        $this->user_log($KETERANGAN);
+
+        $hasil_1 = $query_detil_kegiatan->row();
+        $this->data['id_kegiatan'] = $hasil_1->id_kegiatan;
+        $sess_data['id_kegiatan'] = $this->data['id_kegiatan'];
+        $this->session->set_userdata($sess_data);
+
+        if ($query_file_id_kegiatan->num_rows() > 0) {
+
+            $this->data['dokumen'] = $this->m_kegiatan->file_list_by_id_kegiatan_result($this->data['id_kegiatan']);
+
+            $hasil = $query_file_id_kegiatan->row();
+            $DOK_FILE = $hasil->dok_file;
+            $TANGGAL_UPLOAD = $hasil->tanggal_upload;
+
+            if (file_exists($file = './assets/uploads/kegiatan/' . $DOK_FILE)) {
+                $this->data['DOK_FILE'] = $DOK_FILE;
+                $this->data['TANGGAL_UPLOAD'] = $TANGGAL_UPLOAD;
+                $this->data['FILE'] = "ADA";
+            }
+        } else {
+            $this->data['FILE'] = "TIDAK ADA";
+        }
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->in_group(1)) {
+
+            $this->load->view('template/wrapper', $this->data);
+        } else {
+            $this->logout();
+        }
+    }
+
+    //Untuk proses upload file
+    function proses_upload_file()
+    {
+
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        $id_pengirim = $this->session->userdata('id_kegiatan');
+
+        //jika mereka sudah login dan sebagai kegiatan
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
+            $WAKTU = date('Y-m-d H:i:s');
+
+            $nama_file = "file_" . $id_pengirim . '_';
+            $config['upload_path']   = './assets/uploads/kegiatan/';
+            $config['allowed_types'] = 'jpg|png|jpeg|bmp|pdf';
+            $config['file_name'] = $nama_file;
+            $config['file_ext_tolower'] = TRUE;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('userfile')) {
+                $nama = $this->upload->data('file_name');
+                $EKSTENSI = pathinfo($nama, PATHINFO_EXTENSION);
+
+                $file_upload = $this->upload->data();
+
+                $JENIS_FILE = $this->input->post('JENIS_FILE');
+                $KETERANGAN_FILE = $this->input->post('KETERANGAN_FILE');
+
+                $KETERANGAN = './assets/uploads/kegiatan/' . $nama;
+                $this->db->insert('log_file', array('id_pengirim' => $id_pengirim, 'jenis_file' => $JENIS_FILE, 'ekstensi' => $EKSTENSI, 'dok_file' => $nama, 'tanggal_upload' => $WAKTU, 'keterangan_assets' => $KETERANGAN, 'keterangan_file' => $KETERANGAN_FILE, 'pengirim' => 'KEGIATAN'));
+            } else {
+                redirect($_SERVER['REQUEST_URI'], 'refresh');
+            }
+        } else {
+            $this->logout();
+        }
+    }
+    //Hapus file by button
+    function hapus_file()
+    {
+        //jika mereka belum login
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data dari parameter URL
+        $this->data['DOK_FILE'] = $this->uri->segment(4);
+
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
+            //Query file BY DOK_FILE
+            $query_dok_file = $this->m_kegiatan->file_list_by_dok_file($this->data['DOK_FILE']);
+
+            if ($query_dok_file->num_rows() > 0) {
+                $hasil = $query_dok_file->row();
+                $DOK_FILE = $hasil->dok_file;
+                if (file_exists($file = './assets/uploads/kegiatan/' . $DOK_FILE)) {
+                    unlink($file);
+                }
+
+                $this->m_kegiatan->hapus_data_by_dok_file($DOK_FILE);
+
+                $id_kegiatan = $this->session->userdata('id_kegiatan');
+                redirect('/pengurus/list_kegiatan/detail/' . $id_kegiatan, 'refresh');
+            } else {
+                $id_kegiatan = $this->session->userdata('id_kegiatan');
+                redirect('/pengurus/list_kegiatan/detail/' . $id_kegiatan, 'refresh');
+            }
+        } else {
+            // set the flash data error message if there is one
+            $this->ion_auth->logout();
+            $this->session->set_flashdata('message', 'Anda tidak memiliki otorisasi untuk mengakses sistem, silahkan hubungi admin');
+        }
     }
 }

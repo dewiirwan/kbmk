@@ -18,8 +18,6 @@ class Profil_anggota extends CI_Controller
 
         $this->load->model('M_anggota');
         $this->load->model('M_foto');
-        // $this->load->model('Manajemen_user_model');
-        // $this->load->model('Pegawai_model');
 
         date_default_timezone_set('Asia/Jakarta');
     }
@@ -92,7 +90,7 @@ class Profil_anggota extends CI_Controller
             if ($this->ion_auth->in_group(2)) {
                 $sess_data['id_mhs'] = $this->data['id_mhs'];
 
-                $this->load->view('template_pengurus/wrapper', $this->data);
+                $this->load->view('template/wrapper', $this->data);
             }
         } else {
             $this->logout();
@@ -133,7 +131,6 @@ class Profil_anggota extends CI_Controller
         $this->data['role_user'] = 'anggota';
         $this->data['ip_address'] = $user->ip_address;
         $this->data['email'] = $user->email;
-        $this->data['USER_ID'] = $user->id_user;
         date_default_timezone_set('Asia/Jakarta');
         $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
         $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -163,10 +160,8 @@ class Profil_anggota extends CI_Controller
         //Kueri data di tabel anggota file
         $query_file_id_mhs = $this->M_anggota->file_list_by_id_mhs($this->data['id_mhs']);
 
-        $query_file_swab_id_mhs = $this->M_anggota->file_swab_list_by_id_mhs($this->data['id_mhs']);
-
         //log
-        $KETERANGAN = "Lihat Profil Anggota: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_mhs) . " ---- " . json_encode($query_file_swab_id_mhs);
+        $KETERANGAN = "Lihat Profil Anggota: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_mhs);
         $this->user_log($KETERANGAN);
 
         $hasil_1 = $query_detil_anggota->row();
@@ -191,28 +186,11 @@ class Profil_anggota extends CI_Controller
             $this->data['FILE'] = "TIDAK ADA";
         }
 
-        if ($query_file_swab_id_mhs->num_rows() > 0) {
-
-            $this->data['dokumen_swab'] = $this->M_anggota->file_swab_list_by_id_mhs_result($sess_data['id_mhs']);
-
-            $hasil = $query_file_swab_id_mhs->row();
-            $FILE_SWAB = $hasil->file_swab;
-            $TANGGAL_UPLOAD = $hasil->tanggal_upload;
-
-            if (file_exists($file = './assets/uploads/anggota/' . $FILE_SWAB)) {
-                $this->data['FILE_SWAB'] = $FILE_SWAB;
-                $this->data['TANGGAL_UPLOAD'] = $TANGGAL_UPLOAD;
-                $this->data['FILE_SWAB'] = "ADA";
-            }
-        } else {
-            $this->data['FILE_SWAB'] = "TIDAK ADA";
-        }
-
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->in_group(2)) {
             $sess_data['id_mhs'] = $this->data['id_mhs'];
 
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             $this->logout();
         }
@@ -335,74 +313,6 @@ class Profil_anggota extends CI_Controller
         }
     }
 
-    //Untuk proses upload file
-    function proses_upload_file_swab()
-    {
-
-        if (!$this->ion_auth->logged_in()) {
-            // alihkan mereka ke halaman login
-            redirect('auth/login', 'refresh');
-        }
-
-        $id_mhs = $this->session->userdata('id_mhs');
-
-        //jika mereka sudah login dan sebagai umat
-        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            $WAKTU = date('Y-m-d H:i:s');
-
-            $nama_file = "file_swab_" . $id_mhs . '_';
-            $config['upload_path']   = './assets/upload_umat_file/';
-            $config['allowed_types'] = 'jpg|png|jpeg|bmp|pdf';
-            $config['file_name'] = $nama_file;
-            $config['file_ext_tolower'] = TRUE;
-
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('userfile')) {
-                $token = $this->input->post('token_file');
-                $nama = $this->upload->data('file_name');
-                $EKSTENSI = pathinfo($nama, PATHINFO_EXTENSION);
-
-                $file_upload = $this->upload->data();
-
-                $TANGGAL_SWAB = $this->input->post('TANGGAL_SWAB');
-                $KETERANGAN_FILE = $this->input->post('KETERANGAN_FILE');
-
-                $KETERANGAN = './assets/upload_umat_file/' . $nama;
-                $this->db->insert('bukti_swab', array('id_mhs' => $id_mhs, 'EKSTENSI' => $EKSTENSI, 'TANGGAL_SWAB' => $TANGGAL_SWAB, 'TANGGAL_UPLOAD' => $WAKTU, 'FILE_SWAB' => $nama, 'TOKEN' => $token,  'KETERANGAN' => $KETERANGAN, 'KETERANGAN_FILE' => $KETERANGAN_FILE));
-            } else {
-                redirect($_SERVER['REQUEST_URI'], 'refresh');
-            }
-        } else if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(2)) {
-            $WAKTU = date('Y-m-d H:i:s');
-
-            $nama_file = "file_swab_" . $id_mhs . '_';
-            $config['upload_path']   = './assets/upload_umat_file/';
-            $config['allowed_types'] = 'jpg|png|jpeg|bmp|pdf';
-            $config['file_name'] = $nama_file;
-            $config['file_ext_tolower'] = TRUE;
-
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('userfile')) {
-                $token = $this->input->post('token_file');
-                $nama = $this->upload->data('file_name');
-                $EKSTENSI = pathinfo($nama, PATHINFO_EXTENSION);
-
-                $file_upload = $this->upload->data();
-
-                $TANGGAL_SWAB = $this->input->post('TANGGAL_SWAB');
-                $KETERANGAN_FILE = $this->input->post('KETERANGAN_FILE');
-
-                $KETERANGAN = './assets/upload_umat_file/' . $nama;
-                $this->db->insert('bukti_swab', array('id_mhs' => $id_mhs, 'EKSTENSI' => $EKSTENSI, 'TANGGAL_SWAB' => $TANGGAL_SWAB, 'TANGGAL_UPLOAD' => $WAKTU, 'FILE_SWAB' => $nama, 'TOKEN' => $token,  'KETERANGAN' => $KETERANGAN, 'KETERANGAN_FILE' => $KETERANGAN_FILE));
-            } else {
-                redirect($_SERVER['REQUEST_URI'], 'refresh');
-            }
-        } else {
-            $this->logout();
-        }
-    }
     //Hapus file by button
     function hapus_file()
     {
@@ -461,166 +371,117 @@ class Profil_anggota extends CI_Controller
         }
     }
 
-    //Hapus file by button
-    function hapus_file_swab()
+    function update()
     {
-        //jika mereka belum login
-        if (!$this->ion_auth->logged_in()) {
-            // alihkan mereka ke halaman login
-            redirect('auth/login', 'refresh');
-        }
-
-        //get data dari parameter URL
-        $this->data['FILE_SWAB'] = $this->uri->segment(3);
-
-        //jika mereka sudah login dan sebagai admin
-        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            //Query file BY DOK_FILE
-            $query_file_swab = $this->M_anggota->file_list_by_file_swab($this->data['FILE_SWAB']);
-
-            if ($query_file_swab->num_rows() > 0) {
-                $hasil = $query_file_swab->row();
-                $FILE_SWAB = $hasil->FILE_SWAB;
-                if (file_exists($file = './assets/upload_umat_file/' . $FILE_SWAB)) {
-                    unlink($file);
-                }
-
-                $this->Umat_file_model->hapus_data_by_file_swab($FILE_SWAB);
-
-                $id_mhs = $this->session->userdata('id_mhs');
-                redirect('/Umat_detil/index/' . $id_mhs, 'refresh');
-            } else {
-                $id_mhs = $this->session->userdata('id_mhs');
-                redirect('/Umat_detil/index/' . $id_mhs, 'refresh');
-            }
-        } else if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(2)) {
-            //Query file BY DOK_FILE
-            $query_file_swab = $this->Umat_file_model->file_list_by_file_swab($this->data['FILE_SWAB']);
-
-            if ($query_file_swab->num_rows() > 0) {
-                $hasil = $query_file_swab->row();
-                $FILE_SWAB = $hasil->FILE_SWAB;
-                if (file_exists($file = './assets/upload_umat_file/' . $FILE_SWAB)) {
-                    unlink($file);
-                }
-
-                $this->Umat_file_model->hapus_data_by_file_swab($FILE_SWAB);
-
-                $id_mhs = $this->session->userdata('id_mhs');
-                redirect('/Umat_detil/index/' . $id_mhs, 'refresh');
-            } else {
-                $id_mhs = $this->session->userdata('id_mhs');
-                redirect('/Umat_detil/index/' . $id_mhs, 'refresh');
-            }
-        } else {
-            // set the flash data error message if there is one
-            $this->ion_auth->logout();
-            $this->session->set_flashdata('message', 'Anda tidak memiliki otorisasi untuk mengakses sistem, silahkan hubungi admin');
-        }
-    }
-
-    function update_data()
-    {
-        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(2)) {
             $user = $this->ion_auth->user()->row();
 
-            //set validation rules
-            $this->form_validation->set_rules('npm_2', 'NPM', 'trim|required|max_length[16]|min_length[16]|numeric');
-            $this->form_validation->set_rules('nama_2', 'Nama Anggota', 'trim|required|max_length[100]');
-            $this->form_validation->set_rules('tempat_tgl_lahir_2', 'Tempat Tanggal Lahir', 'trim|required|max_length[100]');
-            $this->form_validation->set_rules('alamat_2', 'Alamat', 'trim|required');
-            $this->form_validation->set_rules('email_2', 'Email', 'trim|required|max_length[100]|valid_email');
-            $this->form_validation->set_rules('no_hp_2', 'No Handphone', 'trim|required|max_length[20]|numeric');
+            $status                = true;
+            $nama_lengkap             = $this->input->post('nama_lengkap_');
+            $npm        = $this->input->post('npm_');
+            $ttl                 = $this->input->post('ttl_');
+            $no_hp                 = $this->input->post('no_hp_');
+            $alamat                 = $this->input->post('alamat_');
+            $email             = $this->input->post('email_');
 
-            //run validation check
-            if ($this->form_validation->run() == FALSE) {   //validation fails
-                echo json_encode(validation_errors());
-            } else {
-                //get the form data
-                $id_mhs_2 = $this->input->post('id_mhs_2');
-                $npm_2 = $this->input->post('npm_2');
-                $nama_2 = $this->input->post('nama_2');
-                $tempat_tgl_lahir_2 = $this->input->post('tempat_tgl_lahir_2');
-                $alamat_2 = $this->input->post('alamat_2');
-                $email_2 = $this->input->post('email_2');
-                $no_hp_2 = $this->input->post('no_hp_2');
+            $id     = $this->input->post('id_mhs');
 
-                //cek apakah input sama dengan eksisting
-                $data = $this->M_anggota->get_data($id_mhs_2);
+            $query['select'] = 'a.*';
+            $query['table']  = 'mahasiswa a';
+            $query['where']  = 'a.id_mhs = ' . $id;
 
-                if ($data['nama'] == $nama_2 || ($this->M_anggota->cek_nama_anggota($nama_2) == 'BELUM ADA NAMA ANGGOTA')) {
-                    $data_awal = $this->M_anggota->get_data($id_mhs_2);
+            $cek  = $this->m_global->getRow($query);
 
-                    //log
-                    $KETERANGAN = "Ubah Data Anggota: " . json_encode($data_awal) . " ---- " . $npm_2 . ";" . $nama_2 . ";" . $tempat_tgl_lahir_2 . ";" . $alamat_2 . ";" . $email_2 . ";" . $no_hp_2;
-                    $this->user_log($KETERANGAN);
+            $this->_validate();
 
-                    $data = $this->M_anggota->update_data($id_mhs_2, $npm_2, $nama_2, $tempat_tgl_lahir_2, $alamat_2, $email_2, $no_hp_2);
-                    echo json_encode($data);
-                } else {
-                    echo json_encode('Nama Anggota sudah ada sebelumnya');
-                }
-            }
-        } else if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(2)) {
-            $user = $this->ion_auth->user()->row();
+            $data = array(
+                'nama'                => $nama_lengkap,
+                'npm'             => $npm,
+                'tempat_tgl_lahir'                     => $ttl,
+                'alamat'                         => $alamat,
+                'email'                         => $email,
+                'no_hp'               => $no_hp,
+            );
 
-            //set validation rules
-            $this->form_validation->set_rules('NIK_2', 'NIK', 'trim|required|max_length[16]|min_length[16]|numeric');
-            $this->form_validation->set_rules('NAMA_2', 'Nama Umat', 'trim|required|max_length[100]');
-            $this->form_validation->set_rules('TEMPAT_TANGGAL_LAHIR_2', 'Tempat Tanggal Lahir', 'trim|required|max_length[100]');
-            $this->form_validation->set_rules('ALAMAT_2', 'Alamat', 'trim|required');
-            $this->form_validation->set_rules('EMAIL_2', 'Email', 'trim|required|max_length[100]|valid_email');
-            $this->form_validation->set_rules('NO_HP_2', 'No Handphone', 'trim|required|max_length[20]|numeric');
+            $KETERANGAN = "Ubah Data Anggota: " . json_encode($cek) . " ---- " . $nama_lengkap . ";" . $npm . ";" . $ttl . ";" . $no_hp . ";" . $alamat . ";" . $email;
 
-            //run validation check
-            if ($this->form_validation->run() == FALSE) {   //validation fails
-                echo json_encode(validation_errors());
-            } else {
-                //get the form data
-                $id_mhs_2 = $this->input->post('id_mhs_2');
-                $NIK_2 = $this->input->post('NIK_2');
-                $NAMA_2 = $this->input->post('NAMA_2');
-                $TEMPAT_TANGGAL_LAHIR_2 = $this->input->post('TEMPAT_TANGGAL_LAHIR_2');
-                $ALAMAT_2 = $this->input->post('ALAMAT_2');
-                $EMAIL_2 = $this->input->post('EMAIL_2');
-                $NO_HP_2 = $this->input->post('NO_HP_2');
-
-                //cek apakah input sama dengan eksisting
-                $data = $this->M_anggota->get_data($id_mhs_2);
-
-                if ($data['NAMA'] == $NAMA_2 || ($this->M_anggota->cek_nama_umat($NAMA_2) == 'BELUM ADA NAMA UMAT')) {
-                    $data_awal = $this->M_anggota->get_data($id_mhs_2);
-
-                    //log
-                    $KETERANGAN = "Ubah Data Umat: " . json_encode($data_awal) . " ---- " . $NIK_2 . ";" . $NAMA_2 . ";" . $TEMPAT_TANGGAL_LAHIR_2 . ";" . $ALAMAT_2 . ";" . $EMAIL_2 . ";" . $NO_HP_2;
-                    $this->user_log($KETERANGAN);
-
-                    $data = $this->M_anggota->update_data($id_mhs_2, $NIK_2, $NAMA_2, $TEMPAT_TANGGAL_LAHIR_2, $ALAMAT_2, $EMAIL_2, $NO_HP_2);
-                    echo json_encode($data);
-                } else {
-                    echo json_encode('Nama umat sudah ada sebelumnya');
-                }
-            }
-        } else {
-            $this->logout();
-        }
-    }
-
-    function hapus_data()
-    {
-        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            $user = $this->ion_auth->user()->row();
-            $ID_UMAT = $this->input->post('kode');
-            $data = $this->M_anggota->get_data($ID_UMAT);
-
-            //log
-            $KETERANGAN = "Hapus Data Umat: " . json_encode($data);
             $this->user_log($KETERANGAN);
-
-            $data = $this->M_anggota->hapus_data($ID_UMAT);
-            echo json_encode($data);
         } else {
             $this->logout();
+        }
+
+        $this->db->where('id_mhs', $id);
+        $this->db->update('mahasiswa', $data);
+        echo json_encode(['status' => $status]);
+    }
+
+    function hapus_anggota()
+    {
+        $post   = $this->input->post();
+        $where  = array('id_mhs' => $post['id']);
+        $status = true;
+
+        $this->db->where($where);
+        $this->db->delete('mahasiswa');
+
+        echo json_encode(['status' => $status]);
+    }
+
+    private function _validate()
+    {
+        $data = [];
+
+        $nama_lengkap             = $this->input->post('nama_lengkap_');
+        $npm        = $this->input->post('npm_');
+        $ttl                 = $this->input->post('ttl_');
+        $no_hp                 = $this->input->post('no_hp_');
+        $alamat                 = $this->input->post('alamat_');
+        $email             = $this->input->post('email_');
+
+
+        $data['error_class']  = [];
+        $data['error_string'] = [];
+        $data['status']       = true;
+
+        if ($nama_lengkap == '') {
+            $data['error_class']['nama_lengkap_']  = 'is-invalid';
+            $data['error_string']['nama_lengkap_'] = 'Nama Lengkap tidak boleh kosong';
+            $data['status']                         = false;
+        }
+
+        if ($npm == '') {
+            $data['error_class']['npm_']  = 'is-invalid';
+            $data['error_string']['npm_'] = 'NPM tidak boleh kosong';
+            $data['status']                = false;
+        }
+
+        if ($ttl == '') {
+            $data['error_class']['ttl_']  = 'is-invalid';
+            $data['error_string']['ttl_'] = 'Tempat Tanggal Lahir tidak boleh kosong';
+            $data['status']                = false;
+        }
+
+        if ($no_hp == '') {
+            $data['error_class']['no_hp_']  = 'is-invalid';
+            $data['error_string']['no_hp_'] = 'Nomor Handphone tidak boleh kosong';
+            $data['status']                         = false;
+        }
+
+        if ($alamat == '') {
+            $data['error_class']['alamat_']  = 'is-invalid';
+            $data['error_string']['alamat_'] = 'Alamat tidak boleh kosong';
+            $data['status']                              = false;
+        }
+
+        if ($email == '') {
+            $data['error_class']['email_']  = 'is-invalid';
+            $data['error_string']['email_'] = 'Email tidak boleh kosong';
+            $data['status']                          = false;
+        }
+
+        if ($data['status'] == false) {
+            echo json_encode($data);
+            exit();
         }
     }
 }

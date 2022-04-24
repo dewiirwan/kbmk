@@ -195,7 +195,6 @@
                                                             <option value='Belum didefinisikan'>- Pilih Jenis File Dokumen -</option>
                                                             <option value='KTP'>KTP</option>
                                                             <option value='Foto'>Foto</option>
-                                                            <option value='Bukti_Swab'>Bukti Swab</option>
                                                             <option value='Dokumen Lainnya'>Dokumen Lainnya</option>
                                                         </select>
                                                         </br>

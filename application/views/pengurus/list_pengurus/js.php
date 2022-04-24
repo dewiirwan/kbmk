@@ -1,6 +1,7 @@
 <script type="text/javascript" language="javascript">
     var dataTable;
-    var SITE_URL = '<?php echo site_url(); ?>';
+    var BASE_URL = '<?= base_url(); ?>';
+    var SITE_URL = '<?= site_url(); ?>';
 
     $(".select2").each((_i, e) => {
         var $e = $(e);
@@ -135,6 +136,10 @@
             var hrs = time;
         }
         return hrs + ":00";
+    }
+
+    function detail(id_pengurus) {
+        window.location.href = BASE_URL + 'pengurus/list_pengurus/detail/' + id_pengurus;
     }
 
     function confirm_save() {

@@ -30,4 +30,42 @@ class M_kegiatan extends CI_Model
         $hasil = $this->db->query("INSERT INTO user_log (id_user, waktu, keterangan, type) VALUES('$ID_USER', '$KETERANGAN', '$WAKTU', 'KEGIATAN')");
         return $hasil;
     }
+
+    function get_detil($id_kegiatan)
+    {
+        $hasil = $this->db->query("SELECT * FROM kegiatan 
+		WHERE id_kegiatan = '$id_kegiatan'");
+        return $hasil;
+    }
+
+    function get_detil_result($id_kegiatan)
+    {
+        $hasil = $this->db->query("SELECT * FROM kegiatan 
+		WHERE id_kegiatan = '$id_kegiatan'");
+        return $hasil->result();
+    }
+
+    function file_list_by_id_kegiatan($id_kegiatan)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_pengirim = '$id_kegiatan' AND pengirim = 'KEGIATAN' ORDER BY tanggal_upload ASC");
+        return $hasil;
+    }
+
+    function file_list_by_id_kegiatan_result($id_kegiatan)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_pengirim = '$id_kegiatan' AND pengirim = 'KEGIATAN' ORDER BY tanggal_upload ASC");
+        return $hasil->result();
+    }
+
+    function file_list_by_dok_file($DOK_FILE)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE dok_file = '$DOK_FILE' AND pengirim = 'KEGIATAN' ORDER BY tanggal_upload ASC");
+        return $hasil;
+    }
+
+    function hapus_data_by_dok_file($DOK_FILE)
+    {
+        $hasil = $this->db->query("DELETE FROM log_file WHERE dok_file='$DOK_FILE' AND pengirim = 'KEGIATAN'");
+        return $hasil;
+    }
 }

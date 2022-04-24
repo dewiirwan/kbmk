@@ -3,124 +3,98 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <link rel="icon" type="image/png" href="images/DB_16х16.png">
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
+    <title>Sistem Informasi Lithang SEGAR Cilodong (SILSCI) | Registrasi Akun</title>
 
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-
-
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="<?= base_url() ?>assets/admin/dist/images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
-
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,100,700,900' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- inject:css -->
-    <link rel="stylesheet" href="<?= base_url() ?>assets/admin/dist/css/lib/getmdl-select.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/admin/dist/css/lib/nv.d3.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/admin/dist/css/application.min.css">
-    <!-- endinject -->
+    <link href="<?php echo base_url(); ?>assets/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/template/css/animate.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/template/css/style.css" rel="stylesheet">
 
 </head>
 
-<body>
-
-    <div class="mdl-layout mdl-js-layout color--gray is-small-screen login">
-        <main class="mdl-layout__content">
-            <div class="mdl-card mdl-card__login mdl-shadow--2dp">
-                <div class="mdl-card__supporting-text color--dark-gray">
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-                            <span class="mdl-card__title-text text-color--smooth-gray">REGISTER KBMK</span>
-                        </div>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-                            <!-- <span class="login-name text-color--white">Sign up</span> -->
-                            <?php if ($message != "") { ?>
-                                <div class="alert alert-danger alert-dismissable">
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                    <?php echo $message; ?>
-                                </div>
-                            <?php
-                            } ?>
-                            <?php if ($pesan_npm != "") { ?>
-                                <div class="alert alert-danger alert-dismissable">
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                    <?php echo $pesan_npm; ?>
-                                </div>
-                            <?php
-                            } ?>
-                        </div>
-                        <?php echo form_open("auth/register"); ?>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
-                                <input class="mdl-textfield__input" type="text" id="name">
-                                <label class="mdl-textfield__label" for="name">Name</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
-                                <input class="mdl-textfield__input" type="text" id="password">
-                                <label class="mdl-textfield__label" for="password">Password</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
-                                <input class="mdl-textfield__input" type="text" id="e-mail">
-                                <label class="mdl-textfield__label" for="e-mail">Email</label>
-                            </div>
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect checkbox--colored-light-blue checkbox--inline checkbox i-checks" for="checkbox-1">
-                                <input type="checkbox" id="terms" class="mdl-checkbox__input" checked>
-
-                            </label>
-                            <span class="login-link">I agree all statements in <a href="#" class="underlined">terms of service</a></span>
-                        </div>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone submit-cell">
-                            <a href="<?php echo base_url(); ?>auth/login" class="login-link">I have already signed up</a>
-                            <div class="mdl-layout-spacer"></div>
-                            <buttons class="mdl-button mdl-js-button mdl-button--raised color--light-blue">
-                                SIGN UP
-                            </buttons>
-                        </div>
-                        <?php echo form_close(); ?>
-                    </div>
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <h3>Selamat Datang di KBMK</h3>
+            </br>
+            <p>Silakan mendaftar untuk mendapatkan hak akses</p>
+            <?php if ($message != "") { ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    <?php echo $message; ?>
                 </div>
+            <?php } ?>
+
+
+            <?php echo form_open("auth/register"); ?>
+            <div class="form-group">
+                <input type="text" class="form-control" name="NIK" id="NIK" value="<?php echo set_value('NIK'); ?>" placeholder="Contoh : NIK" autofocus>
             </div>
-        </main>
+            <div class="form-group">
+                <input type="text" class="form-control" name="NAMA" id="NAMA" value="<?php echo set_value('NAMA'); ?>" placeholder="Contoh: Nama" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="TEMPAT_TANGGAL_LAHIR" id="TEMPAT_TANGGAL_LAHIR" value="<?php echo set_value('TEMPAT_TANGGAL_LAHIR'); ?>" placeholder="Contoh: JAKARTA, 15 DESEMBER 2001" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="ALAMAT" id="ALAMAT" value="<?php echo set_value('ALAMAT'); ?>" placeholder="Contoh: Alamat" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" id="email" value="<?php echo set_value('email'); ?>" placeholder="Contoh: Email" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="NO_HP" id="NO_HP" value="<?php echo set_value('NO_HP'); ?>" placeholder="Contoh: 082158685xxx" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" id="password" value="<?php echo set_value('password'); ?>" placeholder="Contoh: Password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password_confirm" id="password_confirm" value="<?php echo set_value('password_confirm'); ?>" placeholder="Contoh: Confirm Passowrd">
+            </div>
+            <div class="form-group">
+                <div class="checkbox i-checks"><label> <input type="checkbox" id="terms"><i></i> Saya setuju tentang syarat dan ketentuan </label></div>
+            </div>
+            <button id="daftar" type="submit" class="btn btn-primary block full-width m-b" disabled>Register</button>
+
+
+            <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url(); ?>index.php/auth/login">Kembali ke halaman Login</a>
+            <?php echo form_close(); ?>
+            <p class="m-t"> <small>SILSCI &copy; 2021. Tema oleh Inspinia</small> </p>
+        </div>
     </div>
 
-    <!-- inject:js -->
-    <script src="<?= base_url() ?>assets/admin/dist/js/d3.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/getmdl-select.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/material.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/nv.d3.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/layout/layout.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/scroll/scroll.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/charts/discreteBarChart.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/charts/linePlusBarChart.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/charts/stackedBarChart.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/employer-form/employer-form.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/line-chart/line-charts-nvd3.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/map/maps.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/pie-chart/pie-charts-nvd3.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/table/table.min.js"></script>
-    <script src="<?= base_url() ?>assets/admin/dist/js/widgets/todo/todo.min.js"></script>
-    <!-- endinject -->
+    <!-- Mainly scripts -->
+    <script src="<?php echo base_url(); ?>assets/template/js/jquery-3.1.1.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/template/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
 
+    <script>
+        $('#terms').click(function() {
+            //check if checkbox is checked
+            if ($(this).is(':checked')) {
+
+                $('#daftar').removeAttr('disabled'); //enable input
+
+            } else {
+                $('#daftar').attr('disabled', true); //disable input
+            }
+        });
+    </script>
 </body>
 
 </html>

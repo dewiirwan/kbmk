@@ -15,7 +15,8 @@
 
 <script type="text/javascript" language="javascript">
     var dataTable;
-    var SITE_URL = '<?php echo site_url(); ?>';
+    var BASE_URL = '<?= base_url(); ?>';
+    var SITE_URL = '<?= site_url(); ?>';
 
     $(".select2").each((_i, e) => {
         var $e = $(e);
@@ -94,9 +95,6 @@
                     'data': 'jml_slot'
                 },
                 {
-                    'data': 'butuh_swab'
-                },
-                {
                     'data': 'aksi',
                     'orderable': false
                 },
@@ -129,7 +127,6 @@
                 document.getElementById("durasi_").value = myObj.durasi;
                 document.getElementById("ketuplak_").value = myObj.ketua_panitia;
                 document.getElementById("kapasitas_").value = myObj.jml_slot;
-                document.getElementById("bukti_swab_").value = myObj.butuh_swab;
                 document.getElementById("deskripsi_").value = myObj.deskripsi;
             }
         });
@@ -159,6 +156,10 @@
             var hrs = time;
         }
         return hrs + ":00";
+    }
+
+    function detail(id_kegiatan) {
+        window.location.href = BASE_URL + 'pengurus/list_kegiatan/detail/' + id_kegiatan;
     }
 
     function confirm_save() {
@@ -232,9 +233,6 @@
 
                     $('[name="kapasitas"]').addClass(response.error_class['kapasitas']);
                     $('[name="kapasitas"]').next().text(response.error_string['kapasitas']);
-
-                    $('[name="bukti_swab"]').addClass(response.error_class['bukti_swab']);
-                    $('[name="bukti_swab"]').next().text(response.error_string['bukti_swab']);
 
                     $('[name="deskripsi"]').addClass(response.error_class['deskripsi']);
                     $('[name="deskripsi"]').next().text(response.error_string['deskripsi']);
@@ -325,9 +323,6 @@
 
                     $('[name="kapasitas_"]').addClass(response.error_class['kapasitas_']);
                     $('[name="kapasitas_"]').next().text(response.error_string['kapasitas_']);
-
-                    $('[name="bukti_swab_"]').addClass(response.error_class['bukti_swab_']);
-                    $('[name="bukti_swab_"]').next().text(response.error_string['bukti_swab_']);
 
                     $('[name="deskripsi_"]').addClass(response.error_class['deskripsi_']);
                     $('[name="deskripsi_"]').next().text(response.error_string['deskripsi_']);

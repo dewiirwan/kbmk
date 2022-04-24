@@ -47,7 +47,7 @@ class dashboard_pengurus extends CI_Controller
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             // set the flash data error message if there is one
             $this->ion_auth->logout();

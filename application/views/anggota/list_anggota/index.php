@@ -40,42 +40,104 @@
         background: rgba(255, 255, 255, .8) url("<?php echo base_url(); ?>assets/img/loading.gif") 50% 50% no-repeat;
         background-size: 250px;
     }
+
+    .swal2-container {
+        display: grid;
+        position: fixed;
+        z-index: 2060;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        box-sizing: border-box;
+        grid-template-areas: "top-start     top            top-end""center-start  center         center-end""bottom-start  bottom-center  bottom-end";
+        grid-template-rows: minmax(-webkit-min-content, auto) minmax(-webkit-min-content, auto) minmax(-webkit-min-content, auto);
+        grid-template-rows: minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);
+        height: 100%;
+        padding: .625em;
+        overflow-x: hidden;
+        transition: background-color .1s;
+        -webkit-overflow-scrolling: touch
+    }
 </style>
 <div id="loading"></div>
-<main class="mdl-layout__content ">
 
-    <div class="mdl-grid ui-tables">
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>List Anggota</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= base_url() ?>">Home</a>
+            </li>
+            <li>
+                <a href="<?= base_url('anggota/profil_anggota') ?>">Anggota</a>
+            </li>
+            <li class="active">
+                <strong>
+                    <a>List Anggota</a>
+                </strong>
+            </li>
+        </ol>
+    </div>
+</div>
 
-        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
-            <div class="mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title" style="display: block;">
-                    <h1 class="mdl-card__title-text">List Anggota</h1>
-                </div>
-                <div class="mdl-card__supporting-text no-padding">
-                    <div class="alert alert-danger alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        Pastikan Anda mengisi data dengan benar.
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        Pastikan Anda mengisi data dengan benar.
+    </div>
+
+    <div class="alert alert-info alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        Sistem menampilkan seluruh pengumuman pada Lithang Semangat Genta Rohani.
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>List Anggota</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
                     </div>
-                    <table class="mdl-data-table mdl-js-data-table bordered-table" id="tabel">
-                        <thead>
-                            <tr>
-                                <th class="mdl-data-table__cell--non-numeric">No</th>
-                                <th class="mdl-data-table__cell--non-numeric">NPM</th>
-                                <th class="mdl-data-table__cell--non-numeric">Nama Lengkap</th>
-                                <th class="mdl-data-table__cell--non-numeric">Tempat Tanggal Lahir</th>
-                                <th class="mdl-data-table__cell--non-numeric">Alamat</th>
-                                <th class="mdl-data-table__cell--non-numeric">Email</th>
-                                <th class="mdl-data-table__cell--non-numeric">Nomor Telepon</th>
-                                <th class="mdl-data-table__cell--non-numeric">Aksi</th>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
+                <div class="ibox-content">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="tabel">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NPM</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Tempat Tanggal Lahir</th>
+                                    <th>Alamat</th>
+                                    <th>Email</th>
+                                    <th>Nomor Telepon</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
-</main>
+</div>
+</br>
+
+<div class="footer">
+    <div>
+        <p><strong>&copy; <?php echo (date("Y")); ?> KBMK</strong><br /> Hak cipta dilindungi undang-undang.</p>
+    </div>
+</div>
 
 <?php include('modal.php') ?>
 <?php include('js.php') ?>

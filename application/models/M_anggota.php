@@ -110,7 +110,7 @@ class M_anggota extends CI_Model
 
     function file_list_by_id_mhs($id_mhs)
     {
-        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_pengirim = '$id_mhs' ORDER BY tanggal_upload ASC");
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_pengirim = '$id_mhs' AND pengirim = 'ANGGOTA' ORDER BY tanggal_upload ASC");
         return $hasil;
     }
 
@@ -120,39 +120,15 @@ class M_anggota extends CI_Model
         return $hasil->result();
     }
 
-    function file_swab_list_by_id_mhs($id_mhs)
-    {
-        $hasil = $this->db->query("SELECT * FROM bukti_swab WHERE id_mhs = '$id_mhs' ORDER BY tanggal_upload ASC");
-        return $hasil;
-    }
-
-    function file_swab_list_by_id_mhs_result($id_mhs)
-    {
-        $hasil = $this->db->query("SELECT * FROM bukti_swab WHERE id_mhs = '$id_mhs' ORDER BY tanggal_upload ASC");
-        return $hasil->result();
-    }
-
     function file_list_by_dok_file($DOK_FILE)
     {
-        $hasil = $this->db->query("SELECT * FROM log_file WHERE dok_file = '$DOK_FILE' ORDER BY tanggal_upload ASC");
-        return $hasil;
-    }
-
-    function file_list_by_file_swab($FILE_SWAB)
-    {
-        $hasil = $this->db->query("SELECT * FROM bukti_swab WHERE file_swab = '$FILE_SWAB' ORDER BY tanggal_upload ASC");
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE dok_file = '$DOK_FILE' AND pengirim = 'ANGGOTA' ORDER BY tanggal_upload ASC");
         return $hasil;
     }
 
     function hapus_data_by_dok_file($DOK_FILE)
     {
-        $hasil = $this->db->query("DELETE FROM log_file WHERE dok_file='$DOK_FILE'");
-        return $hasil;
-    }
-
-    function hapus_data_by_file_swab($FILE_SWAB)
-    {
-        $hasil = $this->db->query("DELETE FROM bukti_swab WHERE file_swab='$FILE_SWAB'");
+        $hasil = $this->db->query("DELETE FROM log_file WHERE dok_file='$DOK_FILE' AND pengirim = 'ANGGOTA'");
         return $hasil;
     }
 }

@@ -62,9 +62,6 @@
                     'data': 'nama_kegiatan'
                 },
                 {
-                    'data': 'deskripsi'
-                },
-                {
                     'data': 'tgl_kegiatan'
                 },
                 {
@@ -75,12 +72,6 @@
                 },
                 {
                     'data': 'ketua_panitia'
-                },
-                {
-                    'data': 'jml_slot'
-                },
-                {
-                    'data': 'butuh_swab'
                 },
                 {
                     'data': 'aksi',

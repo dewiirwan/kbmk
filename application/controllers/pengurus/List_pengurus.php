@@ -11,6 +11,7 @@ class List_pengurus extends CI_Controller
         $this->load->helper(array('url', 'language'));
         $this->load->model('m_pengurus');
         $this->load->model('m_global');
+        $this->load->model('M_foto');
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -45,7 +46,7 @@ class List_pengurus extends CI_Controller
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             // set the flash data error message if there is one
             $this->ion_auth->logout();
@@ -302,5 +303,168 @@ class List_pengurus extends CI_Controller
         $this->db->delete('pengurus');
 
         echo json_encode(['status' => $status]);
+    }
+
+    public function detail()
+    {
+        //jika mereka belum login
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data tabel users untuk ditampilkan
+        $user = $this->ion_auth->user()->row();
+        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
+
+        $this->data['USER_ID'] = $user->id_user;
+        $this->data['id_pengurus'] = $user->id_mhs;
+        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
+        $this->data['role_user'] = 'pengurus';
+        $this->data['ip_address'] = $user->ip_address;
+        $this->data['email'] = $user->email;
+        date_default_timezone_set('Asia/Jakarta');
+        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
+        $this->data['isi'] = 'pengurus/list_pengurus/detail';
+        $this->data['id_group'] = $id_group->id_group;
+
+        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
+        if ($query_foto_user == "BELUM ADA FOTO") {
+            $this->data['foto_user'] = "assets/img/profile_small.jpg";
+        } else {
+            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+        }
+
+        $this->data['id_pengurus'] = $this->uri->segment(4);
+
+        //Kueri data di tabel pengurus
+        $query_detil_pengurus = $this->m_pengurus->get_detil($this->data['id_pengurus']);
+
+        $query_detil_pengurus_result = $this->m_pengurus->get_detil_result($this->data['id_pengurus']);
+        $this->data['query_detil_pengurus_result'] = $query_detil_pengurus_result;
+
+        if ($query_detil_pengurus->num_rows() == 0) {
+            // alihkan mereka ke halaman list pengurus
+            redirect('pengurus/list_pengurus', 'refresh');
+        }
+        //Kueri data di tabel pengurus file
+        $query_file_id_pengurus = $this->m_pengurus->file_list_by_id_pengurus($this->data['id_pengurus']);
+
+        //log
+        $KETERANGAN = "Lihat Profil Pengurus: " . json_encode($query_detil_pengurus_result) . " ---- " . json_encode($query_file_id_pengurus);
+        $this->user_log($KETERANGAN);
+
+        $hasil_1 = $query_detil_pengurus->row();
+        $this->data['id_pengurus'] = $hasil_1->id_pengurus;
+        $sess_data['id_pengurus'] = $this->data['id_pengurus'];
+        $this->session->set_userdata($sess_data);
+
+        if ($query_file_id_pengurus->num_rows() > 0) {
+
+            $this->data['dokumen'] = $this->m_pengurus->file_list_by_id_pengurus_result($this->data['id_pengurus']);
+
+            $hasil = $query_file_id_pengurus->row();
+            $DOK_FILE = $hasil->dok_file;
+            $TANGGAL_UPLOAD = $hasil->tanggal_upload;
+
+            if (file_exists($file = './assets/uploads/pengurus/' . $DOK_FILE)) {
+                $this->data['DOK_FILE'] = $DOK_FILE;
+                $this->data['TANGGAL_UPLOAD'] = $TANGGAL_UPLOAD;
+                $this->data['FILE'] = "ADA";
+            }
+        } else {
+            $this->data['FILE'] = "TIDAK ADA";
+        }
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->in_group(1)) {
+
+            $this->load->view('template/wrapper', $this->data);
+        } else {
+            $this->logout();
+        }
+    }
+
+    //Untuk proses upload file
+    function proses_upload_file()
+    {
+
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        $id_pengirim = $this->session->userdata('id_pengurus');
+
+        //jika mereka sudah login dan sebagai pengurus
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
+            $WAKTU = date('Y-m-d H:i:s');
+
+            $nama_file = "file_" . $id_pengirim . '_';
+            $config['upload_path']   = './assets/uploads/pengurus/';
+            $config['allowed_types'] = 'jpg|png|jpeg|bmp|pdf';
+            $config['file_name'] = $nama_file;
+            $config['file_ext_tolower'] = TRUE;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('userfile')) {
+                $nama = $this->upload->data('file_name');
+                $EKSTENSI = pathinfo($nama, PATHINFO_EXTENSION);
+
+                $file_upload = $this->upload->data();
+
+                $JENIS_FILE = $this->input->post('JENIS_FILE');
+                $KETERANGAN_FILE = $this->input->post('KETERANGAN_FILE');
+
+                $KETERANGAN = './assets/uploads/pengurus/' . $nama;
+                $this->db->insert('log_file', array('id_pengirim' => $id_pengirim, 'jenis_file' => $JENIS_FILE, 'ekstensi' => $EKSTENSI, 'dok_file' => $nama, 'tanggal_upload' => $WAKTU, 'keterangan_assets' => $KETERANGAN, 'keterangan_file' => $KETERANGAN_FILE, 'pengirim' => 'PENGURUS'));
+            } else {
+                redirect($_SERVER['REQUEST_URI'], 'refresh');
+            }
+        } else {
+            $this->logout();
+        }
+    }
+    //Hapus file by button
+    function hapus_file()
+    {
+        //jika mereka belum login
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data dari parameter URL
+        $this->data['DOK_FILE'] = $this->uri->segment(4);
+
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
+            //Query file BY DOK_FILE
+            $query_dok_file = $this->m_pengurus->file_list_by_dok_file($this->data['DOK_FILE']);
+
+            if ($query_dok_file->num_rows() > 0) {
+                $hasil = $query_dok_file->row();
+                $DOK_FILE = $hasil->dok_file;
+                if (file_exists($file = './assets/uploads/pengurus/' . $DOK_FILE)) {
+                    unlink($file);
+                }
+
+                $this->m_pengurus->hapus_data_by_dok_file($DOK_FILE);
+
+                $id_pengurus = $this->session->userdata('id_pengurus');
+                redirect('/pengurus/list_pengurus/detail/' . $id_pengurus, 'refresh');
+            } else {
+                $id_pengurus = $this->session->userdata('id_pengurus');
+                redirect('/pengurus/list_pengurus/detail/' . $id_pengurus, 'refresh');
+            }
+        } else {
+            // set the flash data error message if there is one
+            $this->ion_auth->logout();
+            $this->session->set_flashdata('message', 'Anda tidak memiliki otorisasi untuk mengakses sistem, silahkan hubungi admin');
+        }
     }
 }

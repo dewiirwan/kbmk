@@ -12,6 +12,7 @@ class List_kegiatan extends CI_Controller
         $this->load->model('m_kegiatan');
         $this->load->model('M_anggota');
         $this->load->model('m_global');
+        $this->load->model('M_foto');
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -46,7 +47,7 @@ class List_kegiatan extends CI_Controller
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(2)) {
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             // set the flash data error message if there is one
             $this->ion_auth->logout();
@@ -89,9 +90,9 @@ class List_kegiatan extends CI_Controller
         $this->data['id_kegiatan'] = $this->uri->segment(4);
 
         //Kueri data di tabel kegiatan
-        $query_detil_kegiatan = $this->M_kegiatan->get_detil($this->data['id_kegiatan']);
+        $query_detil_kegiatan = $this->m_kegiatan->get_detil($this->data['id_kegiatan']);
 
-        $query_detil_kegiatan_result = $this->M_kegiatan->get_detil_result($this->data['id_kegiatan']);
+        $query_detil_kegiatan_result = $this->m_kegiatan->get_detil_result($this->data['id_kegiatan']);
         $this->data['query_detil_kegiatan_result'] = $query_detil_kegiatan_result;
 
         if ($query_detil_kegiatan->num_rows() == 0) {
@@ -99,7 +100,7 @@ class List_kegiatan extends CI_Controller
             redirect('anggota/list_kegiatan', 'refresh');
         }
         //Kueri data di tabel anggota file
-        $query_file_id_kegiatan = $this->M_kegiatan->file_list_by_id_kegiatan($this->data['id_kegiatan']);
+        $query_file_id_kegiatan = $this->m_kegiatan->file_list_by_id_kegiatan($this->data['id_kegiatan']);
 
         //log
         $KETERANGAN = "Lihat Profil Kegiatan: " . json_encode($query_detil_kegiatan_result) . " ---- " . json_encode($query_file_id_kegiatan);
@@ -112,7 +113,7 @@ class List_kegiatan extends CI_Controller
 
         if ($query_file_id_kegiatan->num_rows() > 0) {
 
-            $this->data['dokumen'] = $this->M_kegiatan->file_list_by_id_kegiatan_result($sess_data['id_kegiatan']);
+            $this->data['dokumen'] = $this->m_kegiatan->file_list_by_id_kegiatan_result($sess_data['id_kegiatan']);
 
             $hasil = $query_file_id_kegiatan->row();
             $DOK_FILE = $hasil->dok_file;
@@ -131,7 +132,7 @@ class List_kegiatan extends CI_Controller
         if ($this->ion_auth->in_group(2)) {
             $sess_data['id_kegiatan'] = $this->data['id_kegiatan'];
 
-            $this->load->view('template_pengurus/wrapper', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             $this->logout();
         }

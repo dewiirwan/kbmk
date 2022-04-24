@@ -34,7 +34,7 @@ class Tables extends CI_Controller
 					$l->ttl = $l->tempat_tgl_lahir;
 					$l->aksi = "
 					<div class='btn-group' role='group' aria-label='...'>
-						<button type='button' class='btn btn-info' title='Detail Data' data-href='" . $l->id_pengurus	. "' data-toggle='modal' data-target='#'>
+						<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_pengurus	. ")'>
 							<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
 						</button>
 						<button type='button' class='btn btn-success' title='Edit Data' data-href='" . $l->id_pengurus	. "' data-toggle='modal' data-target='#m_edit'>
@@ -92,7 +92,7 @@ class Tables extends CI_Controller
 					$l->no = $no;
 					$l->aksi = "
 						<div class='btn-group' role='group' aria-label='...'>
-							<button type='button' class='btn btn-info' title='Detail Data' data-href='" . $l->id_kegiatan	. "' data-toggle='modal' data-target='#'>
+							<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
 								<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
 							</button>
 							<button type='button' class='btn btn-success' title='Edit Data' data-href='" . $l->id_kegiatan	. "' data-toggle='modal' data-target='#m_edit'>
@@ -122,7 +122,7 @@ class Tables extends CI_Controller
 					$l->no = $no;
 					$l->aksi = "
 							<div class='btn-group' role='group' aria-label='...'>
-								<button type='button' class='btn btn-info' title='Detail Data' data-href='" . $l->id_kegiatan	. "' data-toggle='modal' data-target='#'>
+								<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
 									<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
 								</button>
 							</div>";

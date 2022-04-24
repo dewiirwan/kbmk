@@ -142,93 +142,6 @@
         window.location.href = BASE_URL + 'anggota/profil_anggota/detail/' + id_mhs;
     }
 
-    function confirm_save() {
-        Swal.fire({
-            title: 'Apakah anda yakin akan menyimpan data ini',
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya!',
-            cancelButtonText: 'Batal!',
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-warning ml-1',
-            buttonsStyling: false,
-        }).then(function(result) {
-
-            if (result.value) {
-                save();
-            }
-        });
-    }
-    async function save() {
-        $("#loading").show();
-        const param = new FormData($('#form_tambah')[0]);
-
-        await fetch(SITE_URL + 'pengurus/list_pengurus/proses', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: param,
-            })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response.status);
-                if (response.status === true) {
-                    $('#m_tambah').modal('hide');
-                    Swal.fire({
-                        type: "success",
-                        title: 'Berhasil!',
-                        text: 'Data berhasil disimpan.',
-                        confirmButtonClass: 'btn btn-success',
-                        timer: 1500
-                    });
-                    setTimeout(function() {
-                        location.reload();
-                    }, 500);
-                } else if (response.status === false) {
-                    Swal.fire({
-                        type: "warning",
-                        title: 'Gagal!',
-                        text: 'Gagal menyimpan data.',
-                        confirmButtonClass: 'btn btn-warning',
-                        timer: 1500
-                    });
-
-                    $('[name="nama_lengkap"]').addClass(response.error_class['nama_lengkap']);
-                    $('[name="nama_lengkap"]').next().text(response.error_string['nama_lengkap']);
-
-                    $('[name="npm"]').addClass(response.error_class['npm']);
-                    $('[name="npm"]').next().text(response.error_string['npm']);
-
-                    $('[name="ttl"]').addClass(response.error_class['ttl']);
-                    $('[name="ttl"]').next().text(response.error_string['ttl']);
-
-                    $('[name="alamat"]').addClass(response.error_class['alamat']);
-                    $('[name="alamat"]').next().text(response.error_string['alamat']);
-
-                    $('[name="email"]').addClass(response.error_class['email']);
-                    $('[name="email"]').next().text(response.error_string['email']);
-
-                    $('[name="no_hp"]').addClass(response.error_class['no_hp']);
-                    $('[name="no_hp"]').next().text(response.error_string['no_hp']);
-                }
-            })
-            .catch((error) => {
-                Swal.fire({
-                    type: "error",
-                    title: 'Kesalahan!',
-                    text: 'Terjadi Kesalahan.',
-                    confirmButtonClass: 'btn btn-danger',
-                });
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                $("#loading").hide();
-            });
-    }
-
     function confirm_update() {
         Swal.fire({
             title: 'Apakah anda yakin akan mengubah data ini',
@@ -252,7 +165,7 @@
         $("#loading").show();
         const param = new FormData($('#form_edit')[0]);
 
-        await fetch(SITE_URL + 'pengurus/list_pengurus/update', {
+        await fetch(SITE_URL + 'anggota/profil_anggota/update', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
@@ -318,7 +231,7 @@
     }
 
     function confirm_del(id) {
-        var id_pengurus = id;
+        var id_anggota = id;
         Swal.fire({
             title: 'Apakah anda yakin akan menghapus data ini',
             type: 'info',
@@ -333,16 +246,16 @@
         }).then(function(result) {
 
             if (result.value) {
-                del(id_pengurus);
+                del(id_anggota);
             }
         });
     }
-    async function del(id_pengurus) {
+    async function del(id_anggota) {
         $("#loading").show();
         const param = new FormData();
-        param.append('id', id_pengurus);
+        param.append('id', id_anggota);
 
-        await fetch(SITE_URL + 'pengurus/list_pengurus/hapus_pengurus', {
+        await fetch(SITE_URL + 'anggota/profil_anggota/hapus_anggota', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
