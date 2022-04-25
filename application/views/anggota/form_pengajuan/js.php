@@ -62,6 +62,9 @@
                     'data': 'tujuan'
                 },
                 {
+                    'data': 'cdd'
+                },
+                {
                     'data': 'aksi',
                     'orderable': false
                 },

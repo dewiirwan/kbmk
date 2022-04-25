@@ -26,7 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Selamat Datang di Sistem Informasi Keluarga Besar Mahasiswa Khonghucu (SIKBMK)</h2>
+                <h2 class="font-bold">Selamat Datang di Sistem Informasi Keluarga Besar Mahasiswa Khonghucu (KBMK)</h2>
 
                 <p>
                     KBMK
@@ -70,16 +70,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <a class="btn btn-sm btn-white btn-block" href="<?= base_url(); ?>auth/register">Buat akun baru</a>
 
                     <?= form_close(); ?>
-                    <p class="m-t">
-                        <small>Theme by Inspina | Engine by CodeIgniter | Webapps</small>
-                    </p>
                 </div>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="col-md-6">
-                Copyright Dewi Irwan
+                Copyright KBMK
             </div>
             <div class="col-md-6 text-right">
                 <small>© 2021</small>

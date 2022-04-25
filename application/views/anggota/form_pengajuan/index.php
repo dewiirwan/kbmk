@@ -106,6 +106,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tujuan</th>
+                                    <th>Tanggal Pengajuan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
