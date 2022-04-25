@@ -47,7 +47,7 @@ $pdf->writeHTMLCell(0, 0, 15, 70, $html, 0, 0, 0, true, 'L');
 $html = '<p style="font-size:12;">Universitas Gunadarma</p><br>';
 $pdf->writeHTMLCell(0, 0, 15, 75, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">Dengan hormat, saya yang bertanda tanga dibawah ini : </p><br>';
+$html = '<p style="font-size:12;">Dengan hormat, saya yang bertanda tangan dibawah ini : </p><br>';
 $pdf->writeHTMLCell(0, 0, 15, 85, $html, 0, 0, 0, true, 'L');
 
 $html = '<p style="font-size:12;">Nama</p><br>';
@@ -111,14 +111,14 @@ $pdf->writeHTMLCell(0, 0, 55, 137, $html, 0, 0, 0, true, 'L');
 $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $region . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 144, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">..............., ...... ...... ......</p><br>';
-$pdf->writeHTMLCell(0, 0, 150, 220, $html, 0, 0, 0, true, 'L');
+// $html = '<p style="font-size:12;">..............., ...... ...... ......</p><br>';
+// $pdf->writeHTMLCell(0, 0, 150, 220, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">Mahasiswa / Mahasiswi</p><br>';
-$pdf->writeHTMLCell(0, 0, 150, 230, $html, 0, 0, 0, true, 'L');
+// $html = '<p style="font-size:12;">Mahasiswa / Mahasiswi</p><br>';
+// $pdf->writeHTMLCell(0, 0, 150, 230, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">___________________</p><br>';
-$pdf->writeHTMLCell(0, 0, 150, 260, $html, 0, 0, 0, true, 'L');
+// $html = '<p style="font-size:12;">___________________</p><br>';
+// $pdf->writeHTMLCell(0, 0, 150, 260, $html, 0, 0, 0, true, 'L');
 
 // $table_footer = '<p style="font-size:10pt;"><b>Catatan</b><br>Sesuai dengan ketentuan perundang-undangan yang berlaku, sertifikat ini telah ditandatangani secara elektronik sehingga tidak diperlukan tanda tangan dan setempel basah</p>';
 // $pdf->writeHTMLCell(200, 0, 5, 250, $table_footer, 0, 0, 0, true, 'L');
