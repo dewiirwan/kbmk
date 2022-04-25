@@ -10,7 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sistem Informasi Lithang SEGAR Cilodong (SILSCI) | Registrasi Akun</title>
+    <title>Sistem Informasi Keluarga Besar Mahasiswa Khonghucu (SIKBMK) | Registrasi Akun</title>
 
 
     <link href="<?php echo base_url(); ?>assets/template/css/bootstrap.min.css" rel="stylesheet">
@@ -29,35 +29,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php if ($message != "") { ?>
                 <div class="alert alert-danger alert-dismissable">
                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    <?php echo $message; ?>
+                    <?= $message; ?>
                 </div>
             <?php } ?>
 
+            <?php if ($pesan_npm != "") { ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    <?php echo $pesan_npm; ?>
+                </div>
+            <?php
+            } ?>
 
-            <?php echo form_open("auth/register"); ?>
+
+            <?= form_open("auth/register"); ?>
             <div class="form-group">
-                <input type="text" class="form-control" name="NIK" id="NIK" value="<?php echo set_value('NIK'); ?>" placeholder="Contoh : NIK" autofocus>
+                <input type="text" class="form-control" name="npm" id="npm" value="<?= set_value('npm'); ?>" placeholder="Contoh : NPM" autofocus>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="NAMA" id="NAMA" value="<?php echo set_value('NAMA'); ?>" placeholder="Contoh: Nama" autofocus>
+                <input type="text" class="form-control" name="nama" id="nama" value="<?= set_value('nama'); ?>" placeholder="Contoh: Nama" autofocus>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="TEMPAT_TANGGAL_LAHIR" id="TEMPAT_TANGGAL_LAHIR" value="<?php echo set_value('TEMPAT_TANGGAL_LAHIR'); ?>" placeholder="Contoh: JAKARTA, 15 DESEMBER 2001" autofocus>
+                <input type="text" class="form-control" name="tempat_tgl_lahir" id="tempat_tgl_lahir" value="<?= set_value('tempat_tgl_lahir'); ?>" placeholder="Contoh: JAKARTA, 15 DESEMBER 2001" autofocus>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="ALAMAT" id="ALAMAT" value="<?php echo set_value('ALAMAT'); ?>" placeholder="Contoh: Alamat" autofocus>
+                <input type="text" class="form-control" name="alamat" id="alamat" value="<?= set_value('alamat'); ?>" placeholder="Contoh: Alamat" autofocus>
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" value="<?php echo set_value('email'); ?>" placeholder="Contoh: Email" autofocus>
+                <input type="email" class="form-control" name="email" id="email" value="<?= set_value('email'); ?>" placeholder="Contoh: Email" autofocus>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="NO_HP" id="NO_HP" value="<?php echo set_value('NO_HP'); ?>" placeholder="Contoh: 082158685xxx" autofocus>
+                <input type="text" class="form-control" name="no_hp" id="no_hp" value="<?= set_value('no_hp'); ?>" placeholder="Contoh: 082158685xxx" autofocus>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" id="password" value="<?php echo set_value('password'); ?>" placeholder="Contoh: Password">
+                <input type="password" class="form-control" name="password" id="password" value="<?= set_value('password'); ?>" placeholder="Contoh: Password">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password_confirm" id="password_confirm" value="<?php echo set_value('password_confirm'); ?>" placeholder="Contoh: Confirm Passowrd">
+                <input type="password" class="form-control" name="password_confirm" id="password_confirm" value="<?= set_value('password_confirm'); ?>" placeholder="Contoh: Confirm Passowrd">
             </div>
             <div class="form-group">
                 <div class="checkbox i-checks"><label> <input type="checkbox" id="terms"><i></i> Saya setuju tentang syarat dan ketentuan </label></div>
@@ -65,15 +73,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <button id="daftar" type="submit" class="btn btn-primary block full-width m-b" disabled>Register</button>
 
 
-            <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url(); ?>index.php/auth/login">Kembali ke halaman Login</a>
-            <?php echo form_close(); ?>
-            <p class="m-t"> <small>SILSCI &copy; 2021. Tema oleh Inspinia</small> </p>
+            <a class="btn btn-sm btn-white btn-block" href="<?= base_url(); ?>auth/login">Kembali ke halaman Login</a>
+            <?= form_close(); ?>
+            <p class="m-t"> <small>KBMK &copy; 2021. Tema oleh Inspinia</small> </p>
         </div>
     </div>
 
     <!-- Mainly scripts -->
-    <script src="<?php echo base_url(); ?>assets/template/js/jquery-3.1.1.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/template/js/bootstrap.min.js"></script>
+    <script src="<?= base_url(); ?>assets/template/js/jquery-3.1.1.min.js"></script>
+    <script src="<?= base_url(); ?>assets/template/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.i-checks').iCheck({

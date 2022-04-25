@@ -131,4 +131,44 @@ class M_anggota extends CI_Model
         $hasil = $this->db->query("DELETE FROM log_file WHERE dok_file='$DOK_FILE' AND pengirim = 'ANGGOTA'");
         return $hasil;
     }
+
+    function simpan_data(
+        $NIK,
+        $NAMA,
+        $TEMPAT_TANGGAL_LAHIR,
+        $ALAMAT,
+        $EMAIL,
+        $NO_HP
+    ) {
+        $hasil = $this->db->query("INSERT INTO mahasiswa (
+			npm,
+			nama,
+			tempat_tgl_lahir,
+			alamat,
+			email,
+			no_hp)
+		VALUES(
+			'$NIK',
+			'$NAMA',
+			'$TEMPAT_TANGGAL_LAHIR',
+			'$ALAMAT',
+			'$EMAIL',
+			'$NO_HP')");
+
+        return $hasil;
+    }
+
+    function simpan_data_registrasi(
+        $NIK,
+        $EMAIL
+    ) {
+        $hasil = $this->db->query("INSERT INTO mahasiswa (
+			npm,
+			email)
+		VALUES(
+			'$NIK',
+			'$EMAIL')");
+
+        return $hasil;
+    }
 }

@@ -401,7 +401,10 @@ class Auth extends CI_Controller
 
 
         // validate form input
-        $this->form_validation->set_rules('NPM', 'NPM', 'trim|required|max_length[16]|min_length[16]');
+        $this->form_validation->set_rules('npm', 'NPM', 'trim|required|max_length[16]');
+        $this->form_validation->set_rules('nama', 'Nama', 'trim|required');
+        $this->form_validation->set_rules('tempat_tgl_lahir', 'Tempat Tanggal Lahir', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'required');
@@ -412,19 +415,19 @@ class Auth extends CI_Controller
             $email = strtolower($this->input->post('email'));
             $identity = ($identity_column === 'email') ? $email : $this->input->post('email');
             $password = $this->input->post('password');
-            $NPM = $this->input->post('NPM');
-            $NAMA = $this->input->post('NAMA');
-            $ALAMAT = $this->input->post('ALAMAT');
-            $NO_HP = $this->input->post('NO_HP');
-            $TEMPAT_TANGGAL_LAHIR = $this->input->post('TEMPAT_TANGGAL_LAHIR');
+            $NPM = $this->input->post('npm');
+            $NAMA = $this->input->post('nama');
+            $ALAMAT = $this->input->post('alamat');
+            $NO_HP = $this->input->post('no_hp');
+            $TEMPAT_TANGGAL_LAHIR = $this->input->post('tempat_tgl_lahir');
 
             $additional_data = array();
             $group = array('2');
 
-            $this->load->model('Umat_model');
-            if ($this->Umat_model->cek_nik_umat($NPM) == 'BELUM ADA NPM$NPM UMAT') {
+            $this->load->model('M_anggota');
+            if ($this->M_anggota->cek_npm_anggota($NPM) == 'BELUM ADA NPM ANGGOTA') {
 
-                $hsl = $this->Umat_model->simpan_data(
+                $hsl = $this->M_anggota->simpan_data(
                     $NPM,
                     $NAMA,
                     $ALAMAT,
@@ -433,36 +436,36 @@ class Auth extends CI_Controller
                     $NO_HP
                 );
 
-                $hsl2 = $this->db->query("SELECT * FROM umat 
-					WHERE NPM = '$NPM'");
+                $hsl2 = $this->db->query("SELECT * FROM mahasiswa 
+					WHERE npm = '$NPM'");
                 if ($hsl2->num_rows() > 0) {
                     foreach ($hsl2->result() as $data) {
                         $hasil = array(
-                            'ID_UMAT' => $data->ID_UMAT
+                            'id_mhs' => $data->id_mhs
                         );
                     }
                 }
 
-                $id_user_aplikasi = $hasil['ID_UMAT'];
+                $id_user_aplikasi = $hasil['id_mhs'];
 
-                $KETERANGAN = "Simpan Umat: "
+                $KETERANGAN = "Simpan Anggota: "
                     . "; " . $NPM
                     . "; " . $email;
 
                 $ID_TEMP = '666666';
                 $WAKTU = date('Y-m-d H:i:s');
-                $this->Umat_model->user_log_umat($ID_TEMP, $KETERANGAN, $WAKTU);
+                $this->M_anggota->user_log_anggota($ID_TEMP, $KETERANGAN, $WAKTU);
 
                 if ($this->ion_auth->register($identity, $password, $email, $additional_data, $group, $id_user_aplikasi)) {
                     // check to see if we are creating the user
                     // redirect them back to the admin page
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    redirect("auth", 'refresh');
+                    redirect('auth', 'refresh');
                 }
             } else {
                 // display the create user form
                 // set the flash data error message if there is one
-                $this->data['pesan_npm'] = "NPM Umat sudah terekam/ada sebelumnya";
+                $this->data['pesan_npm'] = "NPM Anggota sudah terekam/ada sebelumnya";
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->load->view('auth/register', $this->data);
             }

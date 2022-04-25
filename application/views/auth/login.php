@@ -10,13 +10,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo $title; ?></title>
+    <title><?= $title; ?></title>
 
-    <link href="<?php echo base_url(); ?>assets/template/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/template/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="<?php echo base_url(); ?>assets/template/css/animate.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/template/css/style.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/template/css/animate.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/template/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -41,35 +41,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </p>
                 </br>
                 </br>
-                <!-- <a href="<?php echo base_url(); ?>">Kembali ke Home</a> -->
+                <!-- <a href="<?= base_url(); ?>">Kembali ke Home</a> -->
 
             </div>
             <div class="col-md-6">
                 <?php if ($message != "") { ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <?php echo $message; ?>
+                        <?= $message; ?>
                     </div>
                 <?php
                 } ?>
 
                 <div class="ibox-content">
-                    <?php echo form_open("auth/login"); ?>
+                    <?= form_open("auth/login"); ?>
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" id="email" value="<?php echo set_value('email'); ?>" placeholder="Email" autofocus>
+                        <input type="email" class="form-control" name="email" id="email" value="<?= set_value('email'); ?>" placeholder="Email" autofocus>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" id="password" value="<?php echo set_value('password'); ?>" placeholder="Password">
+                        <input type="password" class="form-control" name="password" id="password" value="<?= set_value('password'); ?>" placeholder="Password">
                     </div>
 
                     <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-                    <a href=<?php echo base_url(); ?>index.php/auth/lupa_password><small>Lupa Password</small></a>
+                    <a href="<?= base_url(); ?>auth/lupa_password"><small>Lupa Password</small></a>
 
                     <p class="text-muted text-center"><small>Belum punya akun?</small></p>
-                    <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url(); ?>index.php/auth/register">Buat akun baru</a>
+                    <a class="btn btn-sm btn-white btn-block" href="<?= base_url(); ?>auth/register">Buat akun baru</a>
 
-                    <?php echo form_close(); ?>
+                    <?= form_close(); ?>
                     <p class="m-t">
                         <small>Theme by Inspina | Engine by CodeIgniter | Webapps</small>
                     </p>
