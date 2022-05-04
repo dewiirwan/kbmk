@@ -117,6 +117,7 @@ class Pengajuan extends CI_Controller
 
         //get data tabel users untuk ditampilkan
         $user = $this->ion_auth->user()->row();
+        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
 
         $this->data['USER_ID'] = $user->id_user;
         $this->data['id_mhs'] = $user->id_mhs;
@@ -130,20 +131,14 @@ class Pengajuan extends CI_Controller
         $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
 
+        $this->data['id_group'] = $id_group->id_group;
         $this->data['id_form'] = $this->uri->segment(4);
 
         $query = $this->db->query("SELECT * FROM form_pengajuan WHERE id_form = '" . $this->data['id_form'] . "'");
         $row = $query->row();
 
-        $this->data['nama_lengkap'] = $row->nama;
-        $this->data['kelas'] = $row->kelas;
-        $this->data['npm'] = $row->npm;
-        $this->data['no_telp'] = $row->no_telp;
-        $this->data['fakultas'] = $row->fakultas;
-        $this->data['jurusan'] = $row->jurusan;
-        $this->data['semester'] = $row->semester;
-        $this->data['tahun_angkatan'] = $row->tahun_angkatan;
-        $this->data['region'] = $row->region_kampus;
+        $this->data['isi'] = 'anggota/form_pengajuan/detail';
+        $this->data['file_pdf'] = $row->file_pdf;
 
         //log
         $KETERANGAN = "Lihat Form Pengajuan: " . json_encode($query->result());
@@ -151,9 +146,9 @@ class Pengajuan extends CI_Controller
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->in_group(2)) {
-            $sess_data['id_kegiatan'] = $this->data['id_kegiatan'];
+            // $sess_data['id_kegiatan'] = $this->data['id_kegiatan'];
 
-            $this->load->view('cetak_pdf', $this->data);
+            $this->load->view('template/wrapper', $this->data);
         } else {
             $this->logout();
         }
@@ -165,8 +160,24 @@ class Pengajuan extends CI_Controller
         $where  = array('id_form' => $post['id']);
         $status = true;
 
-        $this->db->where($where);
-        $this->db->delete('form_pengajuan');
+        $query = $this->db->query("SELECT file_pdf FROM form_pengajuan WHERE id_form = '" . $post['id'] . "'");
+        $row = $query->row();
+
+        $hasil = $row->file_pdf;
+
+        if ($hasil != null) {
+            if (file_exists($file = './assets/PDF/' . $hasil)) {
+                unlink($file);
+                $this->db->where($where);
+                $this->db->delete('form_pengajuan');
+                $status = true;
+            } else {
+                $status = false;
+            }
+        } else {
+            $status = false;
+        }
+
 
         echo json_encode(['status' => $status]);
     }
@@ -373,7 +384,7 @@ class Pengajuan extends CI_Controller
         // $pdf->writeHTMLCell(200, 0, 5, 250, $table_footer, 0, 0, 0, true, 'L');
 
 
-        $pdf_name = 'Pengajuan_Keikutsertaan_Pembelajaraan_Agama_Khonghucu_' . @$data->npm . '_' . time() . '.pdf';
+        $pdf_name = 'Pengajuan_Keikutsertaan_Pembelajaraan_Agama_Khonghucu_' . $npm . '_' . time();
         // $pdf->Output('Laporan-Tcpdf-CodeIgniter.pdf');
         // $pdf->Output(FCPATH.'assets/file/pdf/'.$pdf_name.'.pdf');
         $pdf->Output(FCPATH . 'assets/PDF/' . $pdf_name . '.pdf', 'F');

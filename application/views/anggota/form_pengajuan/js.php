@@ -105,10 +105,7 @@
     }
 
     function detail(id_form) {
-        window.open(
-            BASE_URL + 'anggota/pengajuan/detail/' + id_form,
-            '_blank' // <- This is what makes it open in a new window.
-        );
+        window.location.href = BASE_URL + 'anggota/pengajuan/detail/' + id_form;
     }
 
     function confirm_save() {

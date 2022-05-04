@@ -84,7 +84,7 @@ class List_kegiatan extends CI_Controller
         if ($query_foto_user == "BELUM ADA FOTO") {
             $this->data['foto_user'] = "assets/img/profile_small.jpg";
         } else {
-            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
         }
 
         $this->data['id_kegiatan'] = $this->uri->segment(4);

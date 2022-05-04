@@ -79,9 +79,9 @@ class Profil_anggota extends CI_Controller
 
         $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
         if ($query_foto_user == "BELUM ADA FOTO") {
-            $this->data['foto_user'] = "assets/img/profile_small.jpg";
+            $this->data['foto_user'] = base_url() . "assets/template/img/profile_small.jpg";
         } else {
-            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
         }
 
         if ($this->ion_auth->logged_in()) {
@@ -114,6 +114,73 @@ class Profil_anggota extends CI_Controller
         }
     }
 
+
+    public function edit()
+    {
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data tabel users untuk ditampilkan
+        $user = $this->ion_auth->user()->row();
+        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
+
+        $this->data['USER_ID'] = $user->id_user;
+        $this->data['id_mhs'] = $user->id_mhs;
+        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
+        $this->data['role_user'] = 'anggota';
+        $this->data['ip_address'] = $user->ip_address;
+        $this->data['email'] = $user->email;
+        date_default_timezone_set('Asia/Jakarta');
+        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
+        $this->data['isi'] = 'anggota/list_anggota/edit';
+        $this->data['id_group'] = $id_group->id_group;
+
+        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
+
+        if ($query_foto_user == "BELUM ADA FOTO") {
+            $this->data['foto_user'] = base_url() . "assets/template/img/profile_small.jpg";
+        } else {
+            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
+        }
+
+        $this->data['id_mhs'] = $this->uri->segment(4);
+
+        //Kueri data di tabel anggota
+        $query_detil_anggota = $this->M_anggota->get_detil($this->data['id_mhs']);
+
+        $query_detil_anggota_result = $this->M_anggota->get_detil_result($this->data['id_mhs']);
+        $this->data['query_detil_anggota_result'] = $query_detil_anggota_result;
+
+        if ($query_detil_anggota->num_rows() == 0) {
+            // alihkan mereka ke halaman list anggota
+            redirect('anggota/profil_anggota', 'refresh');
+        }
+        //Kueri data di tabel anggota file
+        $query_file_id_mhs = $this->M_anggota->file_list_by_id_mhs($this->data['id_mhs']);
+
+        //log
+        $KETERANGAN = "Edit Profil Anggota: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_mhs);
+        $this->user_log($KETERANGAN);
+
+        $hasil_1 = $query_detil_anggota->row();
+        $this->data['id_mhs'] = $hasil_1->id_mhs;
+        $sess_data['id_mhs'] = $this->data['id_mhs'];
+        $this->session->set_userdata($sess_data);
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->in_group(2)) {
+            $sess_data['id_mhs'] = $this->data['id_mhs'];
+
+            $this->load->view('template/wrapper', $this->data);
+        } else {
+            $this->logout();
+        }
+    }
+
     public function detail()
     {
         if (!$this->ion_auth->logged_in()) {
@@ -140,9 +207,9 @@ class Profil_anggota extends CI_Controller
 
         $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
         if ($query_foto_user == "BELUM ADA FOTO") {
-            $this->data['foto_user'] = "assets/img/profile_small.jpg";
+            $this->data['foto_user'] = base_url() . "assets/template/img/profile_small.jpg";
         } else {
-            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
         }
 
         $this->data['id_mhs'] = $this->uri->segment(4);
@@ -392,6 +459,69 @@ class Profil_anggota extends CI_Controller
 
             $cek  = $this->m_global->getRow($query);
 
+            if ($_FILES['input-b1']['name']) {
+                $uploadPath = './assets/uploads/foto/';
+
+                $_FILES['upload_File']['name']     = $_FILES['input-b1']['name'];
+                $_FILES['upload_File']['type']     = $_FILES['input-b1']['type'];
+                $_FILES['upload_File']['tmp_name'] = $_FILES['input-b1']['tmp_name'];
+                $_FILES['upload_File']['error']    = $_FILES['input-b1']['error'];
+                $_FILES['upload_File']['size']     = $_FILES['input-b1']['size'];
+
+                $config['upload_path']             = $uploadPath;
+                $config['file_name']               = "foto_profil" . "_" . $_POST['npm_'] . "_" . date("Ymd") . "_" . time();
+                $config['allowed_types']           = 'jpg|jpeg';
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if (file_exists($files =  $cek->foto)) {
+                    unlink($files);
+                    // var_dump($files);
+
+                    if ($this->upload->do_upload('upload_File')) {
+
+                        $fileData = $this->upload->data();
+                        $nama = 'assets/uploads/foto/' . $fileData['file_name'];
+                    } else {
+                        $status = 'input-b1' . $this->upload->display_errors();
+                        $this->ajax(array('status' => false, 'message' => $status));
+                        die;
+                    }
+
+                    // $foto = array(
+                    //     'nama_foto' => $fileData['file_name'],
+                    //     'tgl_upload' => date('Y-m-d'),
+                    //     'keterangan' => 'FOTO PROFIL ' . $nama_lengkap,
+                    //     'keterangan_2' => $nama
+                    // );
+
+                    // $this->db->where('id_mhs', $id);
+                    // $this->db->update('foto', $foto);
+                } else {
+                    if ($this->upload->do_upload('upload_File')) {
+
+                        $fileData = $this->upload->data();
+                        $nama = 'assets/uploads/foto/' . $fileData['file_name'];
+                    } else {
+                        $status = 'input-b1' . $this->upload->display_errors();
+                        $this->ajax(array('status' => false, 'message' => $status));
+                        die;
+                    }
+
+                    // $foto = array(
+                    //     'id_mhs' => $id,
+                    //     'nama_foto' => $fileData['file_name'],
+                    //     'tgl_upload' => date('Y-m-d'),
+                    //     'keterangan' => 'FOTO PROFIL ' . $nama_lengkap,
+                    //     'keterangan_2' => $nama
+                    // );
+
+                    // $this->db->insert('foto', $foto);
+                }
+            } else {
+                $nama = $cek->foto;
+            }
+
             $this->_validate();
 
             $data = array(
@@ -401,6 +531,7 @@ class Profil_anggota extends CI_Controller
                 'alamat'                         => $alamat,
                 'email'                         => $email,
                 'no_hp'               => $no_hp,
+                'foto'             => $nama
             );
 
             $KETERANGAN = "Ubah Data Anggota: " . json_encode($cek) . " ---- " . $nama_lengkap . ";" . $npm . ";" . $ttl . ";" . $no_hp . ";" . $alamat . ";" . $email;

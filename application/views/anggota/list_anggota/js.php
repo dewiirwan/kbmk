@@ -10,12 +10,28 @@
         });
     });
     $(document).ready(function() {
+        const newURL =
+            window.location.protocol +
+            "://" +
+            window.location.host +
+            "/" +
+            window.location.pathname;
+        const pathArray = window.location.pathname.split("/");
+        const segment_4 = pathArray[4];
+        get_edit(segment_4);
+
         dataTable = $('#tabel').DataTable({
             paginationType: 'full_numbers',
             processing: true,
             serverSide: true,
             filter: false,
             autoWidth: false,
+            buttons: [
+                'copy',
+                'excel',
+                'csv',
+                'pdf'
+            ],
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
@@ -90,27 +106,59 @@
         }
     });
 
-    $('#m_edit').on('show.bs.modal', function(e) {
-        var id = $(e.relatedTarget).data('href');
+    $("#open-file").on("click", function() {
+        $("#customFileUpload").trigger("click");
+    });
 
+    $('#customFileUpload').on('change', function(e) {
+
+        if (this.files && this.files[0]) {
+            $("#image-label").val(this.files[0].name);
+            $('#imgPreview').attr('src', URL.createObjectURL(this.files[0]));
+        }
+
+    });
+    $("#open-file_").on("click", function() {
+        $("#customFileUpload_").trigger("click");
+    });
+
+    $('#customFileUpload_').on('change', function(e) {
+
+        if (this.files && this.files[0]) {
+            $("#image-label_").val(this.files[0].name);
+            $('#imgPreviews').attr('src', URL.createObjectURL(this.files[0]));
+        }
+
+    });
+
+    function get_edit(id_mhs) {
         $.ajax({
-            url: '<?php echo site_url('anggota/profil_anggota/cek_edit'); ?>',
+            url: '<?= base_url('anggota/profil_anggota/cek_edit'); ?>',
             type: 'POST',
             data: {
-                id: id
+                id: id_mhs
             },
             success: function(data) {
                 var myObj = JSON.parse(data);
-                document.getElementById("id_mhs").value = id;
+                document.getElementById("id_mhs").value = id_mhs;
                 document.getElementById("nama_lengkap_").value = myObj.nama;
                 document.getElementById("npm_").value = myObj.npm;
                 document.getElementById("ttl_").value = myObj.tempat_tgl_lahir;
                 document.getElementById("no_hp_").value = myObj.no_hp;
                 document.getElementById("alamat_").value = myObj.alamat;
                 document.getElementById("email_").value = myObj.email;
+
+                if (myObj.foto != null || myObj.foto != '') {
+                    console.log('ASD');
+                    var foto = myObj.foto;
+                    var subs = foto.substring(43);
+                    $('#imgPreview').attr('src', BASE_URL + myObj.foto);
+                    $('#image-label').val(subs);
+                }
+
             }
         });
-    });
+    }
 
     function refresh_page() {
         location.reload();
@@ -140,6 +188,11 @@
 
     function detail(id_mhs) {
         window.location.href = BASE_URL + 'anggota/profil_anggota/detail/' + id_mhs;
+    }
+
+    function edit(id_mhs) {
+        window.location.href = BASE_URL + 'anggota/profil_anggota/edit/' + id_mhs;
+
     }
 
     function confirm_update() {

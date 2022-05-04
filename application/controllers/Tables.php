@@ -33,17 +33,15 @@ class Tables extends CI_Controller
 					$l->no = $no;
 					$l->ttl = $l->tempat_tgl_lahir;
 					$l->aksi = "
-					<div class='btn-group' role='group' aria-label='...'>
-						<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_pengurus	. ")'>
-							<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
-						</button>
-						<button type='button' class='btn btn-success' title='Edit Data' data-href='" . $l->id_pengurus	. "' data-toggle='modal' data-target='#m_edit'>
-							<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-						</button>
-						<button type='button' class='btn btn-danger' title='Delete Data' onclick='confirm_del(" . $l->id_pengurus . ")'>
-							<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
-						</button>
-					</div>";
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Pengurus' onclick='detail(" . $l->id_pengurus	. ")'>
+					<i class='fa fa-eye'></i> Lihat Pengurus
+					</a>
+					<a href='javascript:void(0)' class='btn btn-warning btn-xs block' title='Edit Pengurus' data-href='" . $l->id_pengurus	. "' data-toggle='modal' data-target='#m_edit'>
+					<i class='fa fa-pencil'></i> Edit
+					</a>
+					<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Pengurus' onclick='confirm_del(" . $l->id_pengurus . ")'>
+					<i class='fa fa-trash'></i> Hapus
+					</a>";
 
 					$data[] = $l;
 				}
@@ -64,14 +62,12 @@ class Tables extends CI_Controller
 					$l->no = $no;
 					$l->ttl = $l->tempat_tgl_lahir;
 					$l->aksi = "
-						<div class='btn-group' role='group' aria-label='...'>
-							<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_user	. ")'>
-								<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
-							</button>
-							<button type='button' class='btn btn-success' title='Edit Data' data-href='" . $l->id_mhs	. "' data-toggle='modal' data-target='#m_edit'>
-								<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-							</button>
-						</div>";
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail(" . $l->id_mhs	. ")'>
+					<i class='fa fa-eye'></i> Lihat Anggota
+					</a>
+					<a href='javascript:void(0)' class='btn btn-warning btn-xs block' title='Edit Anggota' onclick='edit(" . $l->id_mhs . ")'>
+					<i class='fa fa-pencil'></i> Edit
+					</a>";
 
 					$data[] = $l;
 				}
@@ -91,17 +87,15 @@ class Tables extends CI_Controller
 					$no++;
 					$l->no = $no;
 					$l->aksi = "
-						<div class='btn-group' role='group' aria-label='...'>
-							<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
-								<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
-							</button>
-							<button type='button' class='btn btn-success' title='Edit Data' data-href='" . $l->id_kegiatan	. "' data-toggle='modal' data-target='#m_edit'>
-								<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-							</button>
-							<button type='button' class='btn btn-danger' title='Delete Data' onclick='confirm_del(" . $l->id_kegiatan . ")'>
-								<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
-							</button>
-						</div>";
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Kegiatan' onclick='detail(" . $l->id_kegiatan	. ")'>
+					<i class='fa fa-eye'></i> Lihat Kegiatan
+					</a>
+					<a href='javascript:void(0)' class='btn btn-warning btn-xs block' title='Edit Kegiatan' data-href='" . $l->id_kegiatan	. "' data-toggle='modal' data-target='#m_edit'>
+					<i class='fa fa-pencil'></i> Edit
+					</a>
+					<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Kegiatan' onclick='confirm_del(" . $l->id_kegiatan . ")'>
+					<i class='fa fa-trash'></i> Hapus
+					</a>";
 
 					$data[] = $l;
 				}
@@ -121,11 +115,9 @@ class Tables extends CI_Controller
 					$no++;
 					$l->no = $no;
 					$l->aksi = "
-							<div class='btn-group' role='group' aria-label='...'>
-								<button type='button' class='btn btn-info' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
-									<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
-								</button>
-							</div>";
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
+					<i class='fa fa-eye'></i> Lihat Kegiatan
+					</a>";
 
 					$data[] = $l;
 				}
@@ -145,14 +137,12 @@ class Tables extends CI_Controller
 					$no++;
 					$l->no = $no;
 					$l->aksi = "
-								<div class='btn-group' role='group' aria-label='...'>
-									<button type='button' class='btn btn-info' title='Detail Form' onclick='detail(" . $l->id_form	. ")'>
-										<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>
-									</button>
-									<button type='button' class='btn btn-danger' title='Delete Data' onclick='confirm_del(" . $l->id_form . ")'>
-								<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
-							</button>
-								</div>";
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Pengajuan' onclick='detail(" . $l->id_form	. ")'>
+					<i class='fa fa-eye'></i> Lihat Pengajuan
+					</a>
+					<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Pengajuan' onclick='confirm_del(" . $l->id_form . ")'>
+					<i class='fa fa-trash'></i> Hapus
+					</a>";
 
 					$data[] = $l;
 				}
