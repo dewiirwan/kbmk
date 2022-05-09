@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body class="gray-bg">
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-            <h3>Selamat Datang di KBMK</h3>
+            <h3>Selamat Datang di KBMK Gunadarma</h3>
             </br>
             <p>Silakan mendaftar untuk mendapatkan hak akses</p>
             <?php if ($message != "") { ?>

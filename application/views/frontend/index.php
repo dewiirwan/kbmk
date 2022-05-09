@@ -60,9 +60,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="container">
                     <div class="carousel-caption">
                         <h1>Welcome to<br />
-                            SILSCI</h1>
-                        <p>Sistem Informasi<br />
-                            Lithang Semangat Genta Rohani Cilodong.</p>
+                            SI KBMK Gunadarma</h1>
+                        <p>Sistem Informasi <br />
+                           Keluarga Besar Mahasiswa Khonghucu <br/>
+                           Universitas Gunadarma.</p>
                     </div>
                 </div>
                 <!-- Set background for slide in css -->
@@ -273,37 +274,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-3 col-lg-offset-3">
                     <address>
-                        <strong><span class="navy">Lithang Semangat Genta Rohani Cilodong</span></strong><br />
-                        di Jl. Raya Jakarta – Bogor KM 37,7 <br />
-                        Kp. Sidamukti RT.03/01 Kel. Sidamukti, Kec. Cilodong<br />
-                        Kota Depok – Jawa Barat.<br />
-                        Phone: 081285657867<br />
+                        <strong><span class="navy">KBMK Universitas Gunadarma</span></strong><br />
+                        Kampus D Universitas Gunadarma <br />
+                        Jl. Margonda Raya 100. Pondok Cina, Kecamatan Beji, Kota Depok, Jawa Barat <br />        
+                        <br>
+                        Nomor yang dapat dihubungi: 0895345531188<br />
                     </address>
                 </div>
                 <div class="col-lg-4">
-                    <p class="text-color">
-                        Litang yang baru berdiri tersebut diberi nama Litang “Semangat Genta Rohani” (Segar) Cilodong dan diresmikan pada hari Minggu tanggal 15 Desember 2013, yang ditandai dengan pemukulan tambur, pengguntingan pita dan penandatanganan prasasti oleh Bapak Walikota Depok, Ketua Umum Matakin dan Ketua Dewan Rohaniwan Matakin.
+                    <p class="text-color" >
+                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a href="mailto:silsci2021@gmail.com" class="btn btn-primary">Send us mail</a>
+                    <a href="mailto:kbmkgunadarma@gmail.com" class="btn btn-primary">Send us mail</a>
                     <p class="m-t-sm">
                         Or follow us on social platform
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="https://www.facebook.com/dewi.irwan.75"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="https://www.instagram.com/dewiirwan/"><i class="fa fa-instagram"></i></a>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram"></i></a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                    <p><strong>&copy; DEWI IRWAN-4IA01 2018 </strong><br />
-                        Aplikasi Pendaftaran Online..</p>
+                    <p><strong>&copy; Pengurus KBMK Gunadarma </strong><br />
                 </div>
             </div>
         </div>
