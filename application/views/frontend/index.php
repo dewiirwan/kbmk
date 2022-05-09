@@ -92,7 +92,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Fasilitas<br /> <span class="navy"></span>Lithang SEMANGAT GENTA ROHANI Cilodong</h1>
+                <h1>Fasilitas<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
                 <p>Fasilitas yang ada pada Lithang SEGAR Cilodong. </p>
             </div>
         </div>
