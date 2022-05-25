@@ -93,22 +93,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Fasilitas<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
-                <p>Fasilitas yang ada pada Lithang SEGAR Cilodong. </p>
+                <h1>Visi dan Misi<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 text-center wow fadeInLeft">
                 <div>
                     <i class="fa fa-bell features-icon"></i>
-                    <h2>Ruang Peribadahan </h2>
-                    <p>Ruangan Peribahadan berada di Lantai 1 Lithang SEGAR yang terdapat Altar, mimbar, kursi untuk ibadah, meja persembahan Altar, dan alat-alat yang digunakan untuk sembahyang serta alat musik yang digunakan untuk mengiringi lagu pujian.</p>
-                </div>
-                <div class="m-t-lg">
-                    <i class="fa fa-car features-icon"></i>
-                    <i class="fa fa-motorcycle features-icon"></i>
-                    <h2>Tempat Parkir</h2>
-                    <p>Tempat Parkir di Lithang SEGAR bergabung dengan SMP Segar sehingga lumayan luas untuk umat membawa kendaraan pribadi.</p>
+                    <h2>VISI</h2>
+                    <ul><bold>
+                        <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p> 
+                        <p>2. Menciptakan suasana kekeluargaan antar anggota KBMK Universitas Gunadarma dan aktif dalam media online sebagai bentuk aktivitas dari KBMK Universitas Gunadarma selama masa pandemi dan aktivitas offline pada saat pandemi berakhir</p>
+                </ul> </bold>
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
@@ -116,14 +112,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
-                    <i class="fa fa-book features-icon"></i>
-                    <h2>Ruang Pendidikan</h2>
-                    <p>Ruang Pendidikan berada di Lantai 2 Lithang SEGAR yang terdapat beberapa kursi dan meja untuk melaksanakan kegiatan pembelajaran.</p>
-                </div>
-                <div class="m-t-lg">
-                    <i class="fa fa-bus features-icon"></i>
-                    <h2>Mobil Elf</h2>
-                    <p>Mobil Elf digunakan untuk mengantar-jemput kegiatan di luar Lithang dan pelayanan duka.</p>
+                    <i class="fa fa-thumb-tack features-icon"></i>
+                    <h2>MISI</h2>
+                    <p>1. Meningkatkan komunikasi antar anggota KBMK </p>
+                    <p>2. Melaksanakan kegiatan KBMK baik secara online atau offline.</p>
+                    <p>3. Menciptakan kerja sama dan kebersamaan antar anggota KBMK UG dalam menjalankan event-event yang akan dihadiri maupun diadakan KBMK UG.</p>
+                    <p>4. Menciptakan lingkungan yang positif antar anggota KBMK.</p>
+                    <p>5. Meningkatkan keikutsertaan KBMK UG dalam menghadiri acara internal (UKM atau BEM di dalam Universitas Gunadarma) maupun eksternal..</p>
                 </div>
             </div>
         </div>
@@ -134,8 +129,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Pengkhotbah Lithang SEGAR</h1>
-                    <p>Pengkhotbah di Lithang Semangat Genta Rohani Cilodong</p>
+                    <h1>Kepengurusan KBMK Universitas Gunadarma 2021/2022</h1>
+                    <p>Bagan Kepengurusan KBMK Gunadarma</p>
                 </div>
             </div>
             <div class="row">
@@ -203,8 +198,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>INI BUAT PENGUMUMAN</h1>
-                    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+                    <h1>Event</h1>
+                    <p>XXXXX</p>
                 </div>
             </div>
 
