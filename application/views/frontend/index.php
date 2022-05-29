@@ -198,8 +198,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Event</h1>
-                    <p>XXXXX</p>
+                    <h1>Kegiatan</h1>
+                    <p>Kegiatan yang ada di KBMK Gunadarma</p>
                 </div>
             </div>
 
