@@ -65,7 +65,7 @@ class M_pengumuman extends CI_Model
     function cek_judul_pengumuman($JUDUL)
     {
         $hsl = $this->db->query("SELECT * FROM pengumuman 
-		WHERE JUDUL = '$JUDUL'");
+		WHERE judul = '$JUDUL'");
         if ($hsl->num_rows() > 0) {
             foreach ($hsl->result() as $data) {
                 $hasil = array(
