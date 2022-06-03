@@ -166,14 +166,9 @@ class Pengajuan extends CI_Controller
         $hasil = $row->file_pdf;
 
         if ($hasil != null) {
-            if (file_exists($file = './assets/PDF/' . $hasil)) {
-                unlink($file);
-                $this->db->where($where);
-                $this->db->delete('form_pengajuan');
-                $status = true;
-            } else {
-                $status = false;
-            }
+            $this->db->where($where);
+            $this->db->delete('form_pengajuan');
+            $status = true;
         } else {
             $status = false;
         }

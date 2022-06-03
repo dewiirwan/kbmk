@@ -47,75 +47,7 @@ class Profil_anggota extends CI_Controller
         $this->M_anggota->user_log_anggota($user->id_mhs, $KETERANGAN, $WAKTU);
     }
 
-    /**
-     * Redirect if needed, otherwise display the user list
-     */
     public function index()
-    {
-        //jika mereka belum login
-        if (!$this->ion_auth->logged_in()) {
-            // alihkan mereka ke halaman login
-            redirect('auth/login', 'refresh');
-        }
-
-        //get data tabel users untuk ditampilkan
-        $user = $this->ion_auth->user()->row();
-        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
-
-        $this->data['USER_ID'] = $user->id_user;
-        $this->data['id_mhs'] = $user->id_mhs;
-        $this->data['role_user'] = 'anggota';
-        $this->data['ip_address'] = $user->ip_address;
-        $this->data['email'] = $user->email;
-        $this->data['USER_ID'] = $user->id_user;
-        date_default_timezone_set('Asia/Jakarta');
-        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
-        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
-
-        $this->data['isi'] = 'anggota/list_anggota/index';
-        $this->data['id_group'] = $id_group->id_group;
-
-
-        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
-        if ($query_foto_user == "BELUM ADA FOTO") {
-            $this->data['foto_user'] = base_url() . "assets/template/img/profile_small.jpg";
-        } else {
-            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
-        }
-
-        if ($this->ion_auth->logged_in()) {
-            //fungsi ini untuk mengirim data ke dropdown
-
-            if ($this->ion_auth->in_group(2)) {
-                $sess_data['id_mhs'] = $this->data['id_mhs'];
-
-                $this->load->view('template/wrapper', $this->data);
-            }
-        } else {
-            $this->logout();
-        }
-    }
-
-    public function cek_edit()
-    {
-        $id     = $this->input->post('id');
-
-        $query['select'] = 'a.*';
-        $query['table']  = 'mahasiswa a';
-        $query['where']  = 'a.id_mhs = ' . $id;
-
-        if (isset($id)) {
-            $cek                                = $this->m_global->getRow($query);
-            echo json_encode($cek);
-        } else {
-            $this->session->set_flashdata('pesan_gagal', 'Id tidak boleh kosong');
-            redirect('anggota/profil_anggota');
-        }
-    }
-
-
-    public function edit()
     {
         if (!$this->ion_auth->logged_in()) {
             // alihkan mereka ke halaman login
@@ -147,7 +79,7 @@ class Profil_anggota extends CI_Controller
             $this->data['foto_user'] = $query_foto_user['keterangan_2'];
         }
 
-        $this->data['id_mhs'] = $this->uri->segment(4);
+        // $this->data['id_mhs'] = $this->uri->segment(4);
 
         //Kueri data di tabel anggota
         $query_detil_anggota = $this->M_anggota->get_detil($this->data['id_mhs']);
@@ -181,132 +113,20 @@ class Profil_anggota extends CI_Controller
         }
     }
 
-    public function detail()
+    public function cek_edit()
     {
-        if (!$this->ion_auth->logged_in()) {
-            // alihkan mereka ke halaman login
-            redirect('auth/login', 'refresh');
-        }
+        $id     = $this->input->post('id');
 
-        //get data tabel users untuk ditampilkan
-        $user = $this->ion_auth->user()->row();
-        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
+        $query['select'] = 'a.*';
+        $query['table']  = 'mahasiswa a';
+        $query['where']  = 'a.id_mhs = ' . $id;
 
-        $this->data['USER_ID'] = $user->id_user;
-        $this->data['id_mhs'] = $user->id_mhs;
-        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
-        $this->data['role_user'] = 'anggota';
-        $this->data['ip_address'] = $user->ip_address;
-        $this->data['email'] = $user->email;
-        date_default_timezone_set('Asia/Jakarta');
-        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
-        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
-        $this->data['isi'] = 'anggota/list_anggota/detail';
-        $this->data['id_group'] = $id_group->id_group;
-
-        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
-        if ($query_foto_user == "BELUM ADA FOTO") {
-            $this->data['foto_user'] = base_url() . "assets/template/img/profile_small.jpg";
+        if (isset($id)) {
+            $cek                                = $this->m_global->getRow($query);
+            echo json_encode($cek);
         } else {
-            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
-        }
-
-        $this->data['id_mhs'] = $this->uri->segment(4);
-
-        //Kueri data di tabel anggota
-        $query_detil_anggota = $this->M_anggota->get_detil($this->data['id_mhs']);
-
-        $query_detil_anggota_result = $this->M_anggota->get_detil_result($this->data['id_mhs']);
-        $this->data['query_detil_anggota_result'] = $query_detil_anggota_result;
-
-        if ($query_detil_anggota->num_rows() == 0) {
-            // alihkan mereka ke halaman list anggota
-            redirect('anggota/profil_anggota', 'refresh');
-        }
-        //Kueri data di tabel anggota file
-        $query_file_id_mhs = $this->M_anggota->file_list_by_id_mhs($this->data['id_mhs']);
-
-        //log
-        $KETERANGAN = "Lihat Profil Anggota: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_mhs);
-        $this->user_log($KETERANGAN);
-
-        $hasil_1 = $query_detil_anggota->row();
-        $this->data['id_mhs'] = $hasil_1->id_mhs;
-        $sess_data['id_mhs'] = $this->data['id_mhs'];
-        $this->session->set_userdata($sess_data);
-
-        if ($query_file_id_mhs->num_rows() > 0) {
-
-            $this->data['dokumen'] = $this->M_anggota->file_list_by_id_mhs_result($sess_data['id_mhs']);
-
-            $hasil = $query_file_id_mhs->row();
-            $DOK_FILE = $hasil->dok_file;
-            $TANGGAL_UPLOAD = $hasil->tanggal_upload;
-
-            if (file_exists($file = './assets/uploads/anggota/' . $DOK_FILE)) {
-                $this->data['DOK_FILE'] = $DOK_FILE;
-                $this->data['TANGGAL_UPLOAD'] = $TANGGAL_UPLOAD;
-                $this->data['FILE'] = "ADA";
-            }
-        } else {
-            $this->data['FILE'] = "TIDAK ADA";
-        }
-
-        //jika mereka sudah login dan sebagai admin
-        if ($this->ion_auth->in_group(2)) {
-            $sess_data['id_mhs'] = $this->data['id_mhs'];
-
-            $this->load->view('template/wrapper', $this->data);
-        } else {
-            $this->logout();
-        }
-    }
-
-    function data_anggota()
-    {
-
-        if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(1))) {
-
-            $data = $this->M_anggota->list_anggota();
-            echo json_encode($data);
-
-            $KETERANGAN = "Melihat List Data Anggota: " . json_encode($data);
-            $this->user_log($KETERANGAN);
-        } else if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(2))) {
-
-            $id_mhs = $this->input->get('id_mhs');
-
-            $data = $this->M_anggota->anggota_data($id_mhs);
-            echo json_encode($data);
-
-            $KETERANGAN = "Melihat Data Anggota: " . json_encode($data);
-            $this->user_log($KETERANGAN);
-        } else {
-            $this->logout();
-        }
-    }
-
-    function get_data()
-    {
-        if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(1))) {
-            $id_mhs = $this->input->get('id');
-
-            $data = $this->M_anggota->get_data($id_mhs);
-            echo json_encode($data);
-
-            $KETERANGAN = "Get Data Anggota" . json_encode($data);
-            $this->user_log($KETERANGAN);
-        } else if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(2))) {
-            $id_mhs = $this->input->get('id');
-
-            $data = $this->M_anggota->get_data($id_mhs);
-            echo json_encode($data);
-
-            $KETERANGAN = "Get Data Anggota" . json_encode($data);
-            $this->user_log($KETERANGAN);
-        } else {
-            $this->logout();
+            $this->session->set_flashdata('pesan_gagal', 'Id tidak boleh kosong');
+            redirect('anggota/profil_anggota');
         }
     }
 
@@ -543,18 +363,6 @@ class Profil_anggota extends CI_Controller
 
         $this->db->where('id_mhs', $id);
         $this->db->update('mahasiswa', $data);
-        echo json_encode(['status' => $status]);
-    }
-
-    function hapus_anggota()
-    {
-        $post   = $this->input->post();
-        $where  = array('id_mhs' => $post['id']);
-        $status = true;
-
-        $this->db->where($where);
-        $this->db->delete('mahasiswa');
-
         echo json_encode(['status' => $status]);
     }
 

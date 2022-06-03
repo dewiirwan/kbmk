@@ -35,6 +35,17 @@ class M_table extends CI_model
 
                 $filter   = @$_POST['filter'];
                 break;
+            case 'data_list_anggota_pengurus':
+                $this->db->select('a.id_mhs, a.npm, a.nama as nama_anggota, a.tempat_tgl_lahir, a.alamat, a.email, a.no_hp');
+                $this->db->from('mahasiswa a');
+                if ($_POST['order'][0]['column'] == 0) {
+                    $this->db->order_by('id_mhs', $order);
+                } else {
+                    $this->db->order_by($sort, $order);
+                }
+
+                $filter   = @$_POST['filter'];
+                break;
             case 'data_list_kegiatan':
                 $this->db->select('*');
                 $this->db->from('kegiatan');
@@ -62,6 +73,17 @@ class M_table extends CI_model
                 $this->db->from('form_pengajuan');
                 if ($_POST['order'][0]['column'] == 0) {
                     $this->db->order_by('id_form', $order);
+                } else {
+                    $this->db->order_by($sort, $order);
+                }
+
+                $filter   = @$_POST['filter'];
+                break;
+            case 'data_list_pengumuman':
+                $this->db->select('*');
+                $this->db->from('pengumuman');
+                if ($_POST['order'][0]['column'] == 0) {
+                    $this->db->order_by('id_pengumuman', $order);
                 } else {
                     $this->db->order_by($sort, $order);
                 }

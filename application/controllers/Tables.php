@@ -81,6 +81,35 @@ class Tables extends CI_Controller
 				);
 				echo json_encode($output);
 				break;
+			case 'data_list_anggota_pengurus':
+				$list = $this->m_table->get_datatables('data_list_anggota_pengurus', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					$l->ttl = $l->tempat_tgl_lahir;
+					$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail(" . $l->id_mhs	. ")'>
+						<i class='fa fa-eye'></i> Lihat Anggota
+						</a>
+						<a href='javascript:void(0)' class='btn btn-warning btn-xs block' title='Edit Kegiatan' data-href='" . $l->id_mhs	. "' data-toggle='modal' data-target='#m_edit'>
+						<i class='fa fa-pencil'></i> Edit
+						</a>
+						<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Kegiatan' onclick='confirm_del(" . $l->id_mhs . ")'>
+						<i class='fa fa-trash'></i> Hapus
+						</a>";
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_anggota_pengurus', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_anggota_pengurus', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
 			case 'data_list_kegiatan':
 				$list = $this->m_table->get_datatables('data_list_kegiatan', $sort, $order);
 				foreach ($list as $l) {
@@ -126,6 +155,34 @@ class Tables extends CI_Controller
 					"draw"              => $_POST['draw'],
 					"recordsTotal"      => $this->m_table->count_all('data_list_kegiatan_anggota', $sort, $order),
 					"recordsFiltered"   => $this->m_table->count_filtered('data_list_kegiatan_anggota', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
+			case 'data_list_pengumuman':
+				$list = $this->m_table->get_datatables('data_list_pengumuman', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					$l->aksi = "
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Pengumuman' onclick='detail(" . $l->id_pengumuman	. ")'>
+					<i class='fa fa-eye'></i> Lihat Pengumuman
+					</a>
+					<a href='javascript:void(0)' class='btn btn-warning btn-xs block' title='Edit Pengumuman' data-href='" . $l->id_pengumuman	. "' data-toggle='modal' data-target='#m_edit'>
+					<i class='fa fa-pencil'></i> Edit
+					</a>
+					<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Pengumuman' onclick='confirm_del(" . $l->id_pengumuman . ")'>
+					<i class='fa fa-trash'></i> Hapus
+					</a>";
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_pengumuman', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_pengumuman', $sort, $order),
 					"data"              => $data,
 					'filter'            => $filter,
 				);
