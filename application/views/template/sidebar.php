@@ -40,6 +40,9 @@
         <a href="<?= base_url('anggota/pengajuan'); ?>"><i class="fa fa-envelope-open"></i> <span class="nav-label">Form Pengajuan</span> </a>
     </li>
     <li class="active">
+        <a href="<?= base_url('anggota/list_pengurus'); ?>"><i class="fa fa-user"></i> <span class="nav-label">List Pengurus</span> </a>
+    </li>
+    <li class="active">
         <a href="<?= base_url('anggota/list_kegiatan'); ?>"><i class="fa fa-heartbeat"></i> <span class="nav-label">List Kegiatan</span> </a>
     </li>
     <li class="active">
