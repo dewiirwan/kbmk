@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <ul class="nav navbar-nav navbar-left">
                         <li><a class="page-scroll" href="#page-top">Home</a></li>
                         <li><a class="page-scroll" href="#tentang">Tentang</a></li>
-                        <li><a class="page-scroll" href="#pengumuman">Pengumuman</a></li>
+                        <li><a class="page-scroll" href="#kegiatan">Kegiatan</a></li>
                         <li><a class="page-scroll" href="#kontak">Kontak</a></li>
                     </ul>
                     <a class="navbar-brand navbar-right" href="<?= base_url(); ?>index.php/auth">LOGIN</a>
@@ -58,13 +58,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div class="container">
-                    <div class="carousel-caption">
+                    <!-- <div class="carousel-caption">
                         <h1>Welcome to<br />
                             SI KBMK Gunadarma</h1>
                         <p>Sistem Informasi <br />
                            Keluarga Besar Mahasiswa Khonghucu <br/>
                            Universitas Gunadarma.</p>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- Set background for slide in css -->
                 <div class="header-back one"></div>
@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
-                <img src="<?= base_url(); ?>assets/template/img/landing/genta.png" alt="dashboard" class="img-responsive">
+                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
@@ -192,7 +192,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </section>
 
-    <section id="pengumuman" class="features">
+    <section id="kegiatan" class="features">
         <div class="container">
             <div class="row">
 

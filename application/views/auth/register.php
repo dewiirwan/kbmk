@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <a class="btn btn-sm btn-white btn-block" href="<?= base_url(); ?>auth/login">Kembali ke halaman Login</a>
             <?= form_close(); ?>
-            <p class="m-t"> <small>KBMK &copy; 2021. Tema oleh Inspinia</small> </p>
+            <p class="m-t"> <small>KBMK &copy; 2022. Tema oleh Inspinia</small> </p>
         </div>
     </div>
 
