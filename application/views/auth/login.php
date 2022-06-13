@@ -26,14 +26,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Selamat Datang di Sistem Informasi Keluarga Besar Mahasiswa Khonghucu (KBMK)</h2>
+                <h2 class="font-bold">Selamat Datang di Sistem Informasi KBMK Universitas Gunadarma</h2>
 
                 <p>
-                    KBMK
+                    KBMK Gunadarma
                 </p>
 
                 <p>
-                    adalah sistem informasi yang dikembangkan oleh Dewi Irwan untuk memberikan informasi mengenai kebaktian saat pandemi yang sesuai dengan protokol kesehatan.
+                    adalah wadah yang digunakan untuk memberikan informasi mengenai pembelajaran agama khonghucu dan kegiatan yang terkait di Universitas Gunadarma.
                 </p>
 
                 <p>
@@ -79,7 +79,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 Copyright KBMK
             </div>
             <div class="col-md-6 text-right">
-                <small>© 2021</small>
+                <small>© 2022</small>
             </div>
         </div>
     </div>

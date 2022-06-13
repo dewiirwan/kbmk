@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body class="gray-bg">
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-            <h3>Selamat Datang di KBMK</h3>
+            <h3>Selamat Datang di KBMK Gunadarma</h3>
             </br>
             <p>Silakan mendaftar untuk mendapatkan hak akses</p>
             <?php if ($message != "") { ?>
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <a class="btn btn-sm btn-white btn-block" href="<?= base_url(); ?>auth/login">Kembali ke halaman Login</a>
             <?= form_close(); ?>
-            <p class="m-t"> <small>KBMK &copy; 2021. Tema oleh Inspinia</small> </p>
+            <p class="m-t"> <small>KBMK &copy; 2022. Tema oleh Inspinia</small> </p>
         </div>
     </div>
 

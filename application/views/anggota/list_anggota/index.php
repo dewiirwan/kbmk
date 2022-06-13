@@ -90,7 +90,7 @@
 
     <div class="alert alert-info alert-dismissable">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-        Sistem menampilkan seluruh pengumuman pada Lithang Semangat Genta Rohani.
+        Sistem menampilkan Profil Anda.
     </div>
 
     <div class="row">

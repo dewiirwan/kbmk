@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <ul class="nav navbar-nav navbar-left">
                         <li><a class="page-scroll" href="#page-top">Home</a></li>
                         <li><a class="page-scroll" href="#tentang">Tentang</a></li>
-                        <li><a class="page-scroll" href="#pengumuman">Pengumuman</a></li>
+                        <li><a class="page-scroll" href="#kegiatan">Kegiatan</a></li>
                         <li><a class="page-scroll" href="#kontak">Kontak</a></li>
                     </ul>
                     <a class="navbar-brand navbar-right" href="<?= base_url(); ?>index.php/auth">LOGIN</a>
@@ -58,12 +58,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div class="container">
-                    <div class="carousel-caption">
+                    <!-- <div class="carousel-caption">
                         <h1>Welcome to<br />
-                            SILSCI</h1>
-                        <p>Sistem Informasi<br />
-                            Lithang Semangat Genta Rohani Cilodong.</p>
-                    </div>
+                            SI KBMK Gunadarma</h1>
+                        <p>Sistem Informasi <br />
+                           Keluarga Besar Mahasiswa Khonghucu <br/>
+                           Universitas Gunadarma.</p>
+                    </div> -->
                 </div>
                 <!-- Set background for slide in css -->
                 <div class="header-back one"></div>
@@ -92,37 +93,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Fasilitas<br /> <span class="navy"></span>Lithang SEMANGAT GENTA ROHANI Cilodong</h1>
-                <p>Fasilitas yang ada pada Lithang SEGAR Cilodong. </p>
+                <h1>Visi dan Misi<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 text-center wow fadeInLeft">
                 <div>
                     <i class="fa fa-bell features-icon"></i>
-                    <h2>Ruang Peribadahan </h2>
-                    <p>Ruangan Peribahadan berada di Lantai 1 Lithang SEGAR yang terdapat Altar, mimbar, kursi untuk ibadah, meja persembahan Altar, dan alat-alat yang digunakan untuk sembahyang serta alat musik yang digunakan untuk mengiringi lagu pujian.</p>
-                </div>
-                <div class="m-t-lg">
-                    <i class="fa fa-car features-icon"></i>
-                    <i class="fa fa-motorcycle features-icon"></i>
-                    <h2>Tempat Parkir</h2>
-                    <p>Tempat Parkir di Lithang SEGAR bergabung dengan SMP Segar sehingga lumayan luas untuk umat membawa kendaraan pribadi.</p>
+                    <h2>VISI</h2>
+                    <ul><bold>
+                        <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p> 
+                        <p>2. Menciptakan suasana kekeluargaan antar anggota KBMK Universitas Gunadarma dan aktif dalam media online sebagai bentuk aktivitas dari KBMK Universitas Gunadarma selama masa pandemi dan aktivitas offline pada saat pandemi berakhir</p>
+                </ul> </bold>
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
-                <img src="<?= base_url(); ?>assets/template/img/landing/genta.png" alt="dashboard" class="img-responsive">
+                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
-                    <i class="fa fa-book features-icon"></i>
-                    <h2>Ruang Pendidikan</h2>
-                    <p>Ruang Pendidikan berada di Lantai 2 Lithang SEGAR yang terdapat beberapa kursi dan meja untuk melaksanakan kegiatan pembelajaran.</p>
-                </div>
-                <div class="m-t-lg">
-                    <i class="fa fa-bus features-icon"></i>
-                    <h2>Mobil Elf</h2>
-                    <p>Mobil Elf digunakan untuk mengantar-jemput kegiatan di luar Lithang dan pelayanan duka.</p>
+                    <i class="fa fa-thumb-tack features-icon"></i>
+                    <h2>MISI</h2>
+                    <p>1. Meningkatkan komunikasi antar anggota KBMK </p>
+                    <p>2. Melaksanakan kegiatan KBMK baik secara online atau offline.</p>
+                    <p>3. Menciptakan kerja sama dan kebersamaan antar anggota KBMK UG dalam menjalankan event-event yang akan dihadiri maupun diadakan KBMK UG.</p>
+                    <p>4. Menciptakan lingkungan yang positif antar anggota KBMK.</p>
+                    <p>5. Meningkatkan keikutsertaan KBMK UG dalam menghadiri acara internal (UKM atau BEM di dalam Universitas Gunadarma) maupun eksternal..</p>
                 </div>
             </div>
         </div>
@@ -133,8 +129,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Pengkhotbah Lithang SEGAR</h1>
-                    <p>Pengkhotbah di Lithang Semangat Genta Rohani Cilodong</p>
+                    <h1>Kepengurusan KBMK Universitas Gunadarma 2021/2022</h1>
+                    <p>Bagan Kepengurusan KBMK Gunadarma</p>
                 </div>
             </div>
             <div class="row">
@@ -196,14 +192,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </section>
 
-    <section id="pengumuman" class="features">
+    <section id="kegiatan" class="features">
         <div class="container">
             <div class="row">
 
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>INI BUAT PENGUMUMAN</h1>
-                    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+                    <h1>Kegiatan</h1>
+                    <p>Kegiatan yang ada di KBMK Gunadarma</p>
                 </div>
             </div>
 
@@ -273,37 +269,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-3 col-lg-offset-3">
                     <address>
-                        <strong><span class="navy">Lithang Semangat Genta Rohani Cilodong</span></strong><br />
-                        di Jl. Raya Jakarta – Bogor KM 37,7 <br />
-                        Kp. Sidamukti RT.03/01 Kel. Sidamukti, Kec. Cilodong<br />
-                        Kota Depok – Jawa Barat.<br />
-                        Phone: 081285657867<br />
+                        <strong><span class="navy">KBMK Universitas Gunadarma</span></strong><br />
+                        Kampus D Universitas Gunadarma <br />
+                        Jl. Margonda Raya 100. Pondok Cina, Kecamatan Beji, Kota Depok, Jawa Barat <br />        
+                        <br>
+                        Nomor yang dapat dihubungi: 0895345531188<br />
                     </address>
                 </div>
                 <div class="col-lg-4">
-                    <p class="text-color">
-                        Litang yang baru berdiri tersebut diberi nama Litang “Semangat Genta Rohani” (Segar) Cilodong dan diresmikan pada hari Minggu tanggal 15 Desember 2013, yang ditandai dengan pemukulan tambur, pengguntingan pita dan penandatanganan prasasti oleh Bapak Walikota Depok, Ketua Umum Matakin dan Ketua Dewan Rohaniwan Matakin.
+                    <p class="text-color" >
+                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a href="mailto:silsci2021@gmail.com" class="btn btn-primary">Send us mail</a>
+                    <a href="mailto:kbmkgunadarma@gmail.com" class="btn btn-primary">Send us mail</a>
                     <p class="m-t-sm">
                         Or follow us on social platform
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="https://www.facebook.com/dewi.irwan.75"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="https://www.instagram.com/dewiirwan/"><i class="fa fa-instagram"></i></a>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram"></i></a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                    <p><strong>&copy; DEWI IRWAN-4IA01 2018 </strong><br />
-                        Aplikasi Pendaftaran Online..</p>
+                    <p><strong>&copy; Pengurus KBMK Gunadarma </strong><br />
                 </div>
             </div>
         </div>
