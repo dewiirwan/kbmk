@@ -26,6 +26,28 @@ class Tables extends CI_Controller
 		$no = $this->input->post('start');
 
 		switch ($type) {
+			case 'data_list_pengurus_anggota':
+				$list = $this->m_table->get_datatables('data_list_pengurus', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					$l->aksi = "
+					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Pengurus' onclick='detail(" . $l->id_pengurus	. ")'>
+					<i class='fa fa-eye'></i> Lihat Pengurus
+					</a>";
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_pengurus', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_pengurus', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
 			case 'data_list_pengurus':
 				$list = $this->m_table->get_datatables('data_list_pengurus', $sort, $order);
 				foreach ($list as $l) {
@@ -105,6 +127,74 @@ class Tables extends CI_Controller
 					"draw"              => $_POST['draw'],
 					"recordsTotal"      => $this->m_table->count_all('data_list_anggota_pengurus', $sort, $order),
 					"recordsFiltered"   => $this->m_table->count_filtered('data_list_anggota_pengurus', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
+			case 'data_list_jadwal_detail':
+				$list = $this->m_table->get_datatables('data_list_jadwal_detail', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					if ($l->nama_mhs != null && $l->jam_hadir == null) {
+						$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Verif Hadir' onclick='confirm_verif(" . $l->id_jadwal	. ")'>
+						<i class='fa fa-check'></i> Verif Hadir
+						</a>
+						<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Slot' onclick='confirm_del(" . $l->id_jadwal . ")'>
+						<i class='fa fa-trash'></i> Hapus Slot
+						</a>";
+					} else if ($l->nama_mhs == null) {
+						$l->aksi = "
+							<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Slot' onclick='confirm_del(" . $l->id_jadwal . ")'>
+							<i class='fa fa-trash'></i> Hapus Slot
+							</a>";
+					} else if ($l->nama_mhs != null && $l->jam_hadir != null) {
+						$l->aksi = "
+							<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Slot' onclick='confirm_del(" . $l->id_jadwal . ")'>
+							<i class='fa fa-trash'></i> Hapus Slot
+							</a>";
+					}
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_jadwal_detail', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_jadwal_detail', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
+			case 'data_list_jadwal_kegiatan':
+				$list = $this->m_table->get_datatables('data_list_jadwal_kegiatan', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					$getIDKegiatan = $this->db->query('SELECT id_kegiatan FROM jadwal WHERE id_kegiatan = ' . $l->id_kegiatan . '')->row();
+					if (@$getIDKegiatan->id_kegiatan != null) {
+						$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Jadwal' onclick='detail(" . $l->id_kegiatan	. ")'>
+						<i class='fa fa-eye'></i> Lihat Detail
+						</a>
+						<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Reset Slot' onclick='confirm_reset(" . $l->id_kegiatan . ")'>
+						<i class='fa fa-trash'></i> Reset Slot
+						</a>";
+					} else {
+						$l->aksi = '';
+					}
+
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_jadwal_kegiatan', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_jadwal_kegiatan', $sort, $order),
 					"data"              => $data,
 					'filter'            => $filter,
 				);
