@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Isi berita<span class="text-danger">*</span> :</label>
                             <div class="col-lg-9">
-                                <input type="text" name="isi_berita_" class="form-control" id="isi_berita_" placeholder="Contoh: Dalam rangka memperingati HUT ke-98 Majelis Tinggi Agama Khonghucu Indonesia (MATAKIN), kami mengundang Anda untuk bergabung dalam “Dialog Islam-Khonghucu” dengan tema “Tuhan dan Ketuhanan dalam Perspektif Islam dan Khonghucu">
+                                <textarea type="text" name="isi_berita_" class="form-control" id="isi_berita_" placeholder="Contoh: Dalam rangka memperingati HUT ke-98 Majelis Tinggi Agama Khonghucu Indonesia (MATAKIN), kami mengundang Anda untuk bergabung dalam “Dialog Islam-Khonghucu” dengan tema “Tuhan dan Ketuhanan dalam Perspektif Islam dan Khonghucu"></textarea>
                                 <span class="help-block text-danger"></span>
                             </div>
                         </div>

@@ -449,6 +449,9 @@ class Auth extends CI_Controller
                     // redirect them back to the admin page
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
                     redirect('auth', 'refresh');
+                } else {
+                    $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                    redirect('auth', 'refresh');
                 }
             } else {
                 // display the create user form
