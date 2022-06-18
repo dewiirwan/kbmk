@@ -26,14 +26,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Selamat Datang di Sistem Informasi KBMK Universitas Gunadarma</h2>
+                <h2 class="font-bold">Sistem Informasi KBMK Universitas Gunadarma</h2>
 
-                <p>
+                <!-- <p>
                     KBMK Gunadarma
-                </p>
+                </p> -->
 
                 <p>
-                    adalah wadah yang digunakan untuk memberikan informasi mengenai pembelajaran agama khonghucu dan kegiatan yang terkait di Universitas Gunadarma.
+                   <br>
+                    KBMK Gunadarma adalah wadah yang digunakan untuk memberikan informasi mengenai pembelajaran agama khonghucu dan kegiatan yang terkait di Universitas Gunadarma.
+                    
                 </p>
 
                 <p>

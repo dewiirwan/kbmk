@@ -93,14 +93,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Visi dan Misi<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
+                <h1><b>Visi dan Misi<br /> <span class="navy"></span>KBMK Gunadarma</b></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 text-center wow fadeInLeft">
                 <div>
                     <i class="fa fa-bell features-icon"></i>
-                    <h2>VISI</h2>
+                    <h2><b>VISI</b></h2>
                     <ul><bold>
                         <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p> 
                         <p>2. Menciptakan suasana kekeluargaan antar anggota KBMK Universitas Gunadarma dan aktif dalam media online sebagai bentuk aktivitas dari KBMK Universitas Gunadarma selama masa pandemi dan aktivitas offline pada saat pandemi berakhir</p>
@@ -108,12 +108,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
-                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
+                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk1.png" alt="dashboard" class="img-responsive">
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
                     <i class="fa fa-thumb-tack features-icon"></i>
-                    <h2>MISI</h2>
+                    <h2><b>MISI</b></h2>
                     <p>1. Meningkatkan komunikasi antar anggota KBMK </p>
                     <p>2. Melaksanakan kegiatan KBMK baik secara online atau offline.</p>
                     <p>3. Menciptakan kerja sama dan kebersamaan antar anggota KBMK UG dalam menjalankan event-event yang akan dihadiri maupun diadakan KBMK UG.</p>
@@ -129,11 +129,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Kepengurusan KBMK Universitas Gunadarma 2021/2022</h1>
+                    <h1><b>Pengurus KBMK Universitas Gunadarma</b></h1>
                     <p>Bagan Kepengurusan KBMK Gunadarma</p>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-4 wow fadeInLeft">
                     <div class="team-member">
                         <img src="<?= base_url(); ?>assets/template/img/landing/Ws.Chandra.jpg" class="img-responsive img-circle img-small" alt="">
@@ -189,7 +189,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
 
     <section id="kegiatan" class="features">
@@ -198,7 +198,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Kegiatan</h1>
+                    <h1><b>Kegiatan</b></h1>
                     <p>Kegiatan yang ada di KBMK Gunadarma</p>
                 </div>
             </div>
@@ -278,7 +278,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-lg-4">
                     <p class="text-color" >
-                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
+                        KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
                     </p>
                 </div>
             </div>

@@ -99,8 +99,8 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content text-center p-md">
 
-                    <h2><span class="text-navy">KBMK</span>
-                        adalah Keluarga Besar Mahasiswa Khonghucu<br /></h2>
+                    <h2><span class="text-navy">KBMK Gunadarma</span><br> 
+                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma<br /></h2>
                 </div>
             </div>
         </div>
