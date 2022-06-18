@@ -41,14 +41,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </p>
                 </br>
                 </br>
-                <!-- <a href="<?= base_url(); ?>">Kembali ke Home</a> -->
+                <a href="<?= base_url(); ?>">Kembali ke Home</a>
 
             </div>
             <div class="col-md-6">
-                <?php if ($message != "") { ?>
+                <?php if ($message != "" || $this->session->flashdata('sukses')) { ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                         <?= $message; ?>
+                        <?php echo $this->session->flashdata('sukses') ?>
                     </div>
                 <?php
                 } ?>

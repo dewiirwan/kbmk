@@ -42,7 +42,11 @@ class dashboard_mhs extends CI_Controller
         $this->data['left_menu'] = "dashboard_anggota_aktif";
         $this->data['id_group']  = $id_group->id_group;
 
-        $this->data['isi'] = 'pengurus/dashboard';
+        $this->data['isi'] = 'anggota/dashboard';
+
+        $this->data['pengumuman'] = $this->db->query('SELECT id_pengumuman, judul, isi_berita, tgl_posting FROM pengumuman')->result();
+        // var_dump($this->data['pengumuman']);
+        // die;
 
         // $query_foto_user = $this->foto_model->get_data_by_id_umat($user->ID_UMAT);
         // if ($query_foto_user == "BELUM ADA FOTO") {

@@ -9,6 +9,7 @@ class Auth extends CI_Controller
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language', 'file'));
+        $this->load->model('m_auth');
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -174,138 +175,125 @@ class Auth extends CI_Controller
      */
     public function lupa_password()
     {
-        if ($this->ion_auth->logged_in()) {
-            // redirect them to the home page
-            redirect('auth', 'refresh');
-        }
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-        // setting validation rules by checking whether identity is username or email
-        if ($this->config->item('identity', 'ion_auth') != 'email') {
-            $this->form_validation->set_rules('identity', $this->lang->line('forgot_password_identity_label'), 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $data['title'] = 'Halaman Reset Password | Tutorial reset password CodeIgniter @ https://recodeku.blogspot.com';
+            $this->load->view('auth/lupapassword', $data);
         } else {
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        }
+            $email = $this->input->post('email');
+            $clean = $this->security->xss_clean($email);
+            $userInfo = $this->m_auth->getUserInfoByEmail($clean);
 
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->data['type'] = $this->config->item('identity', 'ion_auth');
-            // setup the input
-            $this->data['identity'] = array(
-                'name' => 'identity',
-                'id' => 'identity',
-            );
-
-            if ($this->config->item('identity', 'ion_auth') != 'email') {
-                $this->data['identity_label'] = $this->lang->line('forgot_password_identity_label');
-            } else {
-                $this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
+            if (!$userInfo) {
+                $this->session->set_flashdata('sukses', 'Email yang anda masukkan tidak terdaftar, Silakan coba lagi!');
+                redirect(site_url('auth/lupa_password'), 'refresh');
             }
 
-            // set any errors and display the form
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('auth/lupapassword', $this->data);
-        } else {
-            $identity_column = $this->config->item('identity', 'ion_auth');
-            $identity = $this->ion_auth->where($identity_column, $this->input->post('email'))->users()->row();
+            //build token   
 
-            if (empty($identity)) {
+            $token = $this->m_auth->insertToken($userInfo->id_user);
+            $qstring = $this->base64url_encode($token);
+            $url = site_url() . 'auth/reset_password/token/' . $qstring;
+            $link = '<a href="' . $url . '">' . $url . '</a>';
 
-                if ($this->config->item('identity', 'ion_auth') != 'email') {
-                    $this->ion_auth->set_error('forgot_password_identity_not_found');
-                } else {
-                    $this->ion_auth->set_error('forgot_password_email_not_found');
-                }
+            $message = '';
+            $message .= '<strong>Hai, anda menerima email ini karena ada permintaan untuk memperbaharui  
+                 password anda.</strong><br>';
+            $message .= '<strong>Silakan klik link ini:</strong> ' . $link;
 
-                $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("auth/lupa_password", 'refresh');
-            }
-
-            // run the forgotten password method to email an activation code to the user
-            $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
-
-            if ($forgotten) {
-                // if there were no errors
-                $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
-            } else {
-                $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("auth/lupa_password", 'refresh');
-            }
+            $this->send($email, $message);
+            // exit;
+            // echo $message; //send this through mail  
+            // exit;
         }
     }
 
-    /**
-     * Reset password - final step for forgotten password
-     *
-     * @param string|null $code The reset code
-     */
-    public function reset_password($code = NULL)
+    public function reset_password()
     {
-        if ($this->ion_auth->logged_in()) {
-            // redirect them to the home page
-            redirect('auth', 'refresh');
+        $token = $this->base64url_decode($this->uri->segment(4));
+        $cleanToken = $this->security->xss_clean($token);
+
+        $user_info = $this->m_auth->isTokenValid($cleanToken); //either false or array();          
+        // var_dump($token);
+        // var_dump($cleanToken);
+        // var_dump($user_info);
+        // die;
+        if (!$user_info) {
+            $this->session->set_flashdata('sukses', 'Token tidak valid atau kadaluarsa');
+            redirect(site_url('auth'), 'refresh');
+            // var_dump($token);
+            // var_dump($cleanToken);
+            // var_dump($user_info);
+            // die;
         }
 
-        if (!$code) {
-            $code = $this->input->post('code');
-            if (!$code) {
-                show_404();
-            }
-        }
+        $data = array(
+            'token' => $this->base64url_encode($token)
+        );
 
-        $user = $this->ion_auth->forgotten_password_check($code);
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+        $this->form_validation->set_rules('konfirmasi_password', 'Password Confirmation', 'required|matches[password]');
 
-        if ($user) {
-            // if the code is valid then display the password reset form
-
-            $this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[konfirmasi_password]');
-            $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi Password', 'required');
-
-            if ($this->form_validation->run() === FALSE) {
-                // display the form
-
-                // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-                $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
-
-                $this->data['user_id'] = $user->id;
-                $this->data['csrf'] = $this->_get_csrf_nonce();
-                $this->data['code'] = $code;
-
-                // render
-                $this->_render_page('auth/resetpassword', $this->data);
-            } else {
-                // do we have a valid request?
-                if (($this->_valid_csrf_nonce() === FALSE) || ($user->id != $this->input->post('user_id'))) {
-
-                    // something fishy might be up
-                    $this->ion_auth->clear_forgotten_password_code($code);
-
-
-                    $this->session->set_flashdata('message', show_error($this->lang->line('error_csrf')));
-                    redirect("auth/login", 'refresh');
-                } else {
-                    // finally change the password
-                    $identity = $user->{$this->config->item('identity', 'ion_auth')};
-
-                    $change = $this->ion_auth->reset_password($identity, $this->input->post('password'));
-
-                    if ($change) {
-                        // if the password was successfully changed
-                        $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect("auth/login", 'refresh');
-                    } else {
-                        $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        $code = $this->input->post('code');
-                        redirect('auth/reset_password/' . $code, 'refresh');
-                    }
-                }
-            }
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('auth/resetpassword', $data);
         } else {
-            // if the code is invalid then send them back to the forgot password page
-            $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("auth/lupa_password", 'refresh');
+
+            $post = $this->input->post(NULL, TRUE);
+            $cleanPost = $this->security->xss_clean($post);
+            $salt = $this->store_salt ? $this->ion_auth->alt() : FALSE;
+            $hashed = $this->ion_auth->hash_password($cleanPost['password'], $salt);
+            $cleanPost['password'] = $hashed;
+            $cleanPost['id_user'] = $user_info->id_user;
+            unset($cleanPost['konfirmasi_password']);
+            if (!$this->m_auth->updatePassword($cleanPost)) {
+                $this->session->set_flashdata('sukses', 'Update password gagal.');
+            } else {
+                $this->session->set_flashdata('sukses', 'Password anda sudah  
+             diperbaharui. Silakan login.');
+            }
+            redirect(site_url('auth'), 'refresh');
+        }
+    }
+
+    public function base64url_encode($data)
+    {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+
+    public function base64url_decode($data)
+    {
+        return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+    }
+
+    public function send($emailUser, $message)
+    {
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'yourEmail',
+            'smtp_pass' => 'appPassword',
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1',
+            'smtp_auth' => TRUE,
+            'starttls' => TRUE,
+            'smtp_crypto' => 'ssl'
+        );
+
+        $this->load->library('email', $config);
+
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('admin@gmail.com', 'Admin Re:Code');
+        $this->email->to($emailUser);
+        $this->email->subject('Percobaan email');
+        $this->email->message($message);
+
+        if (!$this->email->send()) {
+            show_error($this->email->print_debugger());
+        } else {
+            echo 'Success to send email';
         }
     }
 
@@ -460,6 +448,9 @@ class Auth extends CI_Controller
                     // check to see if we are creating the user
                     // redirect them back to the admin page
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
+                    redirect('auth', 'refresh');
+                } else {
+                    $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                     redirect('auth', 'refresh');
                 }
             } else {
