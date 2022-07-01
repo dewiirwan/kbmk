@@ -87,44 +87,38 @@ $html = '<p style="font-size:12;">bantuannya saya ucapkan terimakasih.</p><br>';
 $pdf->writeHTMLCell(0, 0, 15, 174, $html, 0, 0, 0, true, 'L');
 
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $nama_lengkap . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . 'RONI' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 95, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $kelas . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . '4204' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 102, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $npm . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . '5424124' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 109, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $no_telp . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . '081614584684' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 116, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $fakultas . ' / ' . $jurusan . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . 'TEKNOLOGI' . ' / ' . 'INFORMATIKA' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 123, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $semester . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . '6' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 130, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $tahun_angkatan . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . '2022' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 137, $html, 0, 0, 0, true, 'L');
 
-$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $region . '</p><br>';
+$html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . 'DEPOK' . '</p><br>';
 $pdf->writeHTMLCell(0, 0, 55, 144, $html, 0, 0, 0, true, 'L');
 
-// $html = '<p style="font-size:12;">..............., ...... ...... ......</p><br>';
-// $pdf->writeHTMLCell(0, 0, 150, 220, $html, 0, 0, 0, true, 'L');
+$html = '<p style="font-size:12;">' . 'Depok, 21 June 2022' . '</p><br>';
+$pdf->writeHTMLCell(100, 5, 138, 193, $html, 0, 0, 0, true, 'L');
 
-// $html = '<p style="font-size:12;">Mahasiswa / Mahasiswi</p><br>';
-// $pdf->writeHTMLCell(0, 0, 150, 230, $html, 0, 0, 0, true, 'L');
-
-// $html = '<p style="font-size:12;">___________________</p><br>';
-// $pdf->writeHTMLCell(0, 0, 150, 260, $html, 0, 0, 0, true, 'L');
-
-// $table_footer = '<p style="font-size:10pt;"><b>Catatan</b><br>Sesuai dengan ketentuan perundang-undangan yang berlaku, sertifikat ini telah ditandatangani secara elektronik sehingga tidak diperlukan tanda tangan dan setempel basah</p>';
-// $pdf->writeHTMLCell(200, 0, 5, 250, $table_footer, 0, 0, 0, true, 'L');
+$html = '<img src="assets/template/img/test.jpeg" width="150px" height="150px" alt="" srcset="">';
+$pdf->writeHTMLCell(100, 5, 130, 200, $html, 0, 0, 0, true, 'L');
 
 
-$pdf_name = $npm . '_' . $nama_lengkap . '.pdf';
+$pdf_name = '5498646' . '_' . 'RONI' . '.pdf';
 $pdf->Output($pdf_name);
 // $pdf->Output(FCPATH.'assets/file/pdf/'.$pdf_name.'.pdf');
 // $pdf->Output(FCPATH . 'assets/PDF/' . $pdf_name . '.pdf', 'F');

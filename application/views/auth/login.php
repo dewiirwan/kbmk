@@ -45,11 +45,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="col-md-6">
+                <?php
+                // var_dump($message);
+                // var_dump($this->session->flashdata('message'));
+                // die;
+                ?>
                 <?php if ($message != "" || $this->session->flashdata('sukses')) { ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                         <?= $message; ?>
-                        <?php echo $this->session->flashdata('sukses') ?>
+                        <?= $this->session->flashdata('sukses') ?>
                     </div>
                 <?php
                 } ?>

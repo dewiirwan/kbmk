@@ -7,11 +7,25 @@ class M_table extends CI_model
     {
         parent::__construct();
         $this->load->database();
+        $this->load->library(array('ion_auth', 'form_validation'));
     }
 
     private function _get_datatables_query($type = null, $sort = null, $order = null)
     {
         switch ($type) {
+            case 'data_list_sertif_anggota':
+                $user = $this->ion_auth->user()->row();
+                $this->db->select('a.id_log_file, a.ekstensi, a.keterangan_file');
+                $this->db->from('log_file a');
+                $this->db->where('id_pengirim', $user->id_mhs);
+                if ($_POST['order'][0]['column'] == 0) {
+                    $this->db->order_by('id_log_file', $order);
+                } else {
+                    $this->db->order_by($sort, $order);
+                }
+
+                $filter   = @$_POST['filter'];
+                break;
             case 'data_list_pengurus':
                 $this->db->select('id_pengurus,npm,nama as nama_pengurus,tempat_tgl_lahir,alamat,email,no_hp');
                 $this->db->from('pengurus');

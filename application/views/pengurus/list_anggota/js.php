@@ -10,6 +10,7 @@
         });
     });
     $(document).ready(function() {
+        get_detail(<?= @$id_mhs; ?>);
         dataTable = $('#tabel').DataTable({
             paginationType: 'full_numbers',
             processing: true,
@@ -90,29 +91,6 @@
         }
     });
 
-    $('#m_edit').on('show.bs.modal', function(e) {
-        var id = $(e.relatedTarget).data('href');
-        console.log(id);
-
-        $.ajax({
-            url: '<?php echo site_url('pengurus/list_anggota/cek_edit'); ?>',
-            type: 'POST',
-            data: {
-                id: id
-            },
-            success: function(data) {
-                var myObj = JSON.parse(data);
-                document.getElementById("id_mhs").value = id;
-                document.getElementById("nama_lengkap_").value = myObj.nama;
-                document.getElementById("npm_").value = myObj.npm;
-                document.getElementById("ttl_").value = myObj.tempat_tgl_lahir;
-                document.getElementById("no_hp_").value = myObj.no_hp;
-                document.getElementById("alamat_").value = myObj.alamat;
-                document.getElementById("email_").value = myObj.email;
-            }
-        });
-    });
-
     function refresh_page() {
         location.reload();
     }
@@ -143,9 +121,14 @@
         window.location.href = BASE_URL + 'pengurus/list_anggota/detail/' + id_anggota;
     }
 
-    function confirm_save() {
+    function upload(id_anggota) {
+        window.location.href = BASE_URL + 'pengurus/list_anggota/detail_upload/' + id_anggota;
+    }
+
+    function verif(id_mhs) {
+
         Swal.fire({
-            title: 'Apakah anda yakin akan menyimpan data ini',
+            title: 'Apakah anda yakin akan verif data ini',
             type: 'info',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -156,193 +139,19 @@
             cancelButtonClass: 'btn btn-warning ml-1',
             buttonsStyling: false,
         }).then(function(result) {
-
+            // console.log(result)
             if (result.value) {
-                save();
+                save(id_mhs);
             }
         });
     }
-    async function save() {
+    async function save(id_mhs) {
         $("#loading").show();
-        const param = new FormData($('#form_tambah')[0]);
 
-        await fetch(SITE_URL + 'pengurus/list_anggota/proses', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: param,
-            })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response.status);
-                if (response.status === true) {
-                    $('#m_tambah').modal('hide');
-                    Swal.fire({
-                        type: "success",
-                        title: 'Berhasil!',
-                        text: 'Data berhasil disimpan.',
-                        confirmButtonClass: 'btn btn-success',
-                        timer: 1500
-                    });
-                    setTimeout(function() {
-                        location.reload();
-                    }, 500);
-                } else if (response.status === false) {
-                    Swal.fire({
-                        type: "warning",
-                        title: 'Gagal!',
-                        text: 'Gagal menyimpan data.',
-                        confirmButtonClass: 'btn btn-warning',
-                        timer: 1500
-                    });
-
-                    $('[name="nama_lengkap"]').addClass(response.error_class['nama_lengkap']);
-                    $('[name="nama_lengkap"]').next().text(response.error_string['nama_lengkap']);
-
-                    $('[name="npm"]').addClass(response.error_class['npm']);
-                    $('[name="npm"]').next().text(response.error_string['npm']);
-
-                    $('[name="ttl"]').addClass(response.error_class['ttl']);
-                    $('[name="ttl"]').next().text(response.error_string['ttl']);
-
-                    $('[name="no_hp"]').addClass(response.error_class['no_hp']);
-                    $('[name="no_hp"]').next().text(response.error_string['no_hp']);
-
-                    $('[name="alamat"]').addClass(response.error_class['alamat']);
-                    $('[name="alamat"]').next().text(response.error_string['alamat']);
-
-                    $('[name="email"]').addClass(response.error_class['email']);
-                    $('[name="email"]').next().text(response.error_string['email']);
-                }
-            })
-            .catch((error) => {
-                Swal.fire({
-                    type: "error",
-                    title: 'Kesalahan!',
-                    text: 'Terjadi Kesalahan.',
-                    confirmButtonClass: 'btn btn-danger',
-                });
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                $("#loading").hide();
-            });
-    }
-
-    function confirm_update() {
-        Swal.fire({
-            title: 'Apakah anda yakin akan mengubah data ini',
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya!',
-            cancelButtonText: 'Batal!',
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-warning ml-1',
-            buttonsStyling: false,
-        }).then(function(result) {
-
-            if (result.value) {
-                update();
-            }
-        });
-    }
-    async function update() {
-        $("#loading").show();
-        const param = new FormData($('#form_edit')[0]);
-
-        await fetch(SITE_URL + 'pengurus/list_anggota/update', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: param,
-            })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response.status);
-                if (response.status === true) {
-                    $('#m_edit').modal('hide');
-                    Swal.fire({
-                        type: "success",
-                        title: 'Berhasil!',
-                        text: 'Data berhasil diubah.',
-                        confirmButtonClass: 'btn btn-success',
-                        timer: 1500
-                    });
-                    setTimeout(function() {
-                        location.reload();
-                    }, 500);
-                } else if (response.status === false) {
-                    Swal.fire({
-                        type: "warning",
-                        title: 'Gagal!',
-                        text: 'Gagal mengubah data.',
-                        confirmButtonClass: 'btn btn-warning',
-                        timer: 1500
-                    });
-
-                    $('[name="nama_lengkap_"]').addClass(response.error_class['nama_lengkap_']);
-                    $('[name="nama_lengkap_"]').next().text(response.error_string['nama_lengkap_']);
-
-                    $('[name="npm_"]').addClass(response.error_class['npm_']);
-                    $('[name="npm_"]').next().text(response.error_string['npm_']);
-
-                    $('[name="ttl_"]').addClass(response.error_class['ttl_']);
-                    $('[name="ttl_"]').next().text(response.error_string['ttl_']);
-
-                    $('[name="alamat_"]').addClass(response.error_class['alamat_']);
-                    $('[name="alamat_"]').next().text(response.error_string['alamat_']);
-
-                    $('[name="email_"]').addClass(response.error_class['email_']);
-                    $('[name="email_"]').next().text(response.error_string['email_']);
-
-                    $('[name="no_hp_"]').addClass(response.error_class['no_hp_']);
-                    $('[name="no_hp_"]').next().text(response.error_string['no_hp_']);
-                }
-            })
-            .catch((error) => {
-                Swal.fire({
-                    type: "error",
-                    title: 'Kesalahan!',
-                    text: 'Terjadi Kesalahan.',
-                    confirmButtonClass: 'btn btn-danger',
-                });
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                $("#loading").hide();
-            });
-    }
-
-    function confirm_del(id) {
-        var id_anggota = id;
-        Swal.fire({
-            title: 'Apakah anda yakin akan menghapus data ini',
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya!',
-            cancelButtonText: 'Batal!',
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-warning ml-1',
-            buttonsStyling: false,
-        }).then(function(result) {
-
-            if (result.value) {
-                del(id_anggota);
-            }
-        });
-    }
-    async function del(id_anggota) {
-        $("#loading").show();
         const param = new FormData();
-        param.append('id', id_anggota);
 
-        await fetch(SITE_URL + 'pengurus/list_anggota/hapus_anggota', {
+        param.append('id_mhs', id_mhs);
+        await fetch(SITE_URL + 'pengurus/list_anggota/verif', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
@@ -351,17 +160,27 @@
             })
             .then(response => response.json())
             .then(response => {
+                // console.log(response.status);
                 if (response.status === true) {
                     Swal.fire({
                         type: "success",
                         title: 'Berhasil!',
-                        text: 'Data berhasil dihapus.',
+                        text: 'Data berhasil diverif.',
                         confirmButtonClass: 'btn btn-success',
                         timer: 1500
                     });
                     setTimeout(function() {
                         location.reload();
                     }, 500);
+                } else if (response.status === false) {
+                    Swal.fire({
+                        type: "warning",
+                        title: 'Gagal!',
+                        text: 'Gagal verif data.',
+                        confirmButtonClass: 'btn btn-warning',
+                        timer: 1500
+                    });
+
                 }
             })
             .catch((error) => {
@@ -376,5 +195,33 @@
             .finally(() => {
                 $("#loading").hide();
             });
+    }
+
+    function get_detail(id_anggota) {
+        $.ajax({
+            url: '<?= base_url('pengurus/list_anggota/cek_detail'); ?>',
+            type: 'POST',
+            data: {
+                id: id_anggota
+            },
+            success: function(data) {
+                var myObj = JSON.parse(data);
+                document.getElementById("id_mhs").value = id_anggota;
+                document.getElementById("nama_lengkap_").value = myObj.nama;
+                document.getElementById("npm_").value = myObj.npm;
+                document.getElementById("ttl_").value = myObj.tempat_tgl_lahir;
+                document.getElementById("no_hp_").value = myObj.no_hp;
+                document.getElementById("alamat_").value = myObj.alamat;
+                document.getElementById("email_").value = myObj.email;
+
+                if (myObj.foto != null || myObj.foto != '') {
+                    console.log('ASD');
+                    var foto = myObj.foto;
+                    var subs = foto.substring(43);
+                    $('#imgPreview').attr('src', BASE_URL + myObj.foto);
+                }
+
+            }
+        });
     }
 </script>

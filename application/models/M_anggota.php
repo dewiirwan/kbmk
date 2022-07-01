@@ -114,15 +114,33 @@ class M_anggota extends CI_Model
         return $hasil;
     }
 
+    function file_list_by_id_mhs_pengurus($id_mhs)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_anggota = '$id_mhs' AND pengirim = 'PENGURUS' ORDER BY tanggal_upload ASC");
+        return $hasil;
+    }
+
     function file_list_by_id_mhs_result($id_mhs)
     {
         $hasil = $this->db->query("SELECT * FROM log_file WHERE id_pengirim = '$id_mhs' AND pengirim = 'ANGGOTA' ORDER BY tanggal_upload ASC");
         return $hasil->result();
     }
 
+    function file_list_by_id_mhs_result_pengurus($id_mhs)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE id_anggota = '$id_mhs' AND pengirim = 'PENGURUS' ORDER BY tanggal_upload ASC");
+        return $hasil->result();
+    }
+
     function file_list_by_dok_file($DOK_FILE)
     {
         $hasil = $this->db->query("SELECT * FROM log_file WHERE dok_file = '$DOK_FILE' AND pengirim = 'ANGGOTA' ORDER BY tanggal_upload ASC");
+        return $hasil;
+    }
+
+    function file_list_by_dok_file_pengurus($DOK_FILE)
+    {
+        $hasil = $this->db->query("SELECT * FROM log_file WHERE dok_file = '$DOK_FILE' AND pengirim = 'PENGURUS' ORDER BY tanggal_upload ASC");
         return $hasil;
     }
 

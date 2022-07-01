@@ -23,6 +23,76 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Custom styles for this template -->
     <link href="<?= base_url(); ?>assets/template/css/style.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/sweetalert2/sweetalert2.min.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/toastr/toastr.min.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/ekko-lightbox/ekko-lightbox.css">
+
+    <script nonce="f733f503-1503-460a-8aa1-e9fbc286792d">
+        (function(w, d) {
+            ! function(a, e, t, r) {
+                a.zarazData = a.zarazData || {}, a.zarazData.executed = [], a.zaraz = {
+                    deferred: []
+                }, a.zaraz.q = [], a.zaraz._f = function(e) {
+                    return function() {
+                        var t = Array.prototype.slice.call(arguments);
+                        a.zaraz.q.push({
+                            m: e,
+                            a: t
+                        })
+                    }
+                };
+                for (const e of ["track", "set", "ecommerce", "debug"]) a.zaraz[e] = a.zaraz._f(e);
+                a.zaraz.init = () => {
+                    var t = e.getElementsByTagName(r)[0],
+                        z = e.createElement(r),
+                        n = e.getElementsByTagName("title")[0];
+                    for (n && (a.zarazData.t = e.getElementsByTagName("title")[0].text), a.zarazData.x = Math.random(), a.zarazData.w = a.screen.width, a.zarazData.h = a.screen.height, a.zarazData.j = a.innerHeight, a.zarazData.e = a.innerWidth, a.zarazData.l = a.location.href, a.zarazData.r = e.referrer, a.zarazData.k = a.screen.colorDepth, a.zarazData.n = e.characterSet, a.zarazData.o = (new Date).getTimezoneOffset(), a.zarazData.q = []; a.zaraz.q.length;) {
+                        const e = a.zaraz.q.shift();
+                        a.zarazData.q.push(e)
+                    }
+                    z.defer = !0;
+                    for (const e of [localStorage, sessionStorage]) Object.keys(e || {}).filter((a => a.startsWith("_zaraz_"))).forEach((t => {
+                        try {
+                            a.zarazData["z_" + t.slice(7)] = JSON.parse(e.getItem(t))
+                        } catch {
+                            a.zarazData["z_" + t.slice(7)] = e.getItem(t)
+                        }
+                    }));
+                    z.referrerPolicy = "origin", z.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(a.zarazData))), t.parentNode.insertBefore(z, t)
+                }, ["complete", "interactive"].includes(e.readyState) ? zaraz.init() : a.addEventListener("DOMContentLoaded", zaraz.init)
+            }(w, d, 0, "script");
+        })(window, document);
+    </script>
+
+    <style>
+        div.gallery {
+            margin: 7px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 210px;
+        }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body id="page-top" class="landing-page no-skin-config">
@@ -101,10 +171,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div>
                     <i class="fa fa-bell features-icon"></i>
                     <h2>VISI</h2>
-                    <ul><bold>
-                        <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p> 
-                        <p>2. Menciptakan suasana kekeluargaan antar anggota KBMK Universitas Gunadarma dan aktif dalam media online sebagai bentuk aktivitas dari KBMK Universitas Gunadarma selama masa pandemi dan aktivitas offline pada saat pandemi berakhir</p>
-                </ul> </bold>
+                    <ul>
+                        <bold>
+                            <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p>
+                            <p>2. Menciptakan suasana kekeluargaan antar anggota KBMK Universitas Gunadarma dan aktif dalam media online sebagai bentuk aktivitas dari KBMK Universitas Gunadarma selama masa pandemi dan aktivitas offline pada saat pandemi berakhir</p>
+                    </ul>
+                    </bold>
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
@@ -134,58 +206,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 wow fadeInLeft">
-                    <div class="team-member">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/Ws.Chandra.jpg" class="img-responsive img-circle img-small" alt="">
-                        <h4><span class="navy">Ws. Chandra Kurniawan</span></h4>
-                        <p>Ws. Chandra Kurniawan sebagai Dewan Penasihat Makin Semangat Genta Rohani Cilodong</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
+                <div class="col-sm-12">
                     <div class="team-member wow zoomIn">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/Js.OkThian.jpg" class="img-responsive img-circle" alt="">
-                        <h4><span class="navy">Js. Oey Ok Thian</span></h4>
-                        <p>Js. Oey Ok Thian sebagai Ketua Makin Semangat Genta Rohani Cilodong.</p>
-                    </div>
-                </div>
-                <div class="col-sm-4 wow fadeInRight">
-                    <div class="team-member">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/Js.herry.jpg" class="img-responsive img-circle img-small" alt="">
-                        <h4><span class="navy">Js. Heri Setiadi</span></h4>
-                        <p>Js. Heri Setiadi sebagai Sie Kerohanian dan Pelayanan Makin Semangat Genta Rohani Cilodong.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row m-b-lg">
-                <div class="col-lg-12 text-center">
-                    <div class="navy-line"></div>
-                    <h1>Pengurus Lithang SEGAR</h1>
-                    <p>Pengurus di Lithang Semangat Genta Rohani Cilodong.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 wow fadeInLeft">
-                    <div class="team-member">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/ko_talen.jpg" class="img-responsive img-circle img-small" alt="">
-                        <h4><span class="navy">Junaedi</span></h4>
-                        <p>Dq. Junaedi sebagai Sie Umum Makin Semangat Genta Rohani Cilodong.</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member wow zoomIn">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/citanty1.jpg" class="img-responsive img-circle" alt="">
-                        <h4><span class="navy">Ritanty Kumala</span></h4>
-                        <p>Dq. Ritanty Kumala sebagai Sie Kewanitaan dan Kepemudaan Makin Semangat Genta Rohani Cilodong. </p>
-                    </div>
-                </div>
-                <div class="col-sm-4 wow fadeInRight">
-                    <div class="team-member">
-                        <img src="<?= base_url(); ?>assets/template/img/landing/ko surya.jpg" class="img-responsive img-circle img-small" alt="">
-                        <h4><span class="navy">Surya Cintawarma</span></h4>
-                        <p>Dq. Surya Cintawarman sebagai Sekretaris Makin Semangat Genta Rohani Cilodong.</p>
+                        <a href="<?= base_url(); ?>assets/template/img/bagan_kbmk.png" target="_blank">
+                            <img src="<?= base_url(); ?>assets/template/img/bagan_kbmk.png" class="img-responsive" alt="">
+                        </a>
+                        <!-- <h4><span class="navy">Js. Oey Ok Thian</span></h4>
+                        <p>Js. Oey Ok Thian sebagai Ketua Makin Semangat Genta Rohani Cilodong.</p> -->
                     </div>
                 </div>
             </div>
@@ -203,41 +230,67 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
 
-            <div class="gray-bg">
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-lg-2">
-
-                    </div>
-                </div>
-
-                <div class="wrapper wrapper-content  animated fadeInRight blog">
-                    <div class="row">
-                        <?php foreach ($pengumuman as $pngmmn) { ?>
-                            <div class="col-lg-6">
-                                <div class="ibox">
-                                    <div class="ibox-content">
-                                        <a class="btn-link">
-                                            <h2>
-                                                <?= $pngmmn->JUDUL ?>
-                                            </h2>
-                                        </a>
-
-                                        <div class="small m-b-xs">
-                                            <span class="text-muted"><i class="fa fa-clock-o"></i> <?= $pngmmn->TANGGAL_POSTING ?></span>
+            <div class="wrapper wrapper-content  animated fadeInRight blog">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist" style="justify-content: center; display:flex;">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="custom-tabs-five-one-tab" data-toggle="pill" href="#custom-tabs-five-one" role="tab" aria-controls="custom-tabs-five-one" aria-selected="true" style="font-weight:bold; font-size:18px;">Tab 1</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="custom-tabs-five-two-tab" data-toggle="pill" href="#custom-tabs-five-two" role="tab" aria-controls="custom-tabs-five-two" aria-selected="false" style="font-weight:bold; font-size:18px;">Tab 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-five-tabContent">
+                                    <div class="tab-pane fade show active" id="custom-tabs-five-one" role="tabpanel" aria-labelledby="custom-tabs-five-one-tab">
+                                        <div class="gallery">
+                                            <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto1.jpeg">
+                                                <img src="<?= base_url() ?>assets/foto_kegiatan/foto1.jpeg" alt="Cinque Terre" width="600" height="400">
+                                            </a>
+                                            <div class="desc">Add a description of the image here</div>
                                         </div>
-                                        <h3><?= $pngmmn->HEADLINE_BERITA ?></h3>
-                                        <p><?= $pngmmn->ISI_BERITA ?></p>
+
+                                        <div class="gallery">
+                                            <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto2.jpeg">
+                                                <img src=" <?= base_url() ?>assets/foto_kegiatan/foto2.jpeg" alt=" Forest" width="600" height="400">
+                                            </a>
+                                            <div class="desc">Add a description of the image here</div>
+                                        </div>
+
+                                        <div class="gallery">
+                                            <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto3.jpeg">
+                                                <img src=" <?= base_url() ?>assets/foto_kegiatan/foto3.jpeg" alt=" Northern Lights" width="600" height="400">
+                                            </a>
+                                            <div class="desc">Add a description of the image here</div>
+                                        </div>
+
+                                        <div class="gallery">
+                                            <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto4.jpeg">
+                                                <img src=" <?= base_url() ?>assets/foto_kegiatan/foto4.jpeg" alt=" Mountains" width="600" height="400">
+                                            </a>
+                                            <div class="desc">Add a description of the image here</div>
+                                        </div>
+
+                                        <div class="gallery">
+                                            <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto5.jpeg">
+                                                <img src=" <?= base_url() ?>assets/foto_kegiatan/foto5.jpeg" alt=" Mountains" width="600" height="400">
+                                            </a>
+                                            <div class="desc">Add a description of the image here</div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="custom-tabs-five-two" role="tabpanel" aria-labelledby="custom-tabs-five-two-tab">
+                                        Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
                                     </div>
                                 </div>
                             </div>
 
-                        <?php
-                        }
-                        ?>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
@@ -271,13 +324,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <address>
                         <strong><span class="navy">KBMK Universitas Gunadarma</span></strong><br />
                         Kampus D Universitas Gunadarma <br />
-                        Jl. Margonda Raya 100. Pondok Cina, Kecamatan Beji, Kota Depok, Jawa Barat <br />        
+                        Jl. Margonda Raya 100. Pondok Cina, Kecamatan Beji, Kota Depok, Jawa Barat <br />
                         <br>
                         Nomor yang dapat dihubungi: 0895345531188<br />
                     </address>
                 </div>
                 <div class="col-lg-4">
-                    <p class="text-color" >
+                    <p class="text-color">
                         Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
                     </p>
                 </div>
@@ -313,6 +366,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script src="<?= base_url(); ?>assets/template/js/inspinia.js"></script>
     <script src="<?= base_url(); ?>assets/template/js/plugins/pace/pace.min.js"></script>
     <script src="<?= base_url(); ?>assets/template/js/plugins/wow/wow.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/adminlte/plugins/jquery/jquery.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/adminlte/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/adminlte/dist/js/adminlte.min.js?v=3.2.0"></script>
+
+    <script src="<?= base_url(); ?>assets/adminlte/dist/js/demo.js"></script>
 
 
     <script>
@@ -368,6 +431,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         // Activate WOW.js plugin for animation on scrol
         new WOW().init();
+    </script>
+
+    <script>
+        $(function() {
+            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                    alwaysShowClose: true
+                });
+            });
+
+            $('.filter-container').filterizr({
+                gutterPixels: 3
+            });
+            $('.btn[data-filter]').on('click', function() {
+                $('.btn[data-filter]').removeClass('active');
+                $(this).addClass('active');
+            });
+        })
     </script>
 
 </body>

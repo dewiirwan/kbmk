@@ -202,7 +202,8 @@ class Auth extends CI_Controller
                  password anda.</strong><br>';
             $message .= '<strong>Silakan klik link ini:</strong> ' . $link;
 
-            $this->send($email, $message);
+            redirect($url, 'refresh');
+            // $this->send($email, $message);
             // exit;
             // echo $message; //send this through mail  
             // exit;
@@ -220,7 +221,7 @@ class Auth extends CI_Controller
         // var_dump($user_info);
         // die;
         if (!$user_info) {
-            $this->session->set_flashdata('sukses', 'Token tidak valid atau kadaluarsa');
+            $this->session->set_flashdata('message', 'Token tidak valid atau kadaluarsa');
             redirect(site_url('auth'), 'refresh');
             // var_dump($token);
             // var_dump($cleanToken);
@@ -247,11 +248,15 @@ class Auth extends CI_Controller
             $cleanPost['id_user'] = $user_info->id_user;
             unset($cleanPost['konfirmasi_password']);
             if (!$this->m_auth->updatePassword($cleanPost)) {
-                $this->session->set_flashdata('sukses', 'Update password gagal.');
+                $this->session->set_flashdata('message', 'Update password gagal.');
             } else {
-                $this->session->set_flashdata('sukses', 'Password anda sudah  
-             diperbaharui. Silakan login.');
+                $this->session->set_flashdata('message', 'Password anda sudah  
+                diperbaharui. Silakan login.');
+                //     $this->session->set_flashdata('sukses', 'Password anda sudah  
+                //  diperbaharui. Silakan login.');
             }
+            // var_dump($this->session->flashdata('message'));
+            // die;
             redirect(site_url('auth'), 'refresh');
         }
     }

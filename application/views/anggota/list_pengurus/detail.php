@@ -1,141 +1,106 @@
-<main class="mdl-layout__content ">
+<style>
+    .btn-outline-primary {
+        color: #007bff;
+        background-color: transparent;
+        background-image: none;
+        border-color: #007bff;
+    }
+</style>
 
-    <div class="mdl-grid ui-tables">
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Biodata</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= base_url() ?>">Home</a>
+            </li>
+            <li>
+                <a href="<?= base_url('anggota/list_pengurus') ?>">Pengurus</a>
+            </li>
+            <li class="active">
+                <strong>
+                    <a>Biodata</a>
+                </strong>
+            </li>
+        </ol>
+    </div>
+</div>
 
-        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
-            <div class="mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title" style="display: block;">
-                    <h1 class="mdl-card__title-text">List Pengurus</h1>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="<?php echo base_url('index.php') ?>">Home</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url('index.php/anggota/list_pengurus') ?>">Pengurus</a>
-                        </li>
-                        <li class="active">
-                            <strong>
-                                <a>Detail Pengurus</a>
-                            </strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="mdl-card__supporting-text no-padding">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
 
-                                <!-- BAGIAN PROFIL -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <h5>Detail Pengurus</h5>
-                                            </div>
+            <!-- BAGIAN PROFIL -->
+            <div class="row">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title border-bottom white-bg page-heading">
+                        <div class="col-lg-5">
+                            <p style="margin-top: 10px; font-size:20px;">BIODATA & FOTO</p>
+                        </div>
+                    </div>
 
-                                            <?php foreach ($query_detil_pengurus_result as $data_pengurus) { ?>
-                                                <div class="ibox-content">
-                                                    <div class="row">
-                                                        <div class="col-lg-5">
-                                                            <dl class="dl-horizontal">
-
-                                                                <dt>Nama Pengurus:</dt>
-                                                                <dd><?php echo $data_pengurus->nama; ?></dd>
-                                                                <dt>Email:</dt>
-                                                                <dd><?php echo $data_pengurus->email; ?></dd>
-                                                                <dt>No Telepon:</dt>
-                                                                <dd><?php echo $data_pengurus->no_hp; ?></dd>
-                                                            </dl>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
+                    <div class="form-horizontal">
+                        <form class="form-horizontal" action="#" id="form_edit" method="POST">
+                            <div class="modal-body">
+                                <input type="hidden" name="id_pengurus" id="id_pengurus">
+                                <div class="form-group">
+                                    <label for="nama_lengkap" class="col-sm-3 control-label">Nama Lengkap :</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="nama_lengkap_" class="form-control" id="nama_lengkap_" placeholder="Nama Lengkap" readonly>
+                                        <span class="help-block text-danger"></span>
                                     </div>
                                 </div>
-                                <!-- BAGIAN PROFIL -->
-
-                                <!-- BAGIAN DOWNLOAD FILE -->
-                                <?php if ($FILE == "ADA") { ?>
-                                    <div class="row">
-                                        <div class="col-lg-9 animated fadeInRight">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <?php foreach ($dokumen as $pengurus_file) { ?>
-
-                                                        <div class="file-box">
-                                                            <div class="file">
-                                                                <a href="#">
-                                                                    <span class="corner"></span>
-
-                                                                    <?php if ($pengurus_file->ekstensi == "jpg" || $pengurus_file->ekstensi == "png" || $pengurus_file->ekstensi == "jpeg" || $pengurus_file->ekstensi == "bmp") {
-                                                                        echo ("<div class='image'>
-												<img alt='image' class='img-responsive' 
-												src='" . base_url() . $pengurus_file->keterangan_assets . "'></div>");
-                                                                    } else {
-                                                                        echo ("<div class='icon'>
-												<i class='fa fa-file'></i>
-												</div>");
-                                                                    } ?>
-                                                                    <div class="file-name">
-                                                                        <a href="<?php echo base_url(); ?>assets/uploads/pengurus/<?php echo $pengurus_file->dok_file; ?>">Download file</a>
-                                                                        <br />
-                                                                        <small>Jenis file: <?php echo $pengurus_file->jenis_file; ?></small>
-                                                                        <br />
-                                                                        <small>Keterangan file: <?php echo $pengurus_file->keterangan_file; ?></small>
-                                                                        <br />
-                                                                        <small>Diupload: <?php echo $pengurus_file->tanggal_upload; ?></small>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-
-                                                    <?php } ?>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="npm" class="col-sm-3 control-label">NPM :</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="npm_" class="form-control" id="npm_" placeholder="NPM" readonly>
+                                        <span class="help-block text-danger"></span>
                                     </div>
-
-                                <?php } else { ?>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="ibox">
-                                                <div class="ibox-title">
-                                                    <h5>Download File Dokumen</h5>
-                                                    <div class="ibox-tools">
-                                                        <a class="collapse-link">
-                                                            <i class="fa fa-chevron-up"></i>
-                                                        </a>
-                                                        <a class="fullscreen-link">
-                                                            <i class="fa fa-expand"></i>
-                                                        </a>
-                                                        <a class="close-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="ibox-content">
-                                                    Belum ada file dokumen. Silakan upload file dokumen.
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Tempat Tanggal lahir :</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="ttl_" class="form-control" id="ttl_" placeholder="Contoh: Bogor, 16 Mei 1996" readonly>
+                                        <span class="help-block text-danger"></span>
                                     </div>
-                                <?php } ?>
-                                <!-- BAGIAN DOWNLOAD FILE -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Nomor Handphone :</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="no_hp_" class="form-control" id="no_hp_" placeholder="Contoh: 08123456789" readonly>
+                                        <span class="help-block text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Alamat :</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="alamat_" name="alamat_" value="" placeholder="Masukkan Alamat Lengkap" required readonly>
+                                        <span class="help-block text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label">Email :</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" name="email_" class="form-control" id="email_" placeholder="Contoh: google@gmail.com" required="required" readonly>
+                                        <span class="help-block text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <div class="input-group">
+                                        <div class="input-group-prepend"> -->
+                                    <label class="col-sm-3 control-label">Foto :</label>
 
-
+                                    <img id="imgPreview" style="width: 55.8%;margin-left: 26.5%;border-radius: 5px;" />
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</main>
+</div>
+<?php include('js.php') ?>
 
 <!-- Mainly scripts -->
 <script src="<?php echo base_url(); ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>

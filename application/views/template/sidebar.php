@@ -1,7 +1,8 @@
 <div class="logo-element">
     KBMK
 </div>
-<?php if ($id_group == '1') { ?> <!-- admin -->
+<?php if ($id_group == '1') { ?>
+    <!-- admin -->
     <li class="active">
         <a href="<?= base_url('dashboard_pengurus'); ?>"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> </a>
     </li>
@@ -29,9 +30,10 @@
     <!-- <li class="active">
         <a href="<?= base_url('pengurus/list_event'); ?>"><i class="fa fa-heartbeat"></i> <span class="nav-label">List Jadwal</span> </a>
     </li> -->
-<?php } else { ?> <!-- anggota -->
+<?php } else { ?>
+    <!-- anggota -->
     <li class="active">
-        <a href="<?= base_url('dashboard_anggota'); ?>"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> </a>
+        <a href="<?= base_url('dashboard_mhs'); ?>"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> </a>
     </li>
     <li class="active">
         <a href="<?= base_url('anggota/profil_anggota'); ?>"><i class="fa fa-user"></i> <span class="nav-label">Profil Anggota</span> </a>
@@ -46,7 +48,7 @@
         <a href="<?= base_url('anggota/list_kegiatan'); ?>"><i class="fa fa-heartbeat"></i> <span class="nav-label">List Kegiatan</span> </a>
     </li>
     <li class="active">
-        <a href="<?= base_url('anggota/sertif'); ?>"><i class="fa fa-trophy"></i> <span class="nav-label">List Sertifikat</span> </a>
+        <a href="<?= base_url('anggota/list_sertif'); ?>"><i class="fa fa-trophy"></i> <span class="nav-label">List Sertifikat</span> </a>
     </li>
 <?php } ?>
 

@@ -137,6 +137,23 @@ class List_pengurus extends CI_Controller
         }
     }
 
+    public function cek_detail()
+    {
+        $id     = $this->input->post('id');
+
+        $query['select'] = 'a.*';
+        $query['table']  = 'pengurus a';
+        $query['where']  = 'a.id_pengurus = ' . $id;
+
+        if (isset($id)) {
+            $cek                                = $this->m_global->getRow($query);
+            echo json_encode($cek);
+        } else {
+            $this->session->set_flashdata('pesan_gagal', 'Id tidak boleh kosong');
+            redirect('anggota/list_pengurus');
+        }
+    }
+
     public function user_log($KETERANGAN)
     {
 

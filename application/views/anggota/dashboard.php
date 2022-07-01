@@ -65,6 +65,7 @@
         border-style: solid;
         border-width: 2px;
         position: relative;
+        background-color: #fff;
     }
 
     .content-box-header {
@@ -101,47 +102,6 @@
 
                     <h2><span class="text-navy">KBMK</span>
                         adalah Keluarga Besar Mahasiswa Khonghucu<br /></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-danger pull-right">Hari ini</span>
-                    <h5>Total Umat</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">31</h1>
-                    <div class="stat-percent font-bold text-danger">100% <i class="fa fa-group"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Hari ini</span>
-                    <h5>Total Pengkhotbah</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">32</h1>
-                    <div class="stat-percent font-bold text-success">100% <i class="fa fa-group"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-warning pull-right">Hari ini</span>
-                    <h5>Total Kegiatan</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">43</h1>
-                    <div class="stat-percent font-bold text-warning">100% <i class="fa fa-group"></i></div>
                 </div>
             </div>
         </div>

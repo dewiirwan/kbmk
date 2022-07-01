@@ -10,6 +10,7 @@
         });
     });
     $(document).ready(function() {
+        get_detail(<?= @$id_pengurus; ?>);
         dataTable = $('#tabel').DataTable({
             paginationType: 'full_numbers',
             processing: true,
@@ -83,6 +84,34 @@
             dataTable.ajax.reload(null, true);
         }
     });
+
+    function get_detail(id_pengurus) {
+        $.ajax({
+            url: '<?= base_url('anggota/list_pengurus/cek_detail'); ?>',
+            type: 'POST',
+            data: {
+                id: id_pengurus
+            },
+            success: function(data) {
+                var myObj = JSON.parse(data);
+                document.getElementById("id_pengurus").value = id_pengurus;
+                document.getElementById("nama_lengkap_").value = myObj.nama;
+                document.getElementById("npm_").value = myObj.npm;
+                document.getElementById("ttl_").value = myObj.tempat_tgl_lahir;
+                document.getElementById("no_hp_").value = myObj.no_hp;
+                document.getElementById("alamat_").value = myObj.alamat;
+                document.getElementById("email_").value = myObj.email;
+
+                if (myObj.foto != null || myObj.foto != '') {
+                    console.log('ASD');
+                    var foto = myObj.foto;
+                    var subs = foto.substring(43);
+                    $('#imgPreview').attr('src', BASE_URL + myObj.foto);
+                }
+
+            }
+        });
+    }
 
     function refresh_page() {
         location.reload();

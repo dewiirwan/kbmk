@@ -108,6 +108,11 @@ class Pengajuan extends CI_Controller
         echo json_encode(['status' => $status]);
     }
 
+    public function cetak()
+    {
+        $this->load->view('cetak_pdf');
+    }
+
     public function detail()
     {
         if (!$this->ion_auth->logged_in()) {

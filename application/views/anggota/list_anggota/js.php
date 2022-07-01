@@ -10,14 +10,6 @@
         });
     });
     $(document).ready(function() {
-        const newURL =
-            window.location.protocol +
-            "://" +
-            window.location.host +
-            "/" +
-            window.location.pathname;
-        const pathArray = window.location.pathname.split("/");
-        const segment_4 = pathArray[4];
         get_edit(<?= $id_mhs; ?>);
     });
 

@@ -9,6 +9,7 @@ class List_anggota extends CI_Controller
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
+        $this->load->helper('my_date_helper');
         $this->load->model('m_anggota');
         $this->load->model('m_global');
         $this->load->model('M_foto');
@@ -391,6 +392,161 @@ class List_anggota extends CI_Controller
         }
     }
 
+    public function detail_upload()
+    {
+        //jika mereka belum login
+        if (!$this->ion_auth->logged_in()) {
+            // alihkan mereka ke halaman login
+            redirect('auth/login', 'refresh');
+        }
+
+        //get data tabel users untuk ditampilkan
+        $user = $this->ion_auth->user()->row();
+        $id_group = $this->db->query('SELECT id_group FROM users_groups WHERE id_user = ' . $user->id_user . '')->row();
+
+        $this->data['USER_ID'] = $user->id_user;
+        $this->data['id_mhs'] = $user->id_mhs;
+        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
+        $this->data['role_user'] = 'pengurus';
+        $this->data['ip_address'] = $user->ip_address;
+        $this->data['email'] = $user->email;
+        date_default_timezone_set('Asia/Jakarta');
+        $this->data['last_login'] =  date('d-m-Y H:i:s', $user->last_login);
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        $this->data['message_deaktivasi'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message_deaktivasi');
+        $this->data['isi'] = 'pengurus/list_anggota/upload';
+        $this->data['id_group'] = $id_group->id_group;
+
+        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
+        if ($query_foto_user == "BELUM ADA FOTO") {
+            $this->data['foto_user'] = "assets/img/profile_small.jpg";
+        } else {
+            $this->data['foto_user'] = $query_foto_user['KETERANGAN_2'];
+        }
+
+        $this->data['id_mhs'] = $this->uri->segment(4);
+
+        //Kueri data di tabel pengurus
+        $query_detil_anggota = $this->m_anggota->get_detil($this->data['id_mhs']);
+
+        $query_detil_anggota_result = $this->m_anggota->get_detil_result($this->data['id_mhs']);
+        $this->data['query_detil_anggota_result'] = $query_detil_anggota_result;
+
+        if ($query_detil_anggota->num_rows() == 0) {
+            // alihkan mereka ke halaman list pengurus
+            redirect('pengurus/list_anggota', 'refresh');
+        }
+        //Kueri data di tabel anggota file
+        $query_file_id_mhs = $this->m_anggota->file_list_by_id_mhs($this->data['id_mhs']);
+
+        //log
+        $KETERANGAN = "Upload Sertifikat Anggota: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_mhs);
+        $this->user_log($KETERANGAN);
+
+        $hasil_1 = $query_detil_anggota->row();
+        $this->data['id_mhs'] = $hasil_1->id_mhs;
+        $sess_data['id_mhs'] = $this->data['id_mhs'];
+        $this->session->set_userdata($sess_data);
+
+        if ($query_file_id_mhs->num_rows() > 0) {
+
+            $this->data['dokumen'] = $this->m_anggota->file_list_by_id_mhs_result($this->data['id_mhs']);
+
+            $hasil = $query_file_id_mhs->row();
+            $DOK_FILE = $hasil->dok_file;
+            $TANGGAL_UPLOAD = $hasil->tanggal_upload;
+
+            if (file_exists($file = './assets/uploads/anggota/' . $DOK_FILE)) {
+                $this->data['DOK_FILE'] = $DOK_FILE;
+                $this->data['TANGGAL_UPLOAD'] = $TANGGAL_UPLOAD;
+                $this->data['FILE'] = "ADA";
+            }
+        } else {
+            $this->data['FILE'] = "TIDAK ADA";
+        }
+
+        //jika mereka sudah login dan sebagai admin
+        if ($this->ion_auth->in_group(1)) {
+
+            $this->load->view('template/wrapper', $this->data);
+        } else {
+            $this->logout();
+        }
+    }
+
+
+    public function cek_detail()
+    {
+        $id     = $this->input->post('id');
+
+        $query['select'] = 'a.*';
+        $query['table']  = 'mahasiswa a';
+        $query['where']  = 'a.id_mhs = ' . $id;
+
+        if (isset($id)) {
+            $cek                                = $this->m_global->getRow($query);
+            echo json_encode($cek);
+        } else {
+            $this->session->set_flashdata('pesan_gagal', 'Id tidak boleh kosong');
+            redirect('pengurus/list_anggota');
+        }
+    }
+
+    public function verif()
+    {
+        if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(1))) {
+
+            $status                = true;
+            $user = $this->ion_auth->user()->row();
+
+            $id_mhs = $this->input->post('id_mhs');
+
+            $pengajuan = $this->db->query("SELECT * FROM form_pengajuan 
+            WHERE id_mhs = '$id_mhs'")->row();
+
+            if ($pengajuan) {
+                $nama_lengkap             = $pengajuan->nama;
+                $kelas             = $pengajuan->kelas;
+                $npm        = $pengajuan->npm;
+                $no_telp                 = $pengajuan->no_telp;
+                $fakultas                 = $pengajuan->fakultas;
+                $jurusan                 = $pengajuan->jurusan;
+                $semester             = $pengajuan->semester;
+                $tahun_angkatan                 = $pengajuan->tahun_angkatan;
+                $region             = $pengajuan->region_kampus;
+
+                $tgl = GetFullDateFull(date('Y-m-d'));
+
+                $this->sertifikat($nama_lengkap, $kelas, $npm, $no_telp, $fakultas, $jurusan, $semester, $tahun_angkatan, $region, $tgl);
+                $pdf_name = 'Pengajuan_Keikutsertaan_Pembelajaraan_Agama_Khonghucu_Verif_' . @$npm . '_' . time() . '.pdf';
+                $data = array(
+                    'file_pdf' => $pdf_name,
+                    'status_verif'    => '1'
+                );
+
+                $KETERANGAN = "Update Pengajuan: "
+                    . "; " . $nama_lengkap
+                    . "; " . $kelas
+                    . "; " . $npm
+                    . "; " . $no_telp
+                    . "; " . $fakultas
+                    . "; " . $jurusan
+                    . "; " . $semester
+                    . "; " . $tahun_angkatan
+                    . "; " . $region;
+                $this->user_log($KETERANGAN);
+            } else {
+                $status = false;
+            }
+        } else {
+            $this->logout();
+        }
+
+        $this->db->where('id_mhs', $id_mhs);
+        $this->db->update('form_pengajuan', $data);
+        echo json_encode(['status' => $status]);
+    }
+
     //Untuk proses upload file
     function proses_upload_file()
     {
@@ -406,7 +562,7 @@ class List_anggota extends CI_Controller
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {
             $WAKTU = date('Y-m-d H:i:s');
 
-            $nama_file = "file_" . $id_pengirim . '_';
+            $nama_file = "file_sertifikat_" . $id_pengirim . '_';
             $config['upload_path']   = './assets/uploads/anggota/';
             $config['allowed_types'] = 'jpg|png|jpeg|bmp|pdf';
             $config['file_name'] = $nama_file;
@@ -418,14 +574,19 @@ class List_anggota extends CI_Controller
                 $nama = $this->upload->data('file_name');
                 $EKSTENSI = pathinfo($nama, PATHINFO_EXTENSION);
 
+                // var_dump($nama);
+                // die;
+
                 $file_upload = $this->upload->data();
 
                 $JENIS_FILE = $this->input->post('JENIS_FILE');
                 $KETERANGAN_FILE = $this->input->post('KETERANGAN_FILE');
 
                 $KETERANGAN = './assets/uploads/anggota/' . $nama;
-                $this->db->insert('log_file', array('id_pengirim' => $id_pengirim, 'jenis_file' => $JENIS_FILE, 'ekstensi' => $EKSTENSI, 'dok_file' => $nama, 'tanggal_upload' => $WAKTU, 'keterangan_assets' => $KETERANGAN, 'keterangan_file' => $KETERANGAN_FILE, 'pengirim' => 'Anggota'));
+                $this->db->insert('log_file', array('id_pengirim' => $id_pengirim, 'jenis_file' => 'Sertifikat', 'ekstensi' => $EKSTENSI, 'dok_file' => $nama, 'tanggal_upload' => $WAKTU, 'keterangan_assets' => $KETERANGAN, 'keterangan_file' => $KETERANGAN_FILE, 'pengirim' => 'ANGGOTA'));
             } else {
+                // var_dump($this->upload->do_upload('userfile'));
+                // die;
                 redirect($_SERVER['REQUEST_URI'], 'refresh');
             }
         } else {
@@ -459,16 +620,141 @@ class List_anggota extends CI_Controller
 
                 $this->m_anggota->hapus_data_by_dok_file($DOK_FILE);
 
-                $id_anggota = $this->session->userdata('id_anggota');
-                redirect('/pengurus/list_anggota/detail/' . $id_anggota, 'refresh');
+                $id_anggota = $this->session->userdata('id_mhs');
+                redirect('/pengurus/list_anggota/detail_upload/' . $id_anggota, 'refresh');
             } else {
-                $id_anggota = $this->session->userdata('id_anggota');
-                redirect('/pengurus/list_anggota/detail/' . $id_anggota, 'refresh');
+                $id_anggota = $this->session->userdata('id_mhs');
+                redirect('/pengurus/list_anggota/detail_upload/' . $id_anggota, 'refresh');
             }
         } else {
             // set the flash data error message if there is one
             $this->ion_auth->logout();
             $this->session->set_flashdata('message', 'Anda tidak memiliki otorisasi untuk mengakses sistem, silahkan hubungi admin');
         }
+    }
+
+    public function sertifikat($nama_lengkap, $kelas, $npm, $no_telp, $fakultas, $jurusan, $semester, $tahun_angkatan, $region, $tgl)
+    {
+        require FCPATH . 'vendor/tcpdf/tcpdf.php';
+        $pdf = new \TCPDF();
+
+
+        $pdf->setPrintHeader(false);
+        $pdf->SetAutoPageBreak(false, 0);
+
+        // set image 1
+        $pdf->AddPage('P');
+
+
+        // -- set new background ---
+
+        // get the current page break margin
+        $bMargin = $pdf->getBreakMargin();
+        // get current auto-page-break mode
+        $auto_page_break = $pdf->getAutoPageBreak();
+        // disable auto-page-break
+        $pdf->SetAutoPageBreak(false, 0);
+        // set bacground image
+        // restore auto-page-break status
+        $pdf->SetAutoPageBreak($auto_page_break, $bMargin);
+        // set the starting point for the page content
+        $pdf->setPageMark();
+
+        $html = '<p style="font-size:12;">PENGAJUAN KEIKUTSERTAAN PEMBELAJARAN</p><br>';
+        $pdf->writeHTMLCell(0, 0, 10, 25, $html, 0, 0, 0, true, 'C');
+        $html = '<p style="font-size:12;">AGAMA KHONGHUCU</p><br>';
+        $pdf->writeHTMLCell(0, 0, 10, 32, $html, 0, 0, 0, true, 'C');
+        $htmls = '<p style="font-size:12;">KBMK UNIVERSITAS GUNADARMA</p><br>';
+        $pdf->writeHTMLCell(0, 0, 10, 39, $htmls, 0, 0, 0, true, 'C');
+
+        $html = '<p style="font-size:12;">Kepada Yth.</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 60, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Ketua Pengurus</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 65, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Keluarga Besar Mahasiswa Khonghucu</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 70, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Universitas Gunadarma</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 75, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Dengan hormat, saya yang bertanda tangan dibawah ini : </p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 85, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Nama</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 95, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Kelas</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 102, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">NPM</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 109, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">No. Telp (WA)</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 116, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Fakultas / Jurusan</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 123, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Semester</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 130, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Tahun Angkatan</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 137, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Region Kampus</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 144, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">Dengan ini mengajukan diri untuk dapat mengikuti pembelajaran Agama Khonghucu pada</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 159, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">semester terkait dengan tujuan agar dapat memenuhi kewajiban nilai pendidikan agama</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 164, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">berdasarkan <b>KRS</b> yang telah diambil. Demikian surat pengajuan ini dibuat, atas perhatian dan</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 169, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">bantuannya saya ucapkan terimakasih.</p><br>';
+        $pdf->writeHTMLCell(0, 0, 15, 174, $html, 0, 0, 0, true, 'L');
+
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $nama_lengkap . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 95, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $kelas . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 102, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $npm . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 109, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $no_telp . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 116, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $fakultas . ' / ' . $jurusan . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 123, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $semester . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 130, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $tahun_angkatan . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 137, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $region . '</p><br>';
+        $pdf->writeHTMLCell(0, 0, 55, 144, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">' . 'Depok, ' . $tgl . '</p><br>';
+        $pdf->writeHTMLCell(100, 5, 138, 193, $html, 0, 0, 0, true, 'L');
+
+        $html = '<img src="assets/template/img/verif_sertif.jpeg" width="150px" height="150px" alt="" srcset="">';
+
+        $pdf->writeHTMLCell(100, 5, 130, 200, $html, 0, 0, 0, true, 'L');
+
+
+        $pdf_name = 'Pengajuan_Keikutsertaan_Pembelajaraan_Agama_Khonghucu_Verif_' . $npm . '_' . time();
+        // $pdf->Output('Laporan-Tcpdf-CodeIgniter.pdf');
+        // $pdf->Output(FCPATH.'assets/file/pdf/'.$pdf_name.'.pdf');
+        $pdf->Output(FCPATH . 'assets/PDF/' . $pdf_name . '.pdf', 'F');
+        return $pdf_name . '.pdf';
     }
 }

@@ -422,13 +422,14 @@ body.mini-navbar .navbar-default .nav>li>.nav-second-level li a {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none;
-  border-color: #dddddd #dddddd rgba(0, 0, 0, 0);
-  border-bottom: #f3f3f4;
+  /* background: none; */
+  /* border-color: #dddddd #dddddd rgba(0, 0, 0, 0); */
+  /* border-bottom: solid 2px transparent;
+  border-bottom-color: #f7d101; */
   border-image: none;
   border-style: solid;
   border-width: 1px;
-  color: #555555;
+  color: #1ab394;
   cursor: default;
 }
 
@@ -8429,9 +8430,9 @@ body.landing-page {
   background: inherit;
 }
 
-.landing-page .nav>li>a {
+/* .landing-page .nav>li>a {
   padding: 25px 10px 15px 10px;
-}
+} */
 
 .landing-page .navbar-scroll .navbar-nav>li>a {
   padding: 20px 10px;
@@ -8644,7 +8645,7 @@ body.landing-page {
 }
 
 .landing-page .gray-section {
-  background: #f4f4f4;
+  background: #dce3d8;
   margin-top: 60px;
 }
 
