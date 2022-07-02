@@ -49,4 +49,15 @@ class M_jadwal extends CI_Model
         $result = $this->db->get();
         return $result;
     }
+
+    function Kegiatan_list_jadwal()
+    {
+        $hasil = $this->db->query("SELECT  kg.id_kegiatan, kg.tgl_kegiatan, kg.nama_kegiatan, kg.jml_slot
+		FROM    kegiatan as kg
+		LEFT JOIN
+				jadwal as jd
+		ON     jd.id_kegiatan = kg.id_kegiatan
+		WHERE   jd.id_kegiatan IS NULL");
+        return $hasil->result();
+    }
 }

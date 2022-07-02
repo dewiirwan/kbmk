@@ -103,7 +103,6 @@
                                     <th>Nama Kegiatan</th>
                                     <th>Deskripsi</th>
                                     <th>Tanggal Kegiatan</th>
-                                    <th>Nama Pengkhotbah</th>
                                     <th>Waktu</th>
                                     <th>Ketua Pelaksana</th>
                                     <th>Kapasitas</th>

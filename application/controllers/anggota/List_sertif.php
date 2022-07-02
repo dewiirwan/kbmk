@@ -81,40 +81,21 @@ class List_sertif extends CI_Controller
         $this->data['isi'] = 'anggota/list_sertifikat/detail';
         $this->data['id_group'] = $id_group->id_group;
 
-        $query_foto_user = $this->M_foto->get_data_by_id_mhs($user->id_mhs);
-        if ($query_foto_user == "BELUM ADA FOTO") {
-            $this->data['foto_user'] = "assets/img/profile_small.jpg";
-        } else {
-            $this->data['foto_user'] = $query_foto_user['keterangan_2'];
-        }
-
         $this->data['id_log_file'] = $this->uri->segment(4);
 
-        //Kueri data di tabel kegiatan
-        $query_detil_anggota = $this->M_anggota->get_detil($this->data['id_mhs']);
-
-        $query_detil_anggota_result = $this->M_anggota->get_detil_result($this->data['id_mhs']);
-        $this->data['query_detil_anggota_result'] = $query_detil_anggota_result;
-
-        if ($query_detil_anggota->num_rows() == 0) {
-            // alihkan mereka ke halaman list anggota
-            redirect('anggota/list_sertif', 'refresh');
-        }
         //Kueri data di tabel anggota file
         $query_file_id_log_file = $this->m_sertif->file_list_by_id_log_file($this->data['id_log_file']);
 
         //log
-        $KETERANGAN = "Lihat Detail Sertifikat: " . json_encode($query_detil_anggota_result) . " ---- " . json_encode($query_file_id_log_file);
+        $KETERANGAN = "Lihat Detail Sertifikat: " . json_encode($query_file_id_log_file);
         $this->user_log($KETERANGAN);
 
-        $hasil_1 = $query_detil_anggota->row();
-        $this->data['id_mhs'] = $hasil_1->id_mhs;
         $sess_data['id_log_file'] = $this->uri->segment(4);
         $this->session->set_userdata($sess_data);
 
         if ($query_file_id_log_file->num_rows() > 0) {
 
-            $this->data['dokumen'] = $this->m_sertif->file_list_by_id_log_file_result($sess_data['id_log_file']);
+            $this->data['dokumen'] = $this->m_sertif->file_list_by_id_log_file_row($sess_data['id_log_file']);
 
             $hasil = $query_file_id_log_file->row();
             $DOK_FILE = $hasil->dok_file;

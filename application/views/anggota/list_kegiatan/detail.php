@@ -43,8 +43,6 @@
                                                                 <dd><?php echo $data_kegiatan->nama_kegiatan; ?></dd>
                                                                 <dt>Tanggal Kegiatan:</dt>
                                                                 <dd><?php echo $data_kegiatan->tgl_kegiatan; ?></dd>
-                                                                <dt>Nama Pengkhotbah:</dt>
-                                                                <dd><?php echo $data_kegiatan->pengkhotbah; ?></dd>
                                                             </dl>
                                                         </div>
                                                         <div class="col-lg-5">

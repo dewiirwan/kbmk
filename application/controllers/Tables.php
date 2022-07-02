@@ -26,6 +26,28 @@ class Tables extends CI_Controller
 		$no = $this->input->post('start');
 
 		switch ($type) {
+			case 'data_list_hadir':
+				$list = $this->m_table->get_datatables('data_list_hadir', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+					$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail_hadir(" . $l->id_mhs	. ")'>
+						<i class='fa fa-eye'></i> Lihat Detail
+						</a>";
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_hadir', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_hadir', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
 			case 'data_list_sertif_anggota':
 				$list = $this->m_table->get_datatables('data_list_sertif_anggota', $sort, $order);
 				foreach ($list as $l) {
@@ -276,12 +298,34 @@ class Tables extends CI_Controller
 			case 'data_list_kegiatan_anggota':
 				$list = $this->m_table->get_datatables('data_list_kegiatan_anggota', $sort, $order);
 				foreach ($list as $l) {
+					$id_mhs = $this->session->userdata('id_mhs');
+					$cekDaftar = $this->db->query('SELECT j.* FROM jadwal as j WHERE j.id_mhs = ' . $id_mhs . ' AND j.id_kegiatan = ' . $l->id_kegiatan . '')->row();
+					$getJadwal = $this->db->query('SELECT * FROM jadwal WHERE id_kegiatan = ' . $l->id_kegiatan . '')->row();
 					$no++;
 					$l->no = $no;
-					$l->aksi = "
-					<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
-					<i class='fa fa-eye'></i> Lihat Kegiatan
-					</a>";
+
+					if ($getJadwal) {
+						if ($cekDaftar) {
+							$l->aksi = "
+							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
+							<i class='fa fa-eye'></i> Lihat Kegiatan
+							</a>";
+						} else {
+							$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
+						<i class='fa fa-eye'></i> Lihat Kegiatan
+						</a>
+						<a href='javascript:void(0)' class='btn btn-primary btn-xs block' title='Daftar Kegiatan' onclick='daftar(" . $id_mhs	. "," . @$getJadwal->id_jadwal . ")'>
+						Daftar Kegiatan
+						</a>";
+						}
+					} else {
+						$l->aksi = "
+							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
+							<i class='fa fa-eye'></i> Lihat Kegiatan
+							</a>";
+					}
+
 
 					$data[] = $l;
 				}

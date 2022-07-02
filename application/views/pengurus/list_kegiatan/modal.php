@@ -25,13 +25,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Nama Pengkhotbah<span class="text-danger">*</span> :</label>
-                            <div class="col-lg-9">
-                                <input type="text" name="pengkhotbah" class="form-control" id="pengkhotbah" placeholder="Contoh: Js. We Ok Tian">
-                                <span class="help-block text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">Durasi Kegiatan<span class="text-danger">*</span> :</label>
                             <div class="col-lg-9">
                                 <input type="text" name="durasi" class="form-control" id="durasi" placeholder="Contoh: 3 Jam 30 Menit">
@@ -93,13 +86,6 @@
                             <label for="tgl_kegiatan_" class="col-sm-3 control-label">Tanggal Kegiatan<span class="text-danger">*</span> :</label>
                             <div class="col-sm-9">
                                 <input type="text" name="tgl_kegiatan_" class="form-control" id="tgl_kegiatan_" placeholder="Tanggal Kegiatan">
-                                <span class="help-block text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Nama Pengkhotbah<span class="text-danger">*</span> :</label>
-                            <div class="col-lg-9">
-                                <input type="text" name="pengkhotbah_" class="form-control" id="pengkhotbah_" placeholder="Contoh: Js. We Ok Tian">
                                 <span class="help-block text-danger"></span>
                             </div>
                         </div>

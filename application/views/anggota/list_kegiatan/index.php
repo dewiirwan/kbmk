@@ -85,7 +85,6 @@
                                     <th>No</th>
                                     <th>Nama Kegiatan</th>
                                     <th>Tanggal Kegiatan</th>
-                                    <th>Nama Pengkhotbah</th>
                                     <th>Waktu</th>
                                     <th>Ketua Pelaksana</th>
                                     <th>Aksi</th>

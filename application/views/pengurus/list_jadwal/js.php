@@ -105,7 +105,7 @@
                 },
                 data: function(data) {
                     data.filter = {
-
+                        'id_kegiatan': $('#id_kegiatan').val()
                     };
                     data.<?php echo $this->security->get_csrf_token_name(); ?> = '<?php echo $this->security->get_csrf_hash(); ?>';
                     data.type = 'data_list_jadwal_detail';

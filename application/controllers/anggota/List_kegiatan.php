@@ -138,6 +138,22 @@ class List_kegiatan extends CI_Controller
         }
     }
 
+    public function proses()
+    {
+        if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(2))) {
+            $user = $this->ion_auth->user()->row();
+            $status                = true;
+            $id_mhs             = $this->input->post('id_mhs');
+            $id_jadwal        = $this->input->post('id_jadwal');
+        } else {
+            $this->logout();
+        }
+
+        $this->db->where('id_jadwal', $id_jadwal);
+        $this->db->update('jadwal', array('id_mhs' => $id_mhs));
+        echo json_encode(['status' => $status]);
+    }
+
     public function user_log($KETERANGAN)
     {
 

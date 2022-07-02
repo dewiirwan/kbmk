@@ -373,9 +373,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <script src="<?= base_url(); ?>assets/adminlte/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 
-    <script src="<?= base_url(); ?>assets/adminlte/dist/js/adminlte.min.js?v=3.2.0"></script>
+    <script src="<?= base_url(); ?>assets/adminlte/dist/js/adminlte.min.js"></script>
 
-    <script src="<?= base_url(); ?>assets/adminlte/dist/js/demo.js"></script>
 
 
     <script>

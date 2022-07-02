@@ -50,7 +50,7 @@
                 <a href="<?= base_url() ?>">Home</a>
             </li>
             <li>
-                <a href="<?= base_url('anggota/list_sertifikat') ?>">Sertifikat</a>
+                <a href="<?= base_url('anggota/list_sertif') ?>">Sertifikat</a>
             </li>
             <li class="active">
                 <strong>

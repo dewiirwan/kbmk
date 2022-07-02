@@ -7,7 +7,7 @@
         <a href="<?= base_url('dashboard_pengurus'); ?>"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> </a>
     </li>
     <li class="active">
-        <a href="<?= base_url('pengurus/list_anggota'); ?>"><i class="fa fa-address-book"></i> <span class="nav-label">Data Hadir Anggota</span> </a>
+        <a href="<?= base_url('pengurus/list_data_hadir'); ?>"><i class="fa fa-address-book"></i> <span class="nav-label">Data Hadir Anggota</span> </a>
     </li>
     <li class="active">
         <a href="<?= base_url('pengurus/list_anggota'); ?>"><i class="fa fa-address-card"></i> <span class="nav-label">List Anggota</span> </a>

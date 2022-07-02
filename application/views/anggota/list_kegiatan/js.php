@@ -65,9 +65,6 @@
                     'data': 'tgl_kegiatan'
                 },
                 {
-                    'data': 'pengkhotbah'
-                },
-                {
                     'data': 'durasi'
                 },
                 {
@@ -115,5 +112,75 @@
 
     function detail(id_kegiatan) {
         window.location.href = BASE_URL + 'anggota/list_kegiatan/detail/' + id_kegiatan;
+    }
+
+    function daftar(id_mhs, id_jadwal) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin daftar pada kegiatan ini',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!',
+            cancelButtonText: 'Batal!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-warning ml-1',
+            buttonsStyling: false,
+        }).then(function(result) {
+
+            if (result.value) {
+                save(id_mhs, id_jadwal);
+            }
+        });
+    }
+    async function save(id_mhs, id_jadwal) {
+        $("#loading").show();
+        const param = new FormData();
+        param.append('id_mhs', id_mhs);
+        param.append('id_jadwal', id_jadwal)
+
+        await fetch(SITE_URL + 'anggota/list_kegiatan/proses', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: param,
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response.status);
+                if (response.status === true) {
+                    Swal.fire({
+                        type: "success",
+                        title: 'Berhasil!',
+                        text: 'Data berhasil disimpan.',
+                        confirmButtonClass: 'btn btn-success',
+                        timer: 1500
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 500);
+                } else if (response.status === false) {
+                    Swal.fire({
+                        type: "warning",
+                        title: 'Gagal!',
+                        text: 'Gagal menyimpan data.',
+                        confirmButtonClass: 'btn btn-warning',
+                        timer: 1500
+                    });
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    type: "error",
+                    title: 'Kesalahan!',
+                    text: 'Terjadi Kesalahan.',
+                    confirmButtonClass: 'btn btn-danger',
+                });
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                $("#loading").hide();
+            });
     }
 </script>

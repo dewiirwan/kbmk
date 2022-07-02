@@ -94,7 +94,7 @@
                     <h5>List Jadwal Detail</h5>
                 </div>
                 <div class="ibox-content">
-
+                    <input type="hidden" name="id_kegiatan" id="id_kegiatan" value="<?= @$id_kegiatan ?>">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="tabels">
                             <thead>

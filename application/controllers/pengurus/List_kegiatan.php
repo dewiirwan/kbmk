@@ -100,7 +100,6 @@ class List_kegiatan extends CI_Controller
             $status                = true;
             $nama_kegiatan             = $this->input->post('nama_kegiatan');
             $tgl_kegiatan        = $this->input->post('tgl_kegiatan');
-            $pengkhotbah                 = $this->input->post('pengkhotbah');
             $durasi                 = $this->input->post('durasi');
             $ketuplak                 = $this->input->post('ketuplak');
             $kapasitas             = $this->input->post('kapasitas');
@@ -115,7 +114,6 @@ class List_kegiatan extends CI_Controller
                 $data = array(
                     'nama_kegiatan'                => $nama_kegiatan,
                     'tgl_kegiatan'             => $tgl_kegiatan,
-                    'pengkhotbah'                     => $pengkhotbah,
                     'ketua_panitia'                         => $ketuplak,
                     'jml_slot'                         => $kapasitas,
                     'durasi'               => $durasi,
@@ -126,7 +124,6 @@ class List_kegiatan extends CI_Controller
                 $KETERANGAN = "Simpan Kegiatan: "
                     . "; " . $nama_kegiatan
                     . "; " . $tgl_kegiatan
-                    . "; " . $pengkhotbah
                     . "; " . $durasi
                     . "; " . $ketuplak
                     . "; " . $kapasitas
@@ -150,7 +147,6 @@ class List_kegiatan extends CI_Controller
             $status                = true;
             $nama_kegiatan             = $this->input->post('nama_kegiatan_');
             $tgl_kegiatan        = $this->input->post('tgl_kegiatan_');
-            $pengkhotbah                 = $this->input->post('pengkhotbah_');
             $durasi                 = $this->input->post('durasi_');
             $ketuplak                 = $this->input->post('ketuplak_');
             $kapasitas             = $this->input->post('kapasitas_');
@@ -169,14 +165,13 @@ class List_kegiatan extends CI_Controller
             $data = array(
                 'nama_kegiatan'                => $nama_kegiatan,
                 'tgl_kegiatan'             => $tgl_kegiatan,
-                'pengkhotbah'                     => $pengkhotbah,
                 'ketua_panitia'                         => $ketuplak,
                 'jml_slot'                         => $kapasitas,
                 'durasi'               => $durasi,
                 'deskripsi' => $deskripsi,
             );
 
-            $KETERANGAN = "Ubah Data Kegiatan: " . json_encode($cek) . " ---- " . $nama_kegiatan . ";" . $tgl_kegiatan . ";" . $pengkhotbah . ";" . $ketuplak . ";" . $kapasitas . ";" . $durasi . ";" . $deskripsi;
+            $KETERANGAN = "Ubah Data Kegiatan: " . json_encode($cek) . " ---- " . $nama_kegiatan . ";" . $tgl_kegiatan . ";"  . ";" . $ketuplak . ";" . $kapasitas . ";" . $durasi . ";" . $deskripsi;
 
             $this->user_log($KETERANGAN);
         } else {
@@ -194,7 +189,6 @@ class List_kegiatan extends CI_Controller
 
         $nama_kegiatan             = $this->input->post('nama_kegiatan');
         $tgl_kegiatan        = $this->input->post('tgl_kegiatan');
-        $pengkhotbah                 = $this->input->post('pengkhotbah');
         $durasi                 = $this->input->post('durasi');
         $ketuplak                 = $this->input->post('ketuplak');
         $kapasitas             = $this->input->post('kapasitas');
@@ -214,12 +208,6 @@ class List_kegiatan extends CI_Controller
         if ($tgl_kegiatan == '') {
             $data['error_class']['tgl_kegiatan']  = 'is-invalid';
             $data['error_string']['tgl_kegiatan'] = 'Tanggal Kegiatan tidak boleh kosong';
-            $data['status']                = false;
-        }
-
-        if ($pengkhotbah == '') {
-            $data['error_class']['pengkhotbah']  = 'is-invalid';
-            $data['error_string']['pengkhotbah'] = 'Nama Pengkhotbah tidak boleh kosong';
             $data['status']                = false;
         }
 
@@ -259,7 +247,6 @@ class List_kegiatan extends CI_Controller
 
         $nama_kegiatan             = $this->input->post('nama_kegiatan_');
         $tgl_kegiatan        = $this->input->post('tgl_kegiatan_');
-        $pengkhotbah                 = $this->input->post('pengkhotbah_');
         $durasi                 = $this->input->post('durasi_');
         $ketuplak                 = $this->input->post('ketuplak_');
         $kapasitas             = $this->input->post('kapasitas_');
@@ -279,12 +266,6 @@ class List_kegiatan extends CI_Controller
         if ($tgl_kegiatan == '') {
             $data['error_class']['tgl_kegiatan_']  = 'is-invalid';
             $data['error_string']['tgl_kegiatan_'] = 'Tanggal Kegiatan tidak boleh kosong';
-            $data['status']                = false;
-        }
-
-        if ($pengkhotbah == '') {
-            $data['error_class']['pengkhotbah_']  = 'is-invalid';
-            $data['error_string']['pengkhotbah_'] = 'Nama Pengkhotbah tidak boleh kosong';
             $data['status']                = false;
         }
 

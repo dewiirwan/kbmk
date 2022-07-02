@@ -1,5 +1,6 @@
 <script type="text/javascript" language="javascript">
     var dataTable;
+    var dataTables;
     var BASE_URL = '<?= base_url(); ?>';
     var SITE_URL = '<?= site_url(); ?>';
 
@@ -89,6 +90,94 @@
         function table_data() {
             dataTable.ajax.reload(null, true);
         }
+
+        dataTables = $('#tabels').DataTable({
+            paginationType: 'full_numbers',
+            processing: true,
+            serverSide: true,
+            filter: false,
+            autoWidth: false,
+            aLengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?php echo base_url('tables/ajax_list') ?>',
+                type: 'POST',
+                beforeSend: function() {
+                    $("#loading").show();
+                },
+                data: function(data) {
+                    data.filter = {
+
+                    };
+                    data.<?php echo $this->security->get_csrf_token_name(); ?> = '<?php echo $this->security->get_csrf_hash(); ?>';
+                    data.type = 'data_list_hadir';
+                },
+                complete: function(settings, json) {
+                    $("#loading").hide();
+                }
+            },
+            language: {
+                sProcessing: 'Sedang memproses...',
+                sLengthMenu: 'Tampilkan _MENU_ entri',
+                sZeroRecords: 'Tidak ditemukan data yang sesuai',
+                sInfo: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
+                sInfoEmpty: 'Menampilkan 0 sampai 0 dari 0 entri',
+                sInfoFiltered: '(disaring dari _MAX_ entri keseluruhan)',
+                sInfoPostFix: '',
+                sSearch: 'Cari:',
+                sUrl: '',
+                oPaginate: {
+                    sFirst: '<<',
+                    sPrevious: '<',
+                    sNext: '>',
+                    sLast: '>>'
+                }
+            },
+            order: [0, 'desc'],
+            columns: [{
+                    'data': 'no'
+                },
+                {
+                    'data': 'npm'
+                },
+                {
+                    'data': 'nama_anggota'
+                },
+                {
+                    'data': 'alamat'
+                },
+                {
+                    'data': 'email'
+                },
+                {
+                    'data': 'no_hp'
+                },
+                {
+                    'data': 'nama_kegiatan'
+                },
+                {
+                    'data': 'tgl_kegiatan'
+                },
+                {
+                    'data': 'no_urut'
+                },
+                {
+                    'data': 'jam_hadir'
+                },
+                {
+                    'data': 'aksi',
+                    'orderable': false
+                },
+            ],
+
+
+        });
+
+        function table_datas() {
+            dataTables.ajax.reload(null, true);
+        }
     });
 
     function refresh_page() {
@@ -119,6 +208,10 @@
 
     function detail(id_anggota) {
         window.location.href = BASE_URL + 'pengurus/list_anggota/detail/' + id_anggota;
+    }
+
+    function detail_hadir(id_anggota) {
+        window.location.href = BASE_URL + 'pengurus/list_data_hadir/detail/' + id_anggota;
     }
 
     function upload(id_anggota) {

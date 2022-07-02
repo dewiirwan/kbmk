@@ -43,7 +43,7 @@ class List_jadwal extends CI_Controller
 
         $this->data['isi'] = 'pengurus/list_jadwal/index';
         $this->data['id_group'] = $id_group->id_group;
-        $this->data['Kegiatan_list_jadwal'] = $this->m_jadwal->list_jadwal_kegiatan()->result();
+        $this->data['Kegiatan_list_jadwal'] = $this->m_jadwal->Kegiatan_list_jadwal();
 
         //jika mereka sudah login dan sebagai admin
         if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(1)) {

@@ -13,6 +13,21 @@ class M_table extends CI_model
     private function _get_datatables_query($type = null, $sort = null, $order = null)
     {
         switch ($type) {
+            case 'data_list_hadir':
+                $user = $this->ion_auth->user()->row();
+                $this->db->select('K.id_kegiatan, K.nama_kegiatan, K.tgl_kegiatan, U.nama as nama_anggota, U.npm, U.id_mhs, U.alamat, U.email, U.no_hp, J.no_urut, J.jam_hadir, J.id_jadwal');
+                $this->db->from('kegiatan K');
+                $this->db->join('jadwal J', 'K.id_kegiatan = J.id_kegiatan', 'LEFT OUTER');
+                $this->db->join('mahasiswa U', 'U.id_mhs = J.id_mhs', 'LEFT OUTER');
+                $this->db->where('J.jam_hadir !=', '');
+                if ($_POST['order'][0]['column'] == 0) {
+                    $this->db->order_by('J.id_jadwal', $order);
+                } else {
+                    $this->db->order_by($sort, $order);
+                }
+
+                $filter   = @$_POST['filter'];
+                break;
             case 'data_list_sertif_anggota':
                 $user = $this->ion_auth->user()->row();
                 $this->db->select('a.id_log_file, a.ekstensi, a.keterangan_file');
@@ -61,17 +76,18 @@ class M_table extends CI_model
                 $filter   = @$_POST['filter'];
                 break;
             case 'data_list_jadwal_detail':
+                $filter   = @$_POST['filter'];
                 $this->db->select('K.id_kegiatan, K.nama_kegiatan, U.nama as nama_mhs, K.tgl_kegiatan, J.no_urut, J.kode_qr, J.jam_hadir, J.id_jadwal');
                 $this->db->from('kegiatan K');
                 $this->db->join('jadwal J', 'K.id_kegiatan = J.id_kegiatan', 'LEFT');
                 $this->db->join('mahasiswa U', 'U.id_mhs = J.id_mhs', 'LEFT');
+                if (@$filter['id_kegiatan']) $this->db->where('J.id_kegiatan', $filter['id_kegiatan']);
                 if ($_POST['order'][0]['column'] == 0) {
                     $this->db->order_by('id_jadwal', $order);
                 } else {
                     $this->db->order_by($sort, $order);
                 }
 
-                $filter   = @$_POST['filter'];
                 break;
             case 'data_list_jadwal_kegiatan':
                 $this->db->select('id_kegiatan, nama_kegiatan, tgl_kegiatan, durasi, ketua_panitia, jml_slot');

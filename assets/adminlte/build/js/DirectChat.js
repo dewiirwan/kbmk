@@ -5,88 +5,85 @@
  * --------------------------------------------
  */
 
-const DirectChat = (($) => {
-  /**
-   * Constants
-   * ====================================================
-   */
+import $ from 'jquery'
 
-  const NAME               = 'DirectChat'
-  const DATA_KEY           = 'lte.directchat'
-  const EVENT_KEY          = `.${DATA_KEY}`
-  const JQUERY_NO_CONFLICT = $.fn[NAME]
-  const DATA_API_KEY       = '.data-api'
+/**
+ * Constants
+ * ====================================================
+ */
 
-  const Event = {
-    TOGGLED: `toggled{EVENT_KEY}`
+const NAME = 'DirectChat'
+const DATA_KEY = 'lte.directchat'
+const EVENT_KEY = `.${DATA_KEY}`
+const JQUERY_NO_CONFLICT = $.fn[NAME]
+
+const EVENT_TOGGLED = `toggled${EVENT_KEY}`
+
+const SELECTOR_DATA_TOGGLE = '[data-widget="chat-pane-toggle"]'
+const SELECTOR_DIRECT_CHAT = '.direct-chat'
+
+const CLASS_NAME_DIRECT_CHAT_OPEN = 'direct-chat-contacts-open'
+
+/**
+ * Class Definition
+ * ====================================================
+ */
+
+class DirectChat {
+  constructor(element) {
+    this._element = element
   }
 
-  const Selector = {
-    DATA_TOGGLE: '[data-widget="chat-pane-toggle"]',
-    DIRECT_CHAT: '.direct-chat'
-  };
+  toggle() {
+    $(this._element).parents(SELECTOR_DIRECT_CHAT).first().toggleClass(CLASS_NAME_DIRECT_CHAT_OPEN)
+    $(this._element).trigger($.Event(EVENT_TOGGLED))
+  }
 
-  const ClassName = {
-    DIRECT_CHAT_OPEN: 'direct-chat-contacts-open'
-  };
+  // Static
+  static _jQueryInterface(config) {
+    return this.each(function () {
+      let data = $(this).data(DATA_KEY)
 
-  /**
-   * Class Definition
-   * ====================================================
-   */
-
-  class DirectChat {
-    constructor(element, config) {
-      this._element = element
-    }
-
-    toggle() {
-      $(this._element).parents(Selector.DIRECT_CHAT).first().toggleClass(ClassName.DIRECT_CHAT_OPEN);
-
-      const toggledEvent = $.Event(Event.TOGGLED)
-      $(this._element).trigger(toggledEvent)
-    }
-
-    // Static
-
-    static _jQueryInterface(config) {
-      return this.each(function () {
-        let data      = $(this).data(DATA_KEY)
-
-        if (!data) {
-          data = new DirectChat($(this))
-          $(this).data(DATA_KEY, data)
+      if (!data) {
+        data = new DirectChat($(this))
+        $(this).data(DATA_KEY, data)
+      } else if (typeof config === 'string') {
+        if (typeof data[config] === 'undefined') {
+          throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      })
-    }
+      } else if (typeof config === 'undefined') {
+        data._init()
+      }
+    })
+  }
+}
+
+/**
+ *
+ * Data Api implementation
+ * ====================================================
+ */
+
+$(document).on('click', SELECTOR_DATA_TOGGLE, function (event) {
+  if (event) {
+    event.preventDefault()
   }
 
-  /**
-   *
-   * Data Api implementation
-   * ====================================================
-   */
+  DirectChat._jQueryInterface.call($(this), 'toggle')
+})
 
-  $(document).on('click', Selector.DATA_TOGGLE, function (event) {
-    if (event) event.preventDefault();
-    DirectChat._jQueryInterface.call($(this), 'toggle');
-  });
+/**
+ * jQuery API
+ * ====================================================
+ */
 
-  /**
-   * jQuery API
-   * ====================================================
-   */
-
-  $.fn[NAME] = DirectChat._jQueryInterface
-  $.fn[NAME].Constructor = DirectChat
-  $.fn[NAME].noConflict  = function () {
-    $.fn[NAME] = JQUERY_NO_CONFLICT
-    return DirectChat._jQueryInterface
-  }
-
-  return DirectChat
-})(jQuery)
+$.fn[NAME] = DirectChat._jQueryInterface
+$.fn[NAME].Constructor = DirectChat
+$.fn[NAME].noConflict = function () {
+  $.fn[NAME] = JQUERY_NO_CONFLICT
+  return DirectChat._jQueryInterface
+}
 
 export default DirectChat

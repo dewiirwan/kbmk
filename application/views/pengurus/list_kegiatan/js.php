@@ -83,9 +83,6 @@
                     'data': 'tgl_kegiatan'
                 },
                 {
-                    'data': 'pengkhotbah'
-                },
-                {
                     'data': 'durasi'
                 },
                 {
@@ -123,7 +120,6 @@
                 document.getElementById("id_kegiatan").value = id;
                 document.getElementById("nama_kegiatan_").value = myObj.nama_kegiatan;
                 document.getElementById("tgl_kegiatan_").value = myObj.tgl_kegiatan;
-                document.getElementById("pengkhotbah_").value = myObj.pengkhotbah;
                 document.getElementById("durasi_").value = myObj.durasi;
                 document.getElementById("ketuplak_").value = myObj.ketua_panitia;
                 document.getElementById("kapasitas_").value = myObj.jml_slot;
@@ -222,9 +218,6 @@
                     $('[name="tgl_kegiatan"]').addClass(response.error_class['tgl_kegiatan']);
                     $('[name="tgl_kegiatan"]').next().text(response.error_string['tgl_kegiatan']);
 
-                    $('[name="pengkhotbah"]').addClass(response.error_class['pengkhotbah']);
-                    $('[name="pengkhotbah"]').next().text(response.error_string['pengkhotbah']);
-
                     $('[name="durasi"]').addClass(response.error_class['durasi']);
                     $('[name="durasi"]').next().text(response.error_string['durasi']);
 
@@ -311,9 +304,6 @@
 
                     $('[name="tgl_kegiatan_"]').addClass(response.error_class['tgl_kegiatan_']);
                     $('[name="tgl_kegiatan_"]').next().text(response.error_string['tgl_kegiatan_']);
-
-                    $('[name="pengkhotbah_"]').addClass(response.error_class['pengkhotbah_']);
-                    $('[name="pengkhotbah_"]').next().text(response.error_string['pengkhotbah_']);
 
                     $('[name="durasi_"]').addClass(response.error_class['durasi_']);
                     $('[name="durasi_"]').next().text(response.error_string['durasi_']);
