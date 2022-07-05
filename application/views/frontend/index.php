@@ -163,14 +163,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Visi dan Misi<br /> <span class="navy"></span>KBMK GUNADARMA</h1>
+                <h1><b>Visi dan Misi<br /> <span class="navy"></span>KBMK GUNADARMA</h1></b>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 text-center wow fadeInLeft">
                 <div>
                     <i class="fa fa-bell features-icon"></i>
-                    <h2>VISI</h2>
+                    <h2><b>VISI</b></h2>
                     <ul>
                         <bold>
                             <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p>
@@ -180,12 +180,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="col-md-6 text-center  wow zoomIn">
-                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
+                <img src="<?= base_url(); ?>assets/template/img/landing/kbmk1.png" alt="dashboard" class="img-responsive">
             </div>
             <div class="col-md-3 text-center wow fadeInRight">
                 <div>
                     <i class="fa fa-thumb-tack features-icon"></i>
-                    <h2>MISI</h2>
+                    <h2><b>MISI</b></h2>
                     <p>1. Meningkatkan komunikasi antar anggota KBMK </p>
                     <p>2. Melaksanakan kegiatan KBMK baik secara online atau offline.</p>
                     <p>3. Menciptakan kerja sama dan kebersamaan antar anggota KBMK UG dalam menjalankan event-event yang akan dihadiri maupun diadakan KBMK UG.</p>
@@ -201,7 +201,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Kepengurusan KBMK Universitas Gunadarma 2021/2022</h1>
+                    <h1><b>Kepengurusan KBMK Universitas Gunadarma</h1></b>
                     <p>Bagan Kepengurusan KBMK Gunadarma</p>
                 </div>
             </div>
@@ -225,8 +225,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Kegiatan</h1>
-                    <p>Kegiatan yang ada di KBMK Gunadarma</p>
+                    <h1><b>Kegiatan KBMK Gunadarma</b></h1>
                 </div>
             </div>
 
@@ -237,10 +236,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="card-header p-0 pt-1">
                                 <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist" style="justify-content: center; display:flex;">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="custom-tabs-five-one-tab" data-toggle="pill" href="#custom-tabs-five-one" role="tab" aria-controls="custom-tabs-five-one" aria-selected="true" style="font-weight:bold; font-size:18px;">Tab 1</a>
+                                        <a class="nav-link active" id="custom-tabs-five-one-tab" data-toggle="pill" href="#custom-tabs-five-one" role="tab" aria-controls="custom-tabs-five-one" aria-selected="true" style="font-weight:bold; font-size:18px;">Photos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="custom-tabs-five-two-tab" data-toggle="pill" href="#custom-tabs-five-two" role="tab" aria-controls="custom-tabs-five-two" aria-selected="false" style="font-weight:bold; font-size:18px;">Tab 2</a>
+                                        <a class="nav-link" id="custom-tabs-five-two-tab" data-toggle="pill" href="#custom-tabs-five-two" role="tab" aria-controls="custom-tabs-five-two" aria-selected="false" style="font-weight:bold; font-size:18px;">People</a>
                                     </li>
                                 </ul>
                             </div>
@@ -251,35 +250,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto1.jpeg">
                                                 <img src="<?= base_url() ?>assets/foto_kegiatan/foto1.jpeg" alt="Cinque Terre" width="600" height="400">
                                             </a>
-                                            <div class="desc">Add a description of the image here</div>
+                                            <div class="desc">Foto bersama dengan adik-adik di Yayasan Kasih Mandiri</div>
                                         </div>
 
                                         <div class="gallery">
                                             <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto2.jpeg">
                                                 <img src=" <?= base_url() ?>assets/foto_kegiatan/foto2.jpeg" alt=" Forest" width="600" height="400">
                                             </a>
-                                            <div class="desc">Add a description of the image here</div>
+                                            <div class="desc">Foto bersama dengan adik-adik di Yayasan Kasih Mandiri</div>
                                         </div>
 
                                         <div class="gallery">
                                             <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto3.jpeg">
                                                 <img src=" <?= base_url() ?>assets/foto_kegiatan/foto3.jpeg" alt=" Northern Lights" width="600" height="400">
                                             </a>
-                                            <div class="desc">Add a description of the image here</div>
+                                            <div class="desc">Adik terkasih di Yayasan Kasih Mandiri</div>
                                         </div>
 
                                         <div class="gallery">
                                             <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto4.jpeg">
                                                 <img src=" <?= base_url() ?>assets/foto_kegiatan/foto4.jpeg" alt=" Mountains" width="600" height="400">
                                             </a>
-                                            <div class="desc">Add a description of the image here</div>
+                                            <div class="desc">Perkenalan diri dengan adik-adik di Yayasan Mandiri</div>
                                         </div>
 
                                         <div class="gallery">
                                             <a target="_blank" href="<?= base_url() ?>assets/foto_kegiatan/foto5.jpeg">
                                                 <img src=" <?= base_url() ?>assets/foto_kegiatan/foto5.jpeg" alt=" Mountains" width="600" height="400">
                                             </a>
-                                            <div class="desc">Add a description of the image here</div>
+                                            <div class="desc">Calvin sebagai Ketua KBMK melakukan pembukaan</div>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="custom-tabs-five-two" role="tabpanel" aria-labelledby="custom-tabs-five-two-tab">
@@ -315,7 +314,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row m-b-lg">
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h1>Hubungi Kami</h1>
+                    <h1><b>Hubungi Kami</b></h1>
                     <p>Untuk saran dan kritik dapat menghubungi kami.</p>
                 </div>
             </div>
@@ -331,7 +330,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-lg-4">
                     <p class="text-color">
-                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma telah berdiri sejak tahun 2016 dan berjalan hingga saat ini. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
+                        Keluarga Besar Mahasiswa Khonghucu Universitas Gunadarma (KBMK UG) merupakan Unit Kegiatan Mahasiswa (UKM) yang bergerak dalam bidang kerohanian agama Khonghucu dibawah naungan Universitas Gunadarma. KBMK Universitas Gunadarma juga merupakan media yang menjadi tempat bagi mahasiswa/mahasiswi beragama Khonghucu di Universitas Gunadarma.
                     </p>
                 </div>
             </div>
@@ -342,7 +341,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         Or follow us on social platform
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram"></i></a>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram features-icon"></i></a>
                         </li>
                     </ul>
                 </div>

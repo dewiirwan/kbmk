@@ -20,7 +20,7 @@ class Tables extends CI_Controller
 		$data 	= array();
 		$start    = isset($_POST['start']) ? intval($_POST['start']) : 0;
 		$length   = isset($_POST['length']) ? intval($_POST['length']) : 10;
-		$sort     = isset($_POST['columns'][$_POST['order'][0]['column']]['data']) ? strval($_POST['columns'][$_POST['order'][0]['column']]['data']) : 'nama';
+		$sort     = isset($_POST['columns'][@$_POST['order'][0]['column']]['data']) ? strval(@$_POST['columns'][@$_POST['order'][0]['column']]['data']) : 'nama';
 		$order    = isset($_POST['order'][0]['dir']) ? strval($_POST['order'][0]['dir']) : 'asc';
 		$filter   = @$_POST['filter'];
 		$no = $this->input->post('start');
