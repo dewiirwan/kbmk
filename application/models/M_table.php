@@ -123,8 +123,10 @@ class M_table extends CI_model
                 $filter   = @$_POST['filter'];
                 break;
             case 'data_list_pengajuan':
+                $user = $this->ion_auth->user()->row();
                 $this->db->select('*');
                 $this->db->from('form_pengajuan');
+                $this->db->where('id_user', $user->id_user);
                 if ($_POST['order'][0]['column'] == 0) {
                     $this->db->order_by('id_form', $order);
                 } else {

@@ -298,13 +298,15 @@ class Tables extends CI_Controller
 			case 'data_list_kegiatan_anggota':
 				$list = $this->m_table->get_datatables('data_list_kegiatan_anggota', $sort, $order);
 				foreach ($list as $l) {
-					$id_mhs = $this->session->userdata('id_mhs');
+					$user = $this->ion_auth->user()->row();	
+					$id_mhs = $user->id_mhs;
 					$cekDaftar = $this->db->query('SELECT j.* FROM jadwal as j WHERE j.id_mhs = ' . $id_mhs . ' AND j.id_kegiatan = ' . $l->id_kegiatan . '')->row();
 					$getJadwal = $this->db->query('SELECT * FROM jadwal WHERE id_kegiatan = ' . $l->id_kegiatan . '')->row();
 					$no++;
 					$l->no = $no;
 
 					if ($getJadwal) {
+						// var_dump($cekDaftar);die;
 						if ($cekDaftar) {
 							$l->aksi = "
 							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>

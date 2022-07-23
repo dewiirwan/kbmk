@@ -500,7 +500,7 @@ class Ion_auth_model extends CI_Model
 
 		$data = array(
 			'activation_code' => $activation_code,
-			'active'          => 0
+			'active'          => 1
 		);
 
 		$this->trigger_events('extra_where');
@@ -888,7 +888,7 @@ class Ion_auth_model extends CI_Model
 			'email' => $email,
 			'ip_address' => $ip_address,
 			'created_on' => time(),
-			'active' => ($manual_activation === FALSE ? 1 : 0),
+			'active' => 1,
 			'id_mhs' => $id_user_aplikasi
 		);
 

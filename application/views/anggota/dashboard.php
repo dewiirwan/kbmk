@@ -117,7 +117,6 @@
                     <h3 class="content-box-header  bg-default">
                         <span class="icon-separator">
                             <i class="fa fa-bullhorn"></i>
-
                         </span>
                         <b>
                             <?= $result->judul ?>

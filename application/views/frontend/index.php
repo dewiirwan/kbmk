@@ -211,8 +211,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <a href="<?= base_url(); ?>assets/template/img/bagan_kbmk.png" target="_blank">
                             <img src="<?= base_url(); ?>assets/template/img/bagan_kbmk.png" class="img-responsive" alt="">
                         </a>
-                        <!-- <h4><span class="navy">Js. Oey Ok Thian</span></h4>
-                        <p>Js. Oey Ok Thian sebagai Ketua Makin Semangat Genta Rohani Cilodong.</p> -->
+
                     </div>
                 </div>
             </div>

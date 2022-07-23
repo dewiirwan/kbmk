@@ -118,6 +118,7 @@ class List_anggota extends CI_Controller
                     'no_hp'                         => $no_hp,
                     'alamat'               => $alamat,
                     'email'            => $email,
+                    'active'            => 1,
                 );
 
                 $KETERANGAN = "Simpan Anggota: "
