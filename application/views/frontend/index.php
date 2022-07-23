@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 text-center wow fadeInLeft">
+            <div class="col-md-3 text-center wow fadeInLeft" style="padding-right:0px; text-align:justify;">
                 <div>
                     <i class="fa fa-bell features-icon"></i>
                     <h2><b>VISI</b></h2>
@@ -182,7 +182,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="col-md-6 text-center  wow zoomIn">
                 <img src="<?= base_url(); ?>assets/template/img/landing/kbmk1.png" alt="dashboard" class="img-responsive">
             </div>
-            <div class="col-md-3 text-center wow fadeInRight">
+            <div class="col-md-3 text-center wow fadeInRight" style="padding-right:0px; text-align:justify;">
                 <div>
                     <i class="fa fa-thumb-tack features-icon"></i>
                     <h2><b>MISI</b></h2>

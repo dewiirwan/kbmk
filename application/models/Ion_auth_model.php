@@ -888,9 +888,12 @@ class Ion_auth_model extends CI_Model
 			'email' => $email,
 			'ip_address' => $ip_address,
 			'created_on' => time(),
-			'active' => 1,
+			'active' => '1',
 			'id_mhs' => $id_user_aplikasi
 		);
+
+		// var_dump($data);
+		// die;
 
 		if ($this->store_salt) {
 			$data['salt'] = $salt;
@@ -899,12 +902,16 @@ class Ion_auth_model extends CI_Model
 		// filter out any data passed that doesnt have a matching column in the users table
 		// and merge the set user data and the additional data
 		$user_data = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
+		// var_dump($user_data);
+		// die;
 
 		$this->trigger_events('extra_set');
 
 		$this->db->insert($this->tables['users'], $user_data);
 
 		$id = $this->db->insert_id($this->tables['users'] . '_id_seq');
+		// var_dump($id);
+		// die;
 
 		// add in groups array if it doesn't exists and stop adding into default group if default group ids are set
 		if (isset($default_group->id) && empty($groups)) {

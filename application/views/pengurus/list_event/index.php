@@ -52,6 +52,10 @@
         float: none;
         margin: 0 auto;
     }
+
+    .fc-view-container {
+        background: #fff;
+    }
 </style>
 <!-- <div id="loading"></div> -->
 <div class="container">

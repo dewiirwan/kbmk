@@ -102,6 +102,15 @@
 
                     <h2><span class="text-navy">KBMK</span>
                         adalah Keluarga Besar Mahasiswa Khonghucu<br /></h2>
+                    <div class="row">
+                        <div class="col-md-3 text-center wow fadeInLeft" style="padding-right:0px; text-align:justify;">
+                        </div>
+                        <div class="col-md-6 text-center  wow zoomIn">
+                            <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
+                        </div>
+                        <div class="col-md-3 text-center wow fadeInRight" style="padding-right:0px; text-align:justify;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

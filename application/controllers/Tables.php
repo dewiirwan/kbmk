@@ -299,6 +299,7 @@ class Tables extends CI_Controller
 				$list = $this->m_table->get_datatables('data_list_kegiatan_anggota', $sort, $order);
 				foreach ($list as $l) {
 					$user = $this->ion_auth->user()->row();	
+
 					$id_mhs = $user->id_mhs;
 					$cekDaftar = $this->db->query('SELECT j.* FROM jadwal as j WHERE j.id_mhs = ' . $id_mhs . ' AND j.id_kegiatan = ' . $l->id_kegiatan . '')->row();
 					$getJadwal = $this->db->query('SELECT * FROM jadwal WHERE id_kegiatan = ' . $l->id_kegiatan . '')->row();

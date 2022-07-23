@@ -126,7 +126,6 @@ class Pengajuan extends CI_Controller
 
         $this->data['USER_ID'] = $user->id_user;
         $this->data['id_mhs'] = $user->id_mhs;
-        // $data_role_user = $this->Manajemen_user_model->get_data_role_user_by_id($this->data['USER_ID']);
         $this->data['role_user'] = 'anggota';
         $this->data['ip_address'] = $user->ip_address;
         $this->data['email'] = $user->email;
