@@ -63,6 +63,43 @@
     </div>
 </div>
 
+<div class="modal inmodal fade" id="m_konsultasi" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-group modal-icon"></i>
+                <h4 class="modal-title">Form Verifikasi Konsultasi</h4>
+            </div>
+            <div class="form-horizontal">
+                <form class="form-horizontal" action="#" id="form_konsultasi" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" name="id_mhss" id="id_mhss">
+                            <label class="col-sm-3 control-label">Tanggal Konsultasi<span class="text-danger">*</span> :</label>
+                            <div class="col-lg-9">
+                                <input type="datetime-local" name="tgl_konsultasi" class="form-control" id="tgl_konsultasi" placeholder="Contoh: mm/dd/yyyy">
+                                <span class="help-block text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Keterangan Zoom<span class="text-danger">*</span> :</label>
+                            <div class="col-lg-9">
+                                <textarea type="text" name="keterangan" class="form-control" id="keterangan" placeholder=""></textarea>
+                                <span class="help-block text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Batal</button>
+                    <button type="submit" class="btn btn-primary" onclick="verif_konsultasi()"><i class="fa fa-save"></i> Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal inmodal fade" id="m_edit" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">

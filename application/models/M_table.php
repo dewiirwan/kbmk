@@ -135,6 +135,19 @@ class M_table extends CI_model
 
                 $filter   = @$_POST['filter'];
                 break;
+            case 'data_list_konsultasi':
+                $user = $this->ion_auth->user()->row();
+                $this->db->select('*');
+                $this->db->from('t_konsultasi');
+                $this->db->where('id_mhs', $user->id_user);
+                if ($_POST['order'][0]['column'] == 0) {
+                    $this->db->order_by('id_konsultasi', $order);
+                } else {
+                    $this->db->order_by($sort, $order);
+                }
+
+                $filter   = @$_POST['filter'];
+                break;
             case 'data_list_pengumuman':
                 $this->db->select('*');
                 $this->db->from('pengumuman');

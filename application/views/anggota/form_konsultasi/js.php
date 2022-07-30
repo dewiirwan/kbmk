@@ -31,7 +31,7 @@
 
                     };
                     data.<?php echo $this->security->get_csrf_token_name(); ?> = '<?php echo $this->security->get_csrf_hash(); ?>';
-                    data.type = 'data_list_kegiatan_anggota';
+                    data.type = 'data_list_konsultasi';
                 },
                 complete: function(settings, json) {
                     $("#loading").hide();
@@ -59,20 +59,13 @@
                     'data': 'no'
                 },
                 {
-                    'data': 'nama_kegiatan'
+                    'data': 'tujuan'
                 },
                 {
-                    'data': 'tgl_kegiatan'
+                    'data': 'create_date'
                 },
                 {
-                    'data': 'durasi'
-                },
-                {
-                    'data': 'ketua_panitia'
-                },
-                {
-                    'data': 'aksi',
-                    'orderable': false
+                    'data': 'tgl_konsultasi'
                 },
             ],
 
@@ -83,10 +76,6 @@
             dataTable.ajax.reload(null, true);
         }
     });
-
-    function bukti_daftar(id_mhs) {
-        window.location.href = BASE_URL + 'anggota/list_kegiatan/bukti_daftar/' + id_mhs;
-    }
 
     function refresh_page() {
         location.reload();
@@ -114,13 +103,10 @@
         return hrs + ":00";
     }
 
-    function detail(id_kegiatan) {
-        window.location.href = BASE_URL + 'anggota/list_kegiatan/detail/' + id_kegiatan;
-    }
 
-    function daftar(id_mhs, id_jadwal) {
+    function confirm_save() {
         Swal.fire({
-            title: 'Apakah anda yakin ingin daftar pada kegiatan ini',
+            title: 'Apakah anda yakin akan menyimpan data ini',
             type: 'info',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -133,17 +119,15 @@
         }).then(function(result) {
 
             if (result.value) {
-                save(id_mhs, id_jadwal);
+                save();
             }
         });
     }
-    async function save(id_mhs, id_jadwal) {
+    async function save() {
         $("#loading").show();
-        const param = new FormData();
-        param.append('id_mhs', id_mhs);
-        param.append('id_jadwal', id_jadwal)
+        const param = new FormData($('#form_tambah')[0]);
 
-        await fetch(SITE_URL + 'anggota/list_kegiatan/proses', {
+        await fetch(SITE_URL + 'anggota/konsultasi/proses', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
@@ -154,6 +138,7 @@
             .then(response => {
                 console.log(response.status);
                 if (response.status === true) {
+                    $('#m_tambah').modal('hide');
                     Swal.fire({
                         type: "success",
                         title: 'Berhasil!',
@@ -172,6 +157,82 @@
                         confirmButtonClass: 'btn btn-warning',
                         timer: 1500
                     });
+
+                    $('[name="nama_lengkap"]').addClass(response.error_class['nama_lengkap']);
+                    $('[name="nama_lengkap"]').next().text(response.error_string['nama_lengkap']);
+
+                    $('[name="npm"]').addClass(response.error_class['npm']);
+                    $('[name="npm"]').next().text(response.error_string['npm']);
+
+                    $('[name="kelas"]').addClass(response.error_class['kelas']);
+                    $('[name="kelas"]').next().text(response.error_string['kelas']);
+
+                    $('[name="no_telp"]').addClass(response.error_class['no_telp']);
+                    $('[name="no_telp"]').next().text(response.error_string['no_telp']);
+
+                    $('[name="tujuan"]').addClass(response.error_class['tujuan']);
+                    $('[name="tujuan"]').next().text(response.error_string['tujuan']);
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    type: "error",
+                    title: 'Kesalahan!',
+                    text: 'Terjadi Kesalahan.',
+                    confirmButtonClass: 'btn btn-danger',
+                });
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                $("#loading").hide();
+            });
+    }
+
+    function confirm_del(id) {
+        var id_pengurus = id;
+        Swal.fire({
+            title: 'Apakah anda yakin akan menghapus data ini',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!',
+            cancelButtonText: 'Batal!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-warning ml-1',
+            buttonsStyling: false,
+        }).then(function(result) {
+
+            if (result.value) {
+                del(id_pengurus);
+            }
+        });
+    }
+    async function del(id_pengurus) {
+        $("#loading").show();
+        const param = new FormData();
+        param.append('id', id_pengurus);
+
+        await fetch(SITE_URL + 'anggota/konsultasi/hapus', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: param,
+            })
+            .then(response => response.json())
+            .then(response => {
+                if (response.status === true) {
+                    Swal.fire({
+                        type: "success",
+                        title: 'Berhasil!',
+                        text: 'Data berhasil dihapus.',
+                        confirmButtonClass: 'btn btn-success',
+                        timer: 1500
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 500);
                 }
             })
             .catch((error) => {

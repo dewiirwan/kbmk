@@ -93,55 +93,110 @@
         line-height: 1.6em;
         padding: 10px;
     }
+
+    .card {
+        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+        margin-bottom: 1rem;
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: 0.25rem;
+    }
+
+    .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+        padding: 0.75rem 1.25rem;
+        position: relative;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .card-title {
+        float: left;
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }
+
+    .card-body::after,
+    .card-footer::after,
+    .card-header::after {
+        display: block;
+        clear: both;
+        content: "";
+        box-sizing: border-box;
+    }
+
+    .card-footer {
+        padding: 0.75rem 1.25rem;
+        background-color: rgba(0, 0, 0, .03);
+        border-top: 0 solid rgba(0, 0, 0, .125);
+    }
+
+    .card-body::after,
+    .card-footer::after,
+    .card-header::after {
+        display: block;
+        clear: both;
+        content: "";
+        box-sizing: border-box;
+    }
 </style>
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md">
-
-                    <h2><span class="text-navy">KBMK</span>
-                        adalah Keluarga Besar Mahasiswa Khonghucu<br /></h2>
-                    <div class="row">
-                        <div class="col-md-3 text-center wow fadeInLeft" style="padding-right:0px; text-align:justify;">
-                        </div>
-                        <div class="col-md-6 text-center  wow zoomIn">
-                            <img src="<?= base_url(); ?>assets/template/img/landing/kbmk.png" alt="dashboard" class="img-responsive">
-                        </div>
-                        <div class="col-md-3 text-center wow fadeInRight" style="padding-right:0px; text-align:justify;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Detail Berita</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= base_url() ?>">Home</a>
+            </li>
+            <li>
+                <a href="<?= base_url('anggota/dashboard_mh') ?>">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>
+                    <a>Detail Berita</a>
+                </strong>
+            </li>
+        </ol>
     </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
 
-    <h2 class="title-hero font-black">
-        Berita Terkini
-    </h2>
-    <?php foreach ($pengumuman as $result) { ?>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="content-box">
-                    <h3 class="content-box-header  bg-default">
-                        <span class="icon-separator">
-                            <i class="fa fa-bullhorn"></i>
-                        </span>
-                        <b>
-                            <?= $result->judul ?>
-                        </b>
-                    </h3>
-                    <div class="content-box-wrapper">
-                        <?= $result->isi_berita ?><BR>
-                        <br>
-                        <div class='font-gray'>Diposting pada <?= $result->tgl_posting ?></div><BR>
-                        <div align='right'><a href='<?= base_url('dashboard_mhs/detail/' . $result->id_pengumuman . '') ?>' class='btn btn-default'>Selengkapnya</a></div>
-                    </div>
-                </div>
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><?= $pengumuman->judul ?></h3>
             </div>
+            <div class="card-body">
+                <?= $pengumuman->isi_berita ?>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Tanggal Posting : <?= $pengumuman->tgl_posting ?>
+            </div>
+            <!-- /.card-footer-->
         </div>
-        <br>
-    <?php } ?>
+        <!-- /.card -->
+
+    </section>
 
 </div>
 
@@ -151,102 +206,6 @@
         <p><strong>&copy; <?php echo (date("Y")); ?> KBMK</strong><br /> Hak cipta dilindungi undang-undang.</p>
     </div>
 </div>
-
-<!-- Page-Level Scripts -->
-<!-- <script>
-    $(document).ready(function() {
-
-        tampil_data_kegiatan(); //pemanggilan fungsi tampil data.
-
-        $('#mydata').dataTable({
-            pageLength: 25,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [{
-                    extend: 'copy'
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    },
-                },
-                {
-                    extend: 'excel',
-                    title: 'Kegiatan',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    },
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: 'Kegiatan',
-                    orientation: 'landscape',
-                    pageSize: 'A3',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    },
-                    customize: function(doc) {
-                        doc.content[1].table.widths =
-                            Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                    }
-                },
-
-                {
-                    extend: 'print',
-                    orientation: 'landscape',
-                    pageSize: 'A3',
-                    customize: function(win) {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    },
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    },
-                }
-            ]
-
-        });
-
-        //fungsi tampil data
-        function tampil_data_kegiatan() {
-            $.ajax({
-                type: 'GET',
-                url: '<?php echo base_url() ?>index.php/Kegiatan/data_kegiatan',
-                async: false,
-                dataType: 'json',
-                success: function(data) {
-                    var i;
-                    var html;
-                    for (i = 0; i < data.length; i++) {
-
-                        var TANGGAL_KEGIATAN = new Date(data[i].TANGGAL_KEGIATAN);
-                        var HARI_INI = new Date();
-                        var button_daftar = "";
-
-                        if (HARI_INI < TANGGAL_KEGIATAN) {
-                            button_daftar = '<a href="<?php echo base_url() ?>index.php/Kegiatan_daftar/index/' + data[i].ID_KEGIATAN + '" class="btn btn-warning btn-outline btn-xs block"><i class="fa fa-child"></i> Daftar</a>';
-                        }
-
-                        html += '<tr>' +
-                            '<td>' + data[i].NAMA_KEGIATAN + '</td>' +
-                            '<td>' +
-                            button_daftar + ' ' +
-                            '<a href="<?php echo base_url() ?>index.php/Kegiatan_detil/index/' + data[i].ID_KEGIATAN + '" class="btn btn-info btn-xs block"><i class="fa fa-eye"></i> Lihat Kegiatan</a>' + ' ' +
-                            '</td>' +
-                            '</tr>';
-                    }
-                    $('#show_data').html(html);
-                }
-            });
-        }
-
-    });
-</script> -->
 
 <script>
     $(document).ready(function() {

@@ -48,6 +48,9 @@
         <a href="<?= base_url('anggota/list_kegiatan'); ?>"><i class="fa fa-heartbeat"></i> <span class="nav-label">List Kegiatan</span> </a>
     </li>
     <li class="active">
+        <a href="<?= base_url('anggota/konsultasi'); ?>"><i class="fa fa-quote-right"></i> <span class="nav-label">List Konsultasi</span> </a>
+    </li>
+    <li class="active">
         <a href="<?= base_url('anggota/list_sertif'); ?>"><i class="fa fa-trophy"></i> <span class="nav-label">List Sertifikat</span> </a>
     </li>
 <?php } ?>

@@ -1,3 +1,13 @@
+<!-- <script>
+    $(function() {
+        $('#tgl_konsultasi').datepicker({
+            format: 'yyyy-mm-dd h:i:s',
+            autoclose: true,
+            startDate: "dateToday"
+        });
+    });
+</script> -->
+
 <script type="text/javascript" language="javascript">
     var dataTable;
     var dataTables;
@@ -218,6 +228,12 @@
         window.location.href = BASE_URL + 'pengurus/list_anggota/detail_upload/' + id_anggota;
     }
 
+    function konsultasi(id_mhs) {
+        $('#m_konsultasi').modal('show');
+
+        $('#id_mhss').val(id_mhs);
+    }
+
     function verif(id_mhs) {
 
         Swal.fire({
@@ -245,6 +261,77 @@
 
         param.append('id_mhs', id_mhs);
         await fetch(SITE_URL + 'pengurus/list_anggota/verif', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: param,
+            })
+            .then(response => response.json())
+            .then(response => {
+                // console.log(response.status);
+                if (response.status === true) {
+                    Swal.fire({
+                        type: "success",
+                        title: 'Berhasil!',
+                        text: 'Data berhasil diverif.',
+                        confirmButtonClass: 'btn btn-success',
+                        timer: 1500
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 500);
+                } else if (response.status === false) {
+                    Swal.fire({
+                        type: "warning",
+                        title: 'Gagal!',
+                        text: 'Gagal verif data.',
+                        confirmButtonClass: 'btn btn-warning',
+                        timer: 1500
+                    });
+
+                }
+            })
+            .catch((error) => {
+                Swal.fire({
+                    type: "error",
+                    title: 'Kesalahan!',
+                    text: 'Terjadi Kesalahan.',
+                    confirmButtonClass: 'btn btn-danger',
+                });
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                $("#loading").hide();
+            });
+    }
+
+    function verif_konsultasi() {
+
+        Swal.fire({
+            title: 'Apakah anda yakin akan verif data ini',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!',
+            cancelButtonText: 'Batal!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-warning ml-1',
+            buttonsStyling: false,
+        }).then(function(result) {
+            // console.log(result)
+            if (result.value) {
+                save_konsultasi();
+            }
+        });
+    }
+    async function save_konsultasi() {
+        $("#loading").show();
+
+        const param = new FormData($('#form_konsultasi')[0]);
+
+        await fetch(SITE_URL + 'pengurus/list_anggota/verif_konsultasi', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'

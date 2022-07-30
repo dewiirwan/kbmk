@@ -1,16 +1,16 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Detail Sertifikat</h2>
+        <h2>Bukti Daftar</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="<?= base_url() ?>">Home</a>
             </li>
             <li>
-                <a href="<?= base_url('anggota/list_sertif') ?>">Sertifikat</a>
+                <a href="<?= base_url('anggota/list_kegiatan') ?>">List Kegiatan</a>
             </li>
             <li class="active">
                 <strong>
-                    <a>Detail Sertifikat</a>
+                    <a>Bukti Daftar</a>
                 </strong>
             </li>
         </ol>
@@ -43,7 +43,7 @@
     <!-- Identitas Form FPB -->
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5><?= $dokumen->dok_file; ?></h5>
+            <h5><?= $file_pdf; ?></h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -55,10 +55,10 @@
         </div>
         <div class="ibox-content">
             <div class="container_iframe">
-                <iframe class="responsive-iframe" src="<?= base_url('assets/uploads/anggota/') ?><?= $dokumen->dok_file; ?>"></iframe>
+                <iframe class="responsive-iframe" src="<?= base_url('assets/PDF/') ?><?= $file_pdf; ?>"></iframe>
             </div>
             </br>
-            <a href="<?= base_url('anggota/list_sertif') ?>" class="btn btn-info"> Kembali Ke Halaman List Sertifikat</a>
+            <a href="<?= base_url('anggota/list_kegiatan') ?>" class="btn btn-info"> Kembali Ke Halaman List Kegiatan</a>
         </div>
     </div>
     <!-- End Identitas Form FPB -->

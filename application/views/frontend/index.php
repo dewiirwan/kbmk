@@ -13,6 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta name="author" content="">
 
     <title><?= $title; ?></title>
+    <link rel="shortcut icon" href="#">
 
     <!-- Bootstrap core CSS -->
     <link href="<?= base_url(); ?>assets/template/css/bootstrap.min.css" rel="stylesheet">
@@ -23,52 +24,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Custom styles for this template -->
     <link href="<?= base_url(); ?>assets/template/css/style.css" rel="stylesheet">
-
-
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/fontawesome-free/css/all.min.css">
-
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/sweetalert2/sweetalert2.min.css">
-
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/toastr/toastr.min.css">
-
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/ekko-lightbox/ekko-lightbox.css">
-
-    <script nonce="f733f503-1503-460a-8aa1-e9fbc286792d">
-        (function(w, d) {
-            ! function(a, e, t, r) {
-                a.zarazData = a.zarazData || {}, a.zarazData.executed = [], a.zaraz = {
-                    deferred: []
-                }, a.zaraz.q = [], a.zaraz._f = function(e) {
-                    return function() {
-                        var t = Array.prototype.slice.call(arguments);
-                        a.zaraz.q.push({
-                            m: e,
-                            a: t
-                        })
-                    }
-                };
-                for (const e of ["track", "set", "ecommerce", "debug"]) a.zaraz[e] = a.zaraz._f(e);
-                a.zaraz.init = () => {
-                    var t = e.getElementsByTagName(r)[0],
-                        z = e.createElement(r),
-                        n = e.getElementsByTagName("title")[0];
-                    for (n && (a.zarazData.t = e.getElementsByTagName("title")[0].text), a.zarazData.x = Math.random(), a.zarazData.w = a.screen.width, a.zarazData.h = a.screen.height, a.zarazData.j = a.innerHeight, a.zarazData.e = a.innerWidth, a.zarazData.l = a.location.href, a.zarazData.r = e.referrer, a.zarazData.k = a.screen.colorDepth, a.zarazData.n = e.characterSet, a.zarazData.o = (new Date).getTimezoneOffset(), a.zarazData.q = []; a.zaraz.q.length;) {
-                        const e = a.zaraz.q.shift();
-                        a.zarazData.q.push(e)
-                    }
-                    z.defer = !0;
-                    for (const e of [localStorage, sessionStorage]) Object.keys(e || {}).filter((a => a.startsWith("_zaraz_"))).forEach((t => {
-                        try {
-                            a.zarazData["z_" + t.slice(7)] = JSON.parse(e.getItem(t))
-                        } catch {
-                            a.zarazData["z_" + t.slice(7)] = e.getItem(t)
-                        }
-                    }));
-                    z.referrerPolicy = "origin", z.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(a.zarazData))), t.parentNode.insertBefore(z, t)
-                }, ["complete", "interactive"].includes(e.readyState) ? zaraz.init() : a.addEventListener("DOMContentLoaded", zaraz.init)
-            }(w, d, 0, "script");
-        })(window, document);
-    </script>
 
     <style>
         div.gallery {
@@ -167,10 +122,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 text-center wow fadeInLeft" style="padding-right:0px; text-align:justify;">
-                <div>
-                    <i class="fa fa-bell features-icon"></i>
-                    <h2><b>VISI</b></h2>
+            <div class="col-md-3 text-center wow fadeInLeft" style="padding-right:0px;">
+                <i class="fa fa-bell features-icon"></i>
+                <h2><b>VISI</b></h2>
+                <div style="text-align:justify;">
                     <ul>
                         <bold>
                             <p>1. Menjadi suatu wadah yang dapat memfasilitasi seluruh anggotanya dalam mendalami ajaran dari Agama Khonghucu dengan belajar bersama yang saling melengkapi satu sama lain sehingga juga diharapkan dapat mencapai suasana kekeluargaan.</p>
@@ -182,10 +137,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="col-md-6 text-center  wow zoomIn">
                 <img src="<?= base_url(); ?>assets/template/img/landing/kbmk1.png" alt="dashboard" class="img-responsive">
             </div>
-            <div class="col-md-3 text-center wow fadeInRight" style="padding-right:0px; text-align:justify;">
-                <div>
-                    <i class="fa fa-thumb-tack features-icon"></i>
-                    <h2><b>MISI</b></h2>
+            <div class="col-md-3 text-center wow fadeInRight" style="padding-right:0px;">
+                <i class="fa fa-thumb-tack features-icon"></i>
+                <h2><b>MISI</b></h2>
+                <div style="text-align:justify;">
                     <p>1. Meningkatkan komunikasi antar anggota KBMK </p>
                     <p>2. Melaksanakan kegiatan KBMK baik secara online atau offline.</p>
                     <p>3. Menciptakan kerja sama dan kebersamaan antar anggota KBMK UG dalam menjalankan event-event yang akan dihadiri maupun diadakan KBMK UG.</p>
@@ -340,8 +295,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         Or follow us on social platform
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram features-icon"></i></a>
-                        </li>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/kbmk_gundar/"><i class="fa fa-facebook"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -361,7 +317,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script src="<?= base_url(); ?>assets/template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="<?= base_url(); ?>assets/template/js/inspinia.js"></script>
     <script src="<?= base_url(); ?>assets/template/js/plugins/pace/pace.min.js"></script>
     <script src="<?= base_url(); ?>assets/template/js/plugins/wow/wow.min.js"></script>
 
@@ -428,25 +383,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         // Activate WOW.js plugin for animation on scrol
         new WOW().init();
-    </script>
-
-    <script>
-        $(function() {
-            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox({
-                    alwaysShowClose: true
-                });
-            });
-
-            $('.filter-container').filterizr({
-                gutterPixels: 3
-            });
-            $('.btn[data-filter]').on('click', function() {
-                $('.btn[data-filter]').removeClass('active');
-                $(this).addClass('active');
-            });
-        })
     </script>
 
 </body>

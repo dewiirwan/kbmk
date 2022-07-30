@@ -9,6 +9,7 @@ class List_anggota extends CI_Controller
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
+        $this->load->helper('date_indonesia');
         $this->load->helper('my_date_helper');
         $this->load->model('m_anggota');
         $this->load->model('m_global');
@@ -545,6 +546,75 @@ class List_anggota extends CI_Controller
 
         $this->db->where('id_mhs', $id_mhs);
         $this->db->update('form_pengajuan', $data);
+        echo json_encode(['status' => $status]);
+    }
+
+    public function verif_konsultasi()
+    {
+        if ($this->ion_auth->logged_in() && ($this->ion_auth->in_group(1))) {
+
+            $status                = true;
+            $user = $this->ion_auth->user()->row();
+
+            $id_mhs = $this->input->post('id_mhss');
+
+            $konsultasi = $this->db->query("SELECT * FROM t_konsultasi 
+            WHERE id_mhs = '$id_mhs'")->row();
+
+            if ($konsultasi) {
+                $tgl_konsultasi = $this->input->post('tgl_konsultasi');
+                $keterangan = $this->input->post('keterangan');
+
+                $data = array(
+                    'tgl_konsultasi'    => $tgl_konsultasi,
+                    'keterangan'        => $keterangan
+                );
+            } else {
+                $status = false;
+            }
+        } else {
+            $this->logout();
+        }
+
+        $this->db->where('id_mhs', $id_mhs);
+        $update = $this->db->update('t_konsultasi', $data);
+
+        if ($update) {
+            $curls = curl_init();
+            $msg =
+                'Halo Peserta Konsultasi KBMK Gunadarma😎
+Jangan lewatkan Sesi Zoom Konsultasi ini dengan join melalui link berikut :
+
+KBMK Gunadarma is inviting you to a scheduled Zoom meeting.
+
+Topic: Konsultasi
+Time: ' . indonesian_date($tgl_konsultasi) . '
+
+' . $keterangan . '
+
+
+Sampai Jumpa!
+
+Admin KBMK Gunadarma';
+
+            curl_setopt_array($curls, array(
+                CURLOPT_URL => 'https://app.whacenter.com/api/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array('device_id' => '673aeaa268ab739205b965a00abd68a9', 'number' => $konsultasi->no_whatsapp, 'message' => $msg),
+            ));
+
+            $responses = curl_exec($curls);
+
+            curl_close($curls);
+            // echo $responses;
+        }
+
         echo json_encode(['status' => $status]);
     }
 

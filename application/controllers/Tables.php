@@ -151,6 +151,7 @@ class Tables extends CI_Controller
 				$list = $this->m_table->get_datatables('data_list_anggota_pengurus', $sort, $order);
 				foreach ($list as $l) {
 					$pengajuan = $this->db->query("SELECT status_verif FROM form_pengajuan WHERE id_mhs = '$l->id_mhs'")->row();
+					$konsultasi = $this->db->query("SELECT tgl_konsultasi FROM t_konsultasi WHERE id_mhs = '$l->id_mhs'")->row();
 					$no++;
 					$l->no = $no;
 					$l->ttl = $l->tempat_tgl_lahir;
@@ -182,6 +183,37 @@ class Tables extends CI_Controller
 							</a>
 							<a href='javascript:void(0)' class='btn btn-success btn-xs block' title='Verifikasi Form Pengajuan' onclick='verif(" . $l->id_mhs	. ")'>
 							<i class='fa fa-check'></i> Verif Form Pengajuan
+							</a>";
+						}
+					}
+
+					if ($konsultasi  == null) {
+						$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail(" . $l->id_mhs	. ")'>
+						<i class='fa fa-eye'></i> Lihat Anggota
+						</a>
+						<a href='javascript:void(0)' class='btn btn-success btn-xs block' title='Upload Sertif' onclick='upload(" . $l->id_mhs	. ")'>
+						<i class='fa fa-file'></i> Upload Sertif
+						</a>";
+					} else {
+						if ($konsultasi->tgl_konsultasi != null) {
+							$l->aksi = "
+						<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail(" . $l->id_mhs	. ")'>
+						<i class='fa fa-eye'></i> Lihat Anggota
+						</a>
+						<a href='javascript:void(0)' class='btn btn-success btn-xs block' title='Upload Sertif' onclick='upload(" . $l->id_mhs	. ")'>
+						<i class='fa fa-file'></i> Upload Sertif
+						</a>";
+						} else {
+							$l->aksi = "
+							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Anggota' onclick='detail(" . $l->id_mhs	. ")'>
+							<i class='fa fa-eye'></i> Lihat Anggota
+							</a>
+							<a href='javascript:void(0)' class='btn btn-success btn-xs block' title='Upload Sertif' onclick='upload(" . $l->id_mhs	. ")'>
+							<i class='fa fa-file'></i> Upload Sertif
+							</a>
+							<a href='javascript:void(0)' class='btn btn-success btn-xs block' title='Verifikasi Konsultasi' onclick='konsultasi(" . $l->id_mhs	. ")'>
+							<i class='fa fa-check'></i> Verif Konsultasi
 							</a>";
 						}
 					}
@@ -298,7 +330,7 @@ class Tables extends CI_Controller
 			case 'data_list_kegiatan_anggota':
 				$list = $this->m_table->get_datatables('data_list_kegiatan_anggota', $sort, $order);
 				foreach ($list as $l) {
-					$user = $this->ion_auth->user()->row();	
+					$user = $this->ion_auth->user()->row();
 
 					$id_mhs = $user->id_mhs;
 					$cekDaftar = $this->db->query('SELECT j.* FROM jadwal as j WHERE j.id_mhs = ' . $id_mhs . ' AND j.id_kegiatan = ' . $l->id_kegiatan . '')->row();
@@ -312,6 +344,9 @@ class Tables extends CI_Controller
 							$l->aksi = "
 							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Detail Data' onclick='detail(" . $l->id_kegiatan	. ")'>
 							<i class='fa fa-eye'></i> Lihat Kegiatan
+							</a>
+							<a href='javascript:void(0)' class='btn btn-info btn-xs block' title='Bukti Daftar' onclick='bukti_daftar(" . $id_mhs	. ")'>
+							<i class='fa fa-eye'></i> Bukti Daftar
 							</a>";
 						} else {
 							$l->aksi = "
@@ -390,6 +425,34 @@ class Tables extends CI_Controller
 					"draw"              => $_POST['draw'],
 					"recordsTotal"      => $this->m_table->count_all('data_list_pengajuan', $sort, $order),
 					"recordsFiltered"   => $this->m_table->count_filtered('data_list_pengajuan', $sort, $order),
+					"data"              => $data,
+					'filter'            => $filter,
+				);
+				echo json_encode($output);
+				break;
+			case 'data_list_konsultasi':
+				$list = $this->m_table->get_datatables('data_list_konsultasi', $sort, $order);
+				foreach ($list as $l) {
+					$no++;
+					$l->no = $no;
+
+					if ($l->tgl_konsultasi != null) {
+						$l->aksi = "";
+					} else {
+						$l->aksi = "
+					<a href='javascript:void(0)' class='btn btn-danger btn-xs block' title='Hapus Konsultasi' onclick='confirm_del(" . $l->id_konsultasi . ")'>
+					<i class='fa fa-trash'></i> Hapus
+					</a>";
+					}
+
+
+					$data[] = $l;
+				}
+
+				$output = array(
+					"draw"              => $_POST['draw'],
+					"recordsTotal"      => $this->m_table->count_all('data_list_konsultasi', $sort, $order),
+					"recordsFiltered"   => $this->m_table->count_filtered('data_list_konsultasi', $sort, $order),
 					"data"              => $data,
 					'filter'            => $filter,
 				);
