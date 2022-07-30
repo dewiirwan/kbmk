@@ -195,7 +195,9 @@ class List_kegiatan extends CI_Controller
         if ($update) {
             $getPendaftar = $this->db->query('SELECT m.*, k.* FROM mahasiswa AS m JOIN jadwal AS j ON m.id_mhs = j.id_mhs JOIN kegiatan AS k ON j.id_kegiatan = k.id_kegiatan WHERE m.id_mhs =' . $id_mhs . '')->row();
 
-            $this->sertifikat($getPendaftar->nama, $getPendaftar->npm, $getPendaftar->no_hp, $getPendaftar->alamat, $getPendaftar->nama_kegiatan, $getPendaftar->tgl_kegiatan);
+            $tgl = GetFullDateFull(date('Y-m-d'));
+
+            $this->sertifikat($getPendaftar->nama, $getPendaftar->npm, $getPendaftar->no_hp, $getPendaftar->alamat, $getPendaftar->nama_kegiatan, $getPendaftar->tgl_kegiatan, $tgl);
             $pdf_name = 'Daftar_Kegiatan_' . $getPendaftar->nama_kegiatan . $getPendaftar->npm . '_' . time() . '.pdf';
             // $pdf_name = 'Pengajuan_Keikutsertaan_Pembelajaraan_Agama_Khonghucu_' . @$npm . '_' . time() . '.pdf';
 
@@ -205,7 +207,7 @@ class List_kegiatan extends CI_Controller
         echo json_encode(['status' => $status]);
     }
 
-    public function sertifikat($nama_lengkap, $npm, $no_telp, $alamat, $nama_kegiatan, $tgl_kegiatan)
+    public function sertifikat($nama_lengkap, $npm, $no_telp, $alamat, $nama_kegiatan, $tgl_kegiatan, $tgl)
     {
         require FCPATH . 'vendor/tcpdf/tcpdf.php';
         $pdf = new \TCPDF();
@@ -273,6 +275,13 @@ class List_kegiatan extends CI_Controller
 
         $html = '<p style="font-size:12;">&nbsp;&nbsp; : &nbsp;&nbsp; ' . $tgl_kegiatan . '</p><br>';
         $pdf->writeHTMLCell(0, 0, 55, 100, $html, 0, 0, 0, true, 'L');
+
+        $html = '<p style="font-size:12;">' . 'Depok, ' . $tgl . '</p><br>';
+        $pdf->writeHTMLCell(100, 5, 138, 153, $html, 0, 0, 0, true, 'L');
+
+        $html = '<img src="assets/template/img/verif_sertif.jpeg" width="150px" height="150px" alt="" srcset="">';
+
+        $pdf->writeHTMLCell(100, 5, 130, 160, $html, 0, 0, 0, true, 'L');
 
 
 
