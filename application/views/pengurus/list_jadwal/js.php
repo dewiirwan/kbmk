@@ -105,7 +105,8 @@
                 },
                 data: function(data) {
                     data.filter = {
-                        'id_kegiatan': $('#id_kegiatan').val()
+                        'id_kegiatan': $('#id_kegiatan').val(),
+                        'nama': $('.filter_nama').val(),
                     };
                     data.<?php echo $this->security->get_csrf_token_name(); ?> = '<?php echo $this->security->get_csrf_hash(); ?>';
                     data.type = 'data_list_jadwal_detail';
@@ -145,9 +146,6 @@
                     'data': 'no_urut'
                 },
                 {
-                    'data': 'kode_qr'
-                },
-                {
                     'data': 'nama_mhs'
                 },
                 {
@@ -160,6 +158,10 @@
             ],
 
 
+        });
+
+        $(".filter_nama").keyup(function() {
+            table_datas();
         });
 
         function table_datas() {

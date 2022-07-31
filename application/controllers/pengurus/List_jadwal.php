@@ -107,15 +107,12 @@ class List_jadwal extends CI_Controller
 
                 for ($x = 1; $x <= $kapasitas_kegiatan; $x++) {
 
-                    $KODE_QR = md5('KEGIATAN' . $nama_kegiatan  . $x);
                     $hasil = $this->db->query("INSERT INTO jadwal (
                         id_kegiatan,
-                        no_urut,
-                        kode_qr)
+                        no_urut)
                     VALUES(
                         '$nama_kegiatan',
-                        '$x',
-                        '$KODE_QR')");
+                        '$x')");
                 }
 
                 $KETERANGAN = "Simpan Jadwal: "

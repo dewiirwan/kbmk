@@ -96,6 +96,14 @@
                 <div class="ibox-content">
                     <input type="hidden" name="id_kegiatan" id="id_kegiatan" value="<?= @$id_kegiatan ?>">
                     <div class="table-responsive">
+                        <table class="table table-bordered table-striped tab_container4" cellpadding="0" cellspacing="0" border="0" class="display" width="100%" style="margin-bottom:30px">
+                            <td style="border-bottom: 1px solid #ddd;">
+                                <strong style="font-size: 12px;">Pencarian : </strong>
+                            </td>
+                            <td style="border-bottom: 1px solid #ddd; ">
+                                <input type="text" class="form-control filter_nama" placeholder="Nama Mahasiswa">
+                            </td>
+                        </table>
                         <table class="table table-striped table-bordered table-hover" id="tabels">
                             <thead>
                                 <tr>
@@ -103,7 +111,6 @@
                                     <th>Nama Kegiatan</th>
                                     <th>Tanggal Kegiatan</th>
                                     <th>Nomor Urut</th>
-                                    <th>Kode QR</th>
                                     <th>Nama Mahasiswa</th>
                                     <th>Waktu Hadir</th>
                                     <th>Pilihan</th>

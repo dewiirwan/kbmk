@@ -606,7 +606,7 @@ Admin KBMK Gunadarma';
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array('device_id' => '673aeaa268ab739205b965a00abd68a9', 'number' => $konsultasi->no_whatsapp, 'message' => $msg),
+                CURLOPT_POSTFIELDS => array('device_id' => '7d6be3140ea5c05951663acd7ceff8ee', 'number' => $konsultasi->no_whatsapp, 'message' => $msg),
             ));
 
             $responses = curl_exec($curls);
